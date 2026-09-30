@@ -1,0 +1,226 @@
+[
+  {
+    "a_player_id": "crabbal01",
+    "a_season": 2017,
+    "b_player_id": "aytonde01",
+    "b_season": 2019,
+    "expected_similarity": 69.080992
+  },
+  {
+    "a_player_id": "jonessp01",
+    "a_season": 2026,
+    "b_player_id": "inglejo01",
+    "b_season": 2022,
+    "expected_similarity": 76.916094
+  },
+  {
+    "a_player_id": "hilarne01",
+    "a_season": 2011,
+    "b_player_id": "dragigo01",
+    "b_season": 2023,
+    "expected_similarity": 59.485234
+  },
+  {
+    "a_player_id": "clingdo01",
+    "a_season": 2026,
+    "b_player_id": "campbel01",
+    "b_season": 2003,
+    "expected_similarity": 76.089052
+  },
+  {
+    "a_player_id": "richaja02",
+    "a_season": 2026,
+    "b_player_id": "barneha02",
+    "b_season": 2015,
+    "expected_similarity": 87.979929
+  },
+  {
+    "a_player_id": "barbole01",
+    "a_season": 2009,
+    "b_player_id": "casspom01",
+    "b_season": 2010,
+    "expected_similarity": 81.007187
+  },
+  {
+    "a_player_id": "hendege02",
+    "a_season": 2017,
+    "b_player_id": "horryro01",
+    "b_season": 2004,
+    "expected_similarity": 85.339281
+  },
+  {
+    "a_player_id": "walkebi01",
+    "a_season": 2011,
+    "b_player_id": "baglema01",
+    "b_season": 2023,
+    "expected_similarity": 73.930739
+  },
+  {
+    "a_player_id": "hachiru01",
+    "a_season": 2020,
+    "b_player_id": "redicjj01",
+    "b_season": 2015,
+    "expected_similarity": 72.169667
+  },
+  {
+    "a_player_id": "herroty01",
+    "a_season": 2021,
+    "b_player_id": "siakapa01",
+    "b_season": 2021,
+    "expected_similarity": 87.602213
+  },
+  {
+    "a_player_id": "jovicni01",
+    "a_season": 2025,
+    "b_player_id": "allenja01",
+    "b_season": 2019,
+    "expected_similarity": 68.162688
+  },
+  {
+    "a_player_id": "finnedo01",
+    "a_season": 2025,
+    "b_player_id": "richani01",
+    "b_season": 2025,
+    "expected_similarity": 59.429218
+  },
+  {
+    "a_player_id": "milescj01",
+    "a_season": 2019,
+    "b_player_id": "josepco01",
+    "b_season": 2021,
+    "expected_similarity": 77.428909
+  },
+  {
+    "a_player_id": "farmajo01",
+    "a_season": 2014,
+    "b_player_id": "hayesja01",
+    "b_season": 2007,
+    "expected_similarity": 70.33673
+  },
+  {
+    "a_player_id": "meeksjo01",
+    "a_season": 2011,
+    "b_player_id": "claxtsp01",
+    "b_season": 2007,
+    "expected_similarity": 60.631622
+  },
+  {
+    "a_player_id": "carusal01",
+    "a_season": 2019,
+    "b_player_id": "olowomi01",
+    "b_season": 2001,
+    "expected_similarity": 72.074634
+  },
+  {
+    "a_player_id": "chandty01",
+    "a_season": 2012,
+    "b_player_id": "murraja01",
+    "b_season": 2018,
+    "expected_similarity": 58.828732
+  },
+  {
+    "a_player_id": "millemi01",
+    "a_season": 2014,
+    "b_player_id": "johnsca02",
+    "b_season": 2023,
+    "expected_similarity": 76.386013
+  },
+  {
+    "a_player_id": "belinma01",
+    "a_season": 2010,
+    "b_player_id": "snellto01",
+    "b_season": 2019,
+    "expected_similarity": 79.266981
+  },
+  {
+    "a_player_id": "willizi02",
+    "a_season": 2025,
+    "b_player_id": "davishu01",
+    "b_season": 2002,
+    "expected_similarity": 78.676966
+  },
+  {
+    "a_player_id": "okurme01",
+    "a_season": 2005,
+    "b_player_id": "burketr01",
+    "b_season": 2014,
+    "expected_similarity": 67.797091
+  },
+  {
+    "a_player_id": "landajo01",
+    "a_season": 2022,
+    "b_player_id": "mutomdi01",
+    "b_season": 2007,
+    "expected_similarity": 69.625984
+  },
+  {
+    "a_player_id": "greendr01",
+    "a_season": 2013,
+    "b_player_id": "brookaa01",
+    "b_season": 2011,
+    "expected_similarity": 66.624489
+  },
+  {
+    "a_player_id": "bennean01",
+    "a_season": 2014,
+    "b_player_id": "holidjr01",
+    "b_season": 2012,
+    "expected_similarity": 76.955837
+  },
+  {
+    "a_player_id": "koufoko01",
+    "a_season": 2017,
+    "b_player_id": "burksal01",
+    "b_season": 2020,
+    "expected_similarity": 71.934533
+  },
+  {
+    "a_player_id": "horryro01",
+    "a_season": 2007,
+    "b_player_id": "clarkjo01",
+    "b_season": 2021,
+    "expected_similarity": 67.964094
+  },
+  {
+    "a_player_id": "olowomi01",
+    "a_season": 2004,
+    "b_player_id": "josepco01",
+    "b_season": 2023,
+    "expected_similarity": 68.57344
+  },
+  {
+    "a_player_id": "smartma01",
+    "a_season": 2023,
+    "b_player_id": "nashst01",
+    "b_season": 2011,
+    "expected_similarity": 74.343082
+  },
+  {
+    "a_player_id": "fortsda01",
+    "a_season": 2004,
+    "b_player_id": "nocioan01",
+    "b_season": 2007,
+    "expected_similarity": 64.582248
+  },
+  {
+    "a_player_id": "morrite01",
+    "a_season": 2003,
+    "b_player_id": "harriot01",
+    "b_season": 2001,
+    "expected_similarity": 76.975447
+  },
+  {
+    "a_player_id": "curryst01",
+    "a_season": 2016,
+    "b_player_id": "hardeja01",
+    "b_season": 2018,
+    "expected_similarity": 81.507201
+  },
+  {
+    "a_player_id": "goberru01",
+    "a_season": 2018,
+    "b_player_id": "jokicni01",
+    "b_season": 2019,
+    "expected_similarity": 59.599408
+  }
+]

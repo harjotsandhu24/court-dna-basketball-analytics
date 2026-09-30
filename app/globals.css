@@ -1,0 +1,224 @@
+@import "tailwindcss";
+@import "@fontsource/anton";
+@import "@fontsource-variable/inter";
+
+/* ==========================================================================
+   COURT DNA design tokens — a dark arena foundation, not a data-dashboard
+   theme. See docs/methodology.md is analytical; this file is the visual
+   identity referenced throughout Section 13 of the build spec.
+   ========================================================================== */
+:root {
+  --arena-bg: #0b0d12;
+  --arena-bg-raised: #12151d;
+  --arena-panel: #161a24;
+  --arena-panel-strong: #1c2130;
+  --line: #262c3b;
+  --line-strong: #333b4f;
+
+  --ink: #f4f2ec;
+  --ink-light: #e7e4da;
+  --stone: #9aa0b4;
+  --stone-light: #6c7288;
+
+  --court-orange: #ff6a1a;
+  --court-orange-bright: #ff8a3d;
+  --court-orange-deep: #c2470a;
+
+  --cp-grid: #333b4f;
+  --cp-center: #e8e6df;
+
+  --guard-accent: #ff5252;
+  --wing-accent: #ff6a1a;
+  --big-accent: #ffb23d;
+
+  --font-display: "Anton", "Arial Narrow", sans-serif;
+  --font-body: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --focus-ring: #ff8a3d;
+}
+
+@theme inline {
+  --color-arena-bg: var(--arena-bg);
+  --color-arena-bg-raised: var(--arena-bg-raised);
+  --color-arena-panel: var(--arena-panel);
+  --color-arena-panel-strong: var(--arena-panel-strong);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-light: var(--ink-light);
+  --color-stone: var(--stone);
+  --color-stone-light: var(--stone-light);
+  --color-court-orange: var(--court-orange);
+  --color-court-orange-bright: var(--court-orange-bright);
+  --color-court-orange-deep: var(--court-orange-deep);
+  --color-guard-accent: var(--guard-accent);
+  --color-wing-accent: var(--wing-accent);
+  --color-big-accent: var(--big-accent);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--arena-bg);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255, 106, 26, 0.12), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(255, 106, 26, 0.05), transparent);
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.text-eyebrow {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--stone);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Court-line texture used behind hero/section headers — geometry only,
+   never a copied NBA/team diagram or logo. */
+.court-lines-bg {
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 64px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 64px);
+}
+
+/* ==========================================================================
+   Interactive states — deliberately NOT gated behind motion-safe/hover
+   media queries, so hover/press/focus affordances always work even with
+   reduced motion enabled (Section 14/28 requirement).
+   ========================================================================== */
+a,
+button {
+  cursor: pointer;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, transform 100ms ease;
+}
+.btn-primary {
+  background: var(--court-orange);
+  color: #14100a;
+  border: 1px solid var(--court-orange);
+}
+.btn-primary:hover {
+  background: var(--court-orange-bright);
+  border-color: var(--court-orange-bright);
+}
+.btn-primary:active {
+  background: var(--court-orange-deep);
+  transform: translateY(1px);
+}
+.btn-secondary {
+  background: var(--arena-panel);
+  color: var(--ink-light);
+  border: 1px solid var(--line-strong);
+}
+.btn-secondary:hover {
+  background: var(--arena-panel-strong);
+  border-color: var(--court-orange);
+  color: var(--court-orange-bright);
+}
+.btn-secondary:active {
+  transform: translateY(1px);
+}
+
+.card-interactive {
+  transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+  border: 1px solid var(--line);
+}
+.card-interactive:hover {
+  border-color: var(--court-orange);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px -12px rgba(255, 106, 26, 0.35);
+}
+.card-interactive:active {
+  transform: translateY(-1px);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   Motion — respected globally. Reduced-motion users keep every affordance
+   above (hover/press/focus are plain CSS, not animation-gated) and keep
+   all information; only decorative movement is removed.
+   ========================================================================== */
+.cp-reveal {
+  animation: cp-reveal-anim 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: center;
+}
+@keyframes cp-reveal-anim {
+  from {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .cp-reveal {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+::selection {
+  background: var(--court-orange);
+  color: #14100a;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--arena-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 6px;
+}

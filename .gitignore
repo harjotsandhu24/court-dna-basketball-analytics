@@ -1,0 +1,58 @@
+# Node / Next.js
+node_modules/
+.next/
+out/
+.turbo/
+next-env.d.ts.bak
+
+# Build output
+dist/
+build/
+
+# Raw source data (Kaggle "NBA Stats (1947-present)", CC0) — excluded for
+# repository cleanliness/source separation, not a licensing concern; see
+# docs/data.md for the dataset link, checksum, and scripts/prepare_raw.py.
+raw/*.csv
+raw/*.zip
+/archive.zip
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+
+# Intermediate pipeline output (regenerate via analysis/step*.py; not
+# required for the production app, which only reads public/data/)
+data/*.csv
+data/*.json
+!data/README.md
+
+# Test / QA artifacts
+playwright-report/
+test-results/
+coverage/
+*.log
+
+# Temporary screenshots / image caches (docs/screenshots/*.png ARE kept —
+# those are the real, curated README screenshots, not scratch output)
+/tmp-screenshots/
+*.tmp.png
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Env / secrets
+.env
+.env.local
+.env*.local
+
+# Misc
+*.tsbuildinfo

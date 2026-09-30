@@ -1,0 +1,195 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import PlayerPhoto from "@/components/PlayerPhoto";
+import { loadPlayersIndex, loadSeason, searchPlayers } from "@/lib/dataLoader";
+import { zToApproxPercentile } from "@/lib/stats";
+import type { PlayerSeasonRecord, PlayersIndex } from "@/lib/types";
+
+const DIMENSIONS = [
+  { key: "Playmaking", label: "Creation" },
+  { key: "Perimeter Profile", label: "Perimeter Shooting" },
+  { key: "Rim Pressure", label: "Rim Pressure" },
+  { key: "Rebounding", label: "Rebounding" },
+  { key: "Defensive Activity", label: "Defensive Activity" },
+  { key: "__ball_dominance", label: "Ball Dominance" },
+] as const;
+
+export default function BuildAFivePage() {
+  const [selected, setSelected] = useState<PlayerSeasonRecord[]>([]);
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState<Array<{ id: string; name: string; latest_team: string }>>([]);
+  const [indexCache, setIndexCache] = useState<PlayersIndex | null>(null);
+
+  async function handleSearch(v: string) {
+    setQuery(v);
+    if (v.trim().length < 2) {
+      setResults([]);
+      return;
+    }
+    let idx = indexCache;
+    if (!idx) {
+      idx = await loadPlayersIndex();
+      setIndexCache(idx);
+    }
+    setResults(searchPlayers(idx, v, 6));
+  }
+
+  async function addPlayer(id: string) {
+    if (selected.length >= 5) return;
+    if (selected.some((s) => s.player_id === id)) return; // prevent duplicate player
+    const idx = indexCache ?? (await loadPlayersIndex());
+    const seasons = idx[id]?.qualified_seasons ?? idx[id]?.seasons ?? [];
+    const season = seasons[seasons.length - 1];
+    if (!season) return;
+    const seasonData = await loadSeason(season);
+    const rec = seasonData.find((r) => r.player_id === id);
+    if (rec) {
+      setSelected((prev) => [...prev, rec]);
+      setQuery("");
+      setResults([]);
+    }
+  }
+
+  function removePlayer(id: string) {
+    setSelected((prev) => prev.filter((p) => p.player_id !== id));
+  }
+
+  const dimensionScores = useMemo(() => {
+    if (selected.length === 0) return null;
+    const out: Record<string, number> = {};
+    for (const dim of DIMENSIONS) {
+      const vals = selected.map((p) => {
+        if (dim.key === "__ball_dominance") {
+          return zToApproxPercentile(p.vector.usg_percent ?? 0);
+        }
+        return p.traits[dim.key] ?? 0;
+      });
+      out[dim.key] = vals.reduce((a, b) => a + b, 0) / vals.length;
+    }
+    return out;
+  }, [selected]);
+
+  const observations = useMemo(() => {
+    if (!dimensionScores || selected.length < 3) return [];
+    const obs: string[] = [];
+    const highUsageCreators = selected.filter((p) => (p.traits["Playmaking"] ?? 0) >= 70 && zToApproxPercentile(p.vector.usg_percent ?? 0) >= 70).length;
+    if (highUsageCreators >= 2) obs.push(`Multiple high-usage creators (${highUsageCreators} of ${selected.length})`);
+
+    if (dimensionScores["Perimeter Profile"] >= 65) obs.push("Strong perimeter shot profile across the lineup");
+    if (dimensionScores["Rebounding"] < 40) obs.push("Limited rebounding relative to the selected player pool");
+    if (dimensionScores["Defensive Activity"] >= 65) obs.push("High collective defensive activity (steals + blocks)");
+    if (dimensionScores["Rim Pressure"] >= 65) obs.push("Multiple players who pressure the rim frequently");
+
+    const posGroups = selected.map((p) => p.pos_group);
+    const uniquePos = new Set(posGroups).size;
+    if (uniquePos === 1) obs.push(`All five selections share one position group (${posGroups[0]})`);
+
+    return obs.slice(0, 5);
+  }, [dimensionScores, selected]);
+
+  return (
+    <div className="mx-auto max-w-[1200px] px-5 py-10 md:px-8">
+      <h1 className="font-display text-4xl text-ink mb-1">Build a Five</h1>
+      <p className="mb-8 max-w-2xl text-sm text-stone-light">
+        Select five different player-seasons to generate a statistical lineup identity — a style profile drawn from
+        real box-score data, not a win/loss or net-rating prediction.
+      </p>
+
+      {selected.length < 5 && (
+        <div className="relative mb-8 max-w-md">
+          <input
+            type="search"
+            placeholder="Add a player…"
+            value={query}
+            onChange={(e) => handleSearch(e.target.value)}
+            className="w-full rounded-lg border border-line-strong bg-arena-panel px-4 py-3 text-ink placeholder:text-stone-light outline-none focus:border-court-orange"
+          />
+          {results.length > 0 && (
+            <ul className="absolute z-20 mt-1 w-full overflow-hidden rounded-lg border border-line-strong bg-arena-panel-strong shadow-xl">
+              {results.map((r) => (
+                <li key={r.id}>
+                  <button
+                    onClick={() => addPlayer(r.id)}
+                    disabled={selected.some((s) => s.player_id === r.id)}
+                    className="flex w-full items-center justify-between px-4 py-2.5 text-left text-sm text-ink-light hover:bg-arena-panel disabled:opacity-40"
+                  >
+                    <span>{r.name}</span>
+                    <span className="text-xs text-stone-light">{r.latest_team}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+
+      {/* Selected roster */}
+      <div className="mb-10 grid grid-cols-1 gap-3 sm:grid-cols-5">
+        {Array.from({ length: 5 }).map((_, i) => {
+          const p = selected[i];
+          return (
+            <div key={i} className="flex flex-col items-center gap-2 rounded-xl border border-line bg-arena-panel p-4">
+              {p ? (
+                <>
+                  <PlayerPhoto playerId={p.player_id} name={p.player} posGroup={p.pos_group} size={64} />
+                  <p className="text-center text-xs font-semibold text-ink-light">{p.player}</p>
+                  <p className="text-[10px] text-stone-light">{p.season_label}</p>
+                  <button onClick={() => removePlayer(p.player_id)} className="text-[11px] text-court-orange-bright hover:underline">
+                    Remove
+                  </button>
+                </>
+              ) : (
+                <div className="flex h-[124px] items-center justify-center text-xs text-stone-light">Empty slot</div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Lineup identity card */}
+      {dimensionScores && (
+        <div className="rounded-2xl border border-court-orange/30 bg-gradient-to-br from-arena-panel to-arena-panel-strong p-8">
+          <p className="text-eyebrow mb-1">Lineup Identity Card</p>
+          <h2 className="font-display text-3xl text-ink mb-6">
+            {selected.length === 5 ? "Full Five" : `${selected.length} of 5 Selected`}
+          </h2>
+
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            {DIMENSIONS.map((dim) => {
+              const v = Math.max(0, Math.min(100, dimensionScores[dim.key]));
+              return (
+                <div key={dim.key}>
+                  <div className="mb-1 flex justify-between text-xs">
+                    <span className="text-stone">{dim.label}</span>
+                    <span className="tabular font-semibold text-ink-light">{Math.round(v)}</span>
+                  </div>
+                  <div className="h-2.5 w-full overflow-hidden rounded-full bg-arena-panel-strong">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-court-orange-deep to-court-orange-bright transition-[width] duration-500"
+                      style={{ width: `${v}%` }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {observations.length > 0 && (
+            <div className="mt-8 border-t border-line pt-5">
+              <p className="text-eyebrow mb-2">Observations</p>
+              <ul className="flex flex-col gap-1.5 text-sm text-ink-light">
+                {observations.map((o, i) => <li key={i}>• {o}</li>)}
+              </ul>
+            </div>
+          )}
+
+          <p className="mt-6 text-xs text-stone-light">
+            This is a lineup style profile built from average statistical traits, not a performance simulator — it
+            does not predict wins, championships, or an actual net rating.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}

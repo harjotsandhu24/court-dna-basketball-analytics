@@ -1,0 +1,67 @@
+{
+  "jamesle01": {
+    "player_id": "jamesle01",
+    "player_name": "LeBron James",
+    "wikidata_id": null,
+    "commons_filename": "LeBron James - 51959723161.jpg",
+    "thumbnail_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/LeBron_James_-_51959723161.jpg/400px-LeBron_James_-_51959723161.jpg",
+    "source_page": "https://commons.wikimedia.org/wiki/File:LeBron_James_-_51959723161.jpg",
+    "creator": "Erik Drost",
+    "license_name": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "attribution_text": "Photo by Erik Drost, licensed under CC BY 2.0",
+    "verification_status": "usable"
+  },
+  "curryst01": {
+    "player_id": "curryst01",
+    "player_name": "Stephen Curry",
+    "wikidata_id": null,
+    "commons_filename": "Steph Curry.jpg",
+    "thumbnail_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Steph_Curry.jpg/400px-Steph_Curry.jpg",
+    "source_page": "https://commons.wikimedia.org/wiki/File:Steph_Curry.jpg",
+    "creator": "Erik Drost",
+    "license_name": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "attribution_text": "Photo by Erik Drost, licensed under CC BY 2.0",
+    "verification_status": "usable"
+  },
+  "duranke01": {
+    "player_id": "duranke01",
+    "player_name": "Kevin Durant",
+    "wikidata_id": null,
+    "commons_filename": "Kevin Durant, Paris 2024 (cropped).jpg",
+    "thumbnail_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Kevin_Durant%2C_Paris_2024_%28cropped%29.jpg/400px-Kevin_Durant%2C_Paris_2024_%28cropped%29.jpg",
+    "source_page": "https://commons.wikimedia.org/wiki/File:Kevin_Durant,_Paris_2024_(cropped).jpg",
+    "creator": "Clément Bardot",
+    "license_name": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "attribution_text": "Photo by Clément Bardot, licensed under CC BY-SA 4.0",
+    "verification_status": "usable"
+  },
+  "antetgi01": {
+    "player_id": "antetgi01",
+    "player_name": "Giannis Antetokounmpo",
+    "wikidata_id": null,
+    "commons_filename": "Giannis Antetokounmpo (51915264514).jpg",
+    "thumbnail_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Giannis_Antetokounmpo_%2851915264514%29.jpg/400px-Giannis_Antetokounmpo_%2851915264514%29.jpg",
+    "source_page": "https://commons.wikimedia.org/wiki/File:Giannis_Antetokounmpo_(51915264514).jpg",
+    "creator": "Erik Drost",
+    "license_name": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "attribution_text": "Photo by Erik Drost, licensed under CC BY 2.0",
+    "verification_status": "usable"
+  },
+  "doncilu01": {
+    "player_id": "doncilu01",
+    "player_name": "Luka Dončić",
+    "wikidata_id": null,
+    "commons_filename": "Luka Doncic.jpg",
+    "thumbnail_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Luka_Doncic.jpg/400px-Luka_Doncic.jpg",
+    "source_page": "https://commons.wikimedia.org/wiki/File:Luka_Doncic.jpg",
+    "creator": "Erik Drost",
+    "license_name": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "attribution_text": "Photo by Erik Drost, licensed under CC BY 2.0",
+    "verification_status": "usable"
+  }
+}
