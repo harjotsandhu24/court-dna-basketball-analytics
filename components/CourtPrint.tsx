@@ -7,8 +7,21 @@ import {
   hueForPosGroup,
   DIMENSION_ORDER,
   DIMENSION_DISPLAY_LABEL,
+  DIMENSION_LABEL_LINES,
   computeSpokeLabelPositions,
 } from "@/lib/courtPrint";
+
+// Compact geometry for the below-sm labeled layout -- deliberately
+// independent of the `size` prop (which can be 200-260px, too large to
+// fit seven multi-word labels around on a 360-430px viewport without
+// overflow). Fixed viewBox units, proven at 360/390/430px.
+const MOBILE_CHART = 170;
+const MOBILE_VB = 280;
+const MOBILE_OFFSET = (MOBILE_VB - MOBILE_CHART) / 2;
+const MOBILE_CENTER = MOBILE_CHART / 2;
+const MOBILE_MAX_R = MOBILE_CHART * 0.34;
+const MOBILE_MIN_R = MOBILE_CHART * 0.08;
+const MOBILE_LABEL_RADIUS = MOBILE_MAX_R + 22;
 
 interface CourtPrintProps {
   traits: Record<string, number | null | undefined>;
@@ -70,6 +83,20 @@ export default function CourtPrint({
   const labelPositions = useMemo(
     () => computeSpokeLabelPositions(labelRadiusPx, outerBoxSize),
     [labelRadiusPx, outerBoxSize],
+  );
+
+  // Mobile (below sm) geometry -- separate fixed-size spoke computation
+  // and label positions, independent of the `size` prop. Same underlying
+  // computeSpokes/smoothClosedPath calculation, just at mobile-safe scale.
+  const mobileSpokes = useMemo(
+    () => computeSpokes(traits, MOBILE_OFFSET + MOBILE_CENTER, MOBILE_MAX_R, MOBILE_MIN_R),
+    [traits],
+  );
+  const mobilePath = useMemo(() => smoothClosedPath(mobileSpokes), [mobileSpokes]);
+  const mobileRingRadii = [0.25, 0.5, 0.75, 1.0].map((f) => MOBILE_MIN_R + (MOBILE_MAX_R - MOBILE_MIN_R) * f);
+  const mobileLabelPositions = useMemo(
+    () => computeSpokeLabelPositions(MOBILE_LABEL_RADIUS, MOBILE_VB),
+    [],
   );
 
   const ariaLabel =
@@ -206,24 +233,79 @@ export default function CourtPrint({
             })}
           </div>
 
-          {/* below sm: chart at its natural size, full-label list underneath. */}
-          <div className="flex flex-col items-center gap-3 sm:hidden">
-            {renderChart("mobile")}
-            <ul className="grid w-full max-w-[360px] grid-cols-1 gap-x-5 gap-y-1.5 text-sm text-stone-light">
-              {spokes.map((s) => (
-                <li key={s.dimension} className="flex items-center justify-between gap-2">
-                  <span className="flex min-w-0 items-center gap-1.5">
-                    <span
-                      className="h-2 w-2 shrink-0 rounded-full"
-                      style={{ backgroundColor: `hsl(${hue} 90% 60%)` }}
-                      aria-hidden="true"
+          {/* below sm: compact chart with labels directly around the
+              spokes, at mobile-safe scale -- no separate list. */}
+          <div className="relative mx-auto sm:hidden" style={{ width: 280, height: 280, maxWidth: "100%" }}>
+            <svg
+              viewBox={`0 0 ${MOBILE_VB} ${MOBILE_VB}`}
+              width="100%"
+              height="100%"
+              role="img"
+              aria-label={ariaLabel}
+              className="overflow-visible"
+            >
+              <defs>
+                <radialGradient id={`cp-fill-${uid}-mb`} cx="50%" cy="50%" r="65%">
+                  <stop offset="0%" stopColor={`hsl(${hue} 95% 62% / 0.85)`} />
+                  <stop offset="100%" stopColor={`hsl(${hue} 90% 48% / 0.35)`} />
+                </radialGradient>
+              </defs>
+              <g opacity={0.35} stroke="var(--cp-grid, #4b4f5c)" strokeWidth={1} fill="none">
+                {mobileRingRadii.map((r) => (
+                  <circle key={r} cx={MOBILE_OFFSET + MOBILE_CENTER} cy={MOBILE_OFFSET + MOBILE_CENTER} r={r} />
+                ))}
+                {DIMENSION_ORDER.map((_, i) => {
+                  const a = (-90 + (360 / DIMENSION_ORDER.length) * i) * (Math.PI / 180);
+                  return (
+                    <line
+                      key={i}
+                      x1={MOBILE_OFFSET + MOBILE_CENTER}
+                      y1={MOBILE_OFFSET + MOBILE_CENTER}
+                      x2={MOBILE_OFFSET + MOBILE_CENTER + MOBILE_MAX_R * Math.cos(a)}
+                      y2={MOBILE_OFFSET + MOBILE_CENTER + MOBILE_MAX_R * Math.sin(a)}
                     />
-                    <span className="truncate text-ink-light">{DIMENSION_DISPLAY_LABEL[s.dimension]}</span>
-                  </span>
-                  <span className="tabular shrink-0 font-semibold text-ink-light">{Math.round(s.value)}</span>
-                </li>
+                  );
+                })}
+              </g>
+              <path d={mobilePath} fill={`url(#cp-fill-${uid}-mb)`} stroke={`hsl(${hue} 95% 65%)`} strokeWidth={2} />
+              {mobileSpokes.map((s) => (
+                <circle key={s.dimension} cx={s.x} cy={s.y} r={2.5 + (s.value / 100) * 2} fill={`hsl(${hue} 95% 78%)`} />
               ))}
-            </ul>
+              <circle cx={MOBILE_OFFSET + MOBILE_CENTER} cy={MOBILE_OFFSET + MOBILE_CENTER} r={2.5} fill="var(--cp-center, #e8e6df)" />
+            </svg>
+
+            {mobileLabelPositions.map((lp) => {
+              const spoke = mobileSpokes.find((s) => s.dimension === lp.dimension)!;
+              const lines = DIMENSION_LABEL_LINES[lp.dimension];
+              const lastIdx = lines.length - 1;
+              const textAlign = lp.align === "center" ? "center" : lp.align === "left" ? "left" : "right";
+              const translateX = lp.align === "center" ? "-50%" : lp.align === "left" ? "0%" : "-100%";
+              return (
+                <div
+                  key={lp.dimension}
+                  aria-hidden="true"
+                  className="pointer-events-none absolute w-max max-w-[88px] text-[9px] leading-tight"
+                  style={{
+                    left: `${lp.leftPct}%`,
+                    top: `${lp.topPct}%`,
+                    transform: `translate(${translateX}, -50%)`,
+                    textAlign,
+                  }}
+                >
+                  {lines.map((line, i) =>
+                    i === lastIdx ? (
+                      <div key={i} className="whitespace-nowrap font-semibold" style={{ color: `hsl(${hue} 85% 68%)` }}>
+                        {line} {Math.round(spoke.value)}
+                      </div>
+                    ) : (
+                      <div key={i} className="whitespace-nowrap text-stone-light">
+                        {line}
+                      </div>
+                    ),
+                  )}
+                </div>
+              );
+            })}
           </div>
         </>
       )}

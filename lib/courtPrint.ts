@@ -44,6 +44,19 @@ export const DIMENSION_DISPLAY_LABEL: Record<TraitDimension, string> = {
   Efficiency: "Scoring Efficiency",
 };
 
+/** How each display label wraps around the chart -- exact line breaks,
+ * not left to the browser's natural word-wrap, so e.g. "Passing &" always
+ * stays on its own line rather than breaking after "Passing". */
+export const DIMENSION_LABEL_LINES: Record<TraitDimension, string[]> = {
+  Scoring: ["Scoring"],
+  "Perimeter Profile": ["Three-Point", "Style"],
+  Playmaking: ["Passing &", "Creation"],
+  "Defensive Activity": ["Defense"],
+  Rebounding: ["Rebounding"],
+  "Rim Pressure": ["Attacking the", "Basket"],
+  Efficiency: ["Scoring", "Efficiency"],
+};
+
 export interface SpokePoint {
   dimension: TraitDimension;
   value: number; // 0-100 percentile
