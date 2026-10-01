@@ -15,7 +15,7 @@ export default function Footer() {
             </p>
           </div>
           <nav className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-stone" aria-label="Footer">
-            <Link href="/methodology" className="hover:text-ink-light">Methodology</Link>
+            <Link href="/methodology" className="hover:text-ink-light">How It Works</Link>
             <Link href="/credits" className="hover:text-ink-light">Photo Credits</Link>
             <a href="https://github.com/harjotsandhu24/court-dna-basketball-analytics" className="hover:text-ink-light" target="_blank" rel="noreferrer noopener">
               GitHub

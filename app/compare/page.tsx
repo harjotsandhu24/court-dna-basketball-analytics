@@ -11,6 +11,7 @@ import { findPlayerSeason } from "@/lib/dataLoader";
 import { similarityIndex } from "@/lib/similarity";
 import { explainMatch } from "@/lib/explain";
 import { TRAIT_DIMENSIONS } from "@/lib/config";
+import { DIMENSION_DISPLAY_LABEL } from "@/lib/courtPrint";
 import type { PlayerSeasonRecord } from "@/lib/types";
 import { fmt1 } from "@/lib/format";
 
@@ -58,12 +59,12 @@ function ComparePageInner() {
   if (!a || !b) {
     return (
       <div className="mx-auto max-w-2xl px-5 py-20 text-center md:px-8">
-        <h1 className="font-display text-4xl text-ink mb-2">Head-to-Head</h1>
-        <p className="mb-8 text-stone">Search for two players to build a matchup.</p>
+        <h1 className="font-display text-4xl text-ink mb-2">Compare Players</h1>
+        <p className="mb-8 text-stone">Compare two players side by side.</p>
         <div className="flex flex-col gap-4">
           <SearchBar />
           <p className="text-xs text-stone-light">
-            Tip: open any player&rsquo;s closest matches and click a card to jump straight into a comparison.
+            Tip: open any player&rsquo;s Similar Players list and click a card to jump straight into a comparison.
           </p>
         </div>
       </div>
@@ -80,7 +81,7 @@ function ComparePageInner() {
   return (
     <div className="mx-auto max-w-[1400px] px-5 py-10 md:px-8">
       <div className="mb-8 flex items-center justify-between">
-        <h1 className="font-display text-4xl text-ink">Head-to-Head</h1>
+        <h1 className="font-display text-4xl text-ink">Compare Players</h1>
         <button onClick={swap} className="btn btn-secondary px-4 py-2 text-sm">Swap sides ⇄</button>
       </div>
 
@@ -91,14 +92,17 @@ function ComparePageInner() {
           <span className="font-display text-2xl text-stone">VS</span>
           <div className="mt-3 rounded-full border border-court-orange/40 bg-court-orange/10 px-4 py-2 text-center">
             <div className="font-display text-3xl text-court-orange-bright tabular">{Math.round(sim)}</div>
-            <div className="text-[10px] uppercase tracking-wide text-stone-light">Similarity Index</div>
+            <div className="text-[10px] uppercase tracking-wide text-stone-light">Style Match</div>
           </div>
+          <p className="mt-2 max-w-[180px] text-center text-[11px] text-stone-light">
+            Higher scores mean the two players had more similar playing styles.
+          </p>
         </div>
         <PlayerHeader record={b} align="right" />
       </div>
 
       {/* Court Prints */}
-      <div className="mt-10 grid grid-cols-1 gap-6 border-t border-line pt-10 sm:grid-cols-2">
+      <div className="mt-10 grid grid-cols-1 gap-6 border-t border-line pt-10 lg:grid-cols-2">
         <div className="flex justify-center"><CourtPrint traits={a.traits} posGroup={a.pos_group} archetype={a.archetype} size={200} showLegend /></div>
         <div className="flex justify-center"><CourtPrint traits={b.traits} posGroup={b.pos_group} archetype={b.archetype} size={200} showLegend /></div>
       </div>
@@ -114,7 +118,7 @@ function ComparePageInner() {
               <div key={dim}>
                 <div className="mb-1 flex items-center justify-between text-xs text-stone">
                   <span className="tabular">{Math.round(av)}</span>
-                  <span>{dim}</span>
+                  <span>{DIMENSION_DISPLAY_LABEL[dim]}</span>
                   <span className="tabular">{Math.round(bv)}</span>
                 </div>
                 <div className="flex h-2.5 w-full gap-0.5">

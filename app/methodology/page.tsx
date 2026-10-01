@@ -11,7 +11,7 @@ export default function MethodologyPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-5 py-14 md:px-8">
-      <p className="text-eyebrow mb-2">Methodology</p>
+      <p className="text-eyebrow mb-2">How It Works</p>
       <h1 className="font-display text-5xl text-ink mb-8">How COURT DNA works</h1>
 
       <Section title="Data source">
@@ -111,7 +111,7 @@ export default function MethodologyPage() {
         </p>
       </Section>
 
-      <Section title="Shot DNA">
+      <Section title="Shooting Profile">
         <p>
           Built from Basketball-Reference&rsquo;s shot-range breakdown (0-3 ft, 3-10 ft, 10-16 ft, 16 ft-3PT,
           3-point). This is <strong>not</strong> a location-based shot chart — the source data has no x/y shot
@@ -120,7 +120,7 @@ export default function MethodologyPage() {
         </p>
       </Section>
 
-      <Section title="Player Galaxy and PCA">
+      <Section title="Player Map and PCA">
         <p>
           The Galaxy plots each season&rsquo;s qualified pool in 2D using deterministic PCA (fixed random state) on
           the same standardized features used everywhere else. This is for visualization only — proximity in the 2D

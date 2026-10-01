@@ -39,7 +39,7 @@ export default function PlayerDnaPage({
   if (record === null) {
     return (
       <div className="mx-auto max-w-[1400px] px-5 py-20 text-center md:px-8">
-        <p className="font-display text-3xl text-ink">Player-season not found</p>
+        <p className="font-display text-3xl text-ink">Player profile not found</p>
         <p className="mt-2 text-stone">This player may not have reached the 250-minute display threshold that season.</p>
         <Link href="/" className="mt-6 inline-block btn btn-primary px-5 py-2.5">Back to Discover</Link>
       </div>
@@ -53,6 +53,8 @@ export default function PlayerDnaPage({
         <PlayerPhoto playerId={record.player_id} name={record.player} posGroup={record.pos_group} size={140} showAttribution priority />
 
         <div>
+          <p className="text-eyebrow text-court-orange-bright">Player DNA</p>
+          <p className="mb-2 text-sm text-stone-light">See a player&rsquo;s strengths and playing style.</p>
           <div className="flex flex-wrap items-center gap-2">
             <p className="text-eyebrow">
               {record.team_stints.length > 1 ? record.team_stints.join(" · ") : record.team} · {record.pos}
@@ -96,7 +98,7 @@ export default function PlayerDnaPage({
             </div>
           )}
           <Link href={`/career/${playerId}`} className="mt-3 inline-block text-sm font-medium text-court-orange-bright hover:underline">
-            View full career evolution →
+            View career over time →
           </Link>
         </div>
 
@@ -109,7 +111,7 @@ export default function PlayerDnaPage({
       <div className="grid grid-cols-1 gap-10 border-b border-line py-10 lg:grid-cols-2">
         <div>
           <h2 className="font-display text-2xl text-ink mb-4">Percentile Traits</h2>
-          <p className="mb-4 text-xs text-stone-light">Relative to the {record.season_label} qualified player pool.</p>
+          <p className="mb-4 text-xs text-stone-light">Compared with other players from the same season.</p>
           <TraitBars traits={record.traits} />
         </div>
         <div>
@@ -119,10 +121,11 @@ export default function PlayerDnaPage({
 
       {/* CLOSEST MATCHES */}
       <div className="border-b border-line py-10">
-        <h2 className="font-display text-2xl text-ink mb-1">Closest Statistical Matches</h2>
+        <h2 className="font-display text-2xl text-ink mb-1">Similar Players</h2>
         <p className="mb-5 text-sm text-stone-light">
-          Ranked by the COURT DNA Similarity Index — a statistical distance score, not a probability. See{" "}
-          <Link href="/methodology" className="text-court-orange-bright hover:underline">methodology</Link>.
+          These players had the most similar overall playing styles. Scored by Style Match — not a
+          probability. See{" "}
+          <Link href="/methodology" className="text-court-orange-bright hover:underline">how it works</Link>.
         </p>
         <ClosestMatches
           query={{
@@ -150,12 +153,13 @@ export default function PlayerDnaPage({
         {record.team_stints.length > 1 && (
           <p className="mt-4 text-sm text-stone">
             Played for multiple teams this season ({record.team_stints.join(", ")}, order not meaningful). The
-            statistical profile above uses the combined-team ({record.team}) totals, not any single team&apos;s stats.
+            numbers above combine all of this player&apos;s teams ({record.team}) for the season, not any single
+            team&apos;s stats.
           </p>
         )}
         <p className="mt-6 text-xs text-stone-light max-w-2xl">
-          Awards, All-Star selections, and accolades are contextual background only — they never factor into the
-          similarity calculation, archetype assignment, or any trait percentile above.
+          Awards, All-Star selections, and accolades are background information only — they never affect the
+          playing-style score, the player&rsquo;s style label, or any of the numbers above.
         </p>
       </div>
     </div>

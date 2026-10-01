@@ -97,14 +97,11 @@ export default function GalaxyPage() {
 
   return (
     <div className="mx-auto max-w-[1400px] px-5 py-10 md:px-8">
-      <h1 className="font-display text-4xl text-ink mb-1">Player Galaxy</h1>
+      <h1 className="font-display text-4xl text-ink mb-1">Player Map</h1>
       <p className="mb-6 max-w-2xl text-sm text-stone-light">
-        Every qualified {data ? seasonLabel(season) : ""} player-season, projected to 2D via deterministic PCA on the
-        same standardized features the similarity engine uses. Proximity here is an approximation — exact similarity
-        rankings always use the full 12-dimension feature set, not this 2D projection.
-        {data && data.variance_explained.length === 2 && (
-          <> This projection captures {Math.round((data.variance_explained[0] + data.variance_explained[1]) * 100)}% of the total variance.</>
-        )}
+        Each dot represents a player from the {data ? seasonLabel(season) : ""} season. Players who appear closer
+        together had more similar playing styles. See{" "}
+        <Link href="/methodology" className="text-court-orange-bright hover:underline">how it works</Link>.
       </p>
 
       <div className="mb-4 flex flex-wrap items-center gap-3">
@@ -129,7 +126,7 @@ export default function GalaxyPage() {
           onChange={(e) => setArchetypeFilter(e.target.value === "any" ? null : e.target.value)}
           className="rounded-md border border-line-strong bg-arena-panel px-3 py-2 text-sm text-ink-light outline-none focus:border-court-orange"
         >
-          <option value="any">All archetypes</option>
+          <option value="any">All playing styles</option>
           {archetypes.map((a) => <option key={a} value={a}>{a}</option>)}
         </select>
 
@@ -154,7 +151,7 @@ export default function GalaxyPage() {
           width="100%"
           height={HEIGHT}
           role="img"
-          aria-label={`Player Galaxy for the ${data ? seasonLabel(season) : ""} season, showing ${visiblePoints.length} qualified player-seasons as points positioned by statistical similarity.`}
+          aria-label={`Player Map for the ${data ? seasonLabel(season) : ""} season, showing ${visiblePoints.length} players as points positioned by playing-style similarity.`}
           className="touch-none"
         >
           <g ref={gRef} transform={transform.toString()}>
@@ -225,10 +222,10 @@ export default function GalaxyPage() {
               <p className="text-sm text-stone">{selected.archetype} · {selected.pos_group}</p>
             </div>
             <Link href={`/player/${selected.player_id}/${season}`} className="btn btn-primary px-4 py-2 text-sm">
-              Open Player DNA →
+              View Player Profile →
             </Link>
           </div>
-          <p className="mt-3 text-xs text-stone-light">Nearest neighbors (full similarity formula, same season):</p>
+          <p className="mt-3 text-xs text-stone-light">Most similar players (same season):</p>
           <div className="mt-2 flex flex-wrap gap-2">
             {neighbors.map((n) => (
               <Link
@@ -244,7 +241,7 @@ export default function GalaxyPage() {
       )}
 
       <p className="mt-6 text-xs text-stone-light">
-        {visiblePoints.length.toLocaleString()} qualified player-seasons shown. Scroll or pinch to zoom, drag to pan.
+        {visiblePoints.length.toLocaleString()} players shown. Scroll or pinch to zoom, drag to pan.
       </p>
     </div>
   );

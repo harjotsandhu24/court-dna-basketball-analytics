@@ -27,6 +27,23 @@ export const DIMENSION_ORDER: TraitDimension[] = [
   "Efficiency",
 ];
 
+/** Plain-English display labels for the Court Print's seven spokes --
+ * presentation only. The underlying dimension keys above (which drive the
+ * actual data lookups, e.g. traits["Perimeter Profile"]) are unchanged;
+ * this is purely what's rendered as user-facing text, so recruiters and
+ * fans who don't know basketball-analytics shorthand (and don't need
+ * "PLM"/"3PT"/"RIM" to understand the chart) can read it directly. See
+ * docs/methodology.md for the full technical dimension names. */
+export const DIMENSION_DISPLAY_LABEL: Record<TraitDimension, string> = {
+  Scoring: "Scoring",
+  "Perimeter Profile": "Three-Point Style",
+  Playmaking: "Passing & Creation",
+  "Defensive Activity": "Defense",
+  Rebounding: "Rebounding",
+  "Rim Pressure": "Attacking the Basket",
+  Efficiency: "Scoring Efficiency",
+};
+
 export interface SpokePoint {
   dimension: TraitDimension;
   value: number; // 0-100 percentile
@@ -91,4 +108,45 @@ export function smoothClosedPath(points: { x: number; y: number }[]): string {
 
 export function hueForPosGroup(posGroup: string): number {
   return POS_GROUP_HUE[posGroup] ?? POS_GROUP_HUE.Wing;
+}
+
+export interface SpokeLabelPosition {
+  dimension: TraitDimension;
+  /** Anchor point, as a percentage of the chart's bounding box, for an
+   * absolutely-positioned HTML label placed just outside the spoke tip. */
+  leftPct: number;
+  topPct: number;
+  /** Which way the label's text should grow from its anchor point, so
+   * multi-word labels (e.g. "Passing & Creation") never drift back over
+   * the chart itself. */
+  align: "left" | "right" | "center";
+}
+
+/** Tablet/desktop on-chart label positions: one per spoke, placed just
+ * outside the chart's outer radius along that spoke's exact angle, so
+ * each label visually lines up with the direction it describes.
+ *
+ * labelRadiusPx: distance from center to each label's anchor point, in
+ * the same pixel units as the chart itself -- callers should pass
+ * maxRadius (the chart's own outer ring) plus a fixed clearance (e.g.
+ * +34px), NOT a value smaller than maxRadius, or labels will sit inside
+ * a spoke that reaches full value (100) rather than outside it.
+ * boxSizePx: the square bounding box's side length the result is
+ * expressed against (as a percentage), i.e. CourtPrint's outerBoxSize. */
+export function computeSpokeLabelPositions(labelRadiusPx: number, boxSizePx: number): SpokeLabelPosition[] {
+  const n = DIMENSION_ORDER.length;
+  const radiusPct = (labelRadiusPx / boxSizePx) * 100;
+  return DIMENSION_ORDER.map((dim, i) => {
+    const angleDeg = -90 + (360 / n) * i;
+    const angleRad = (angleDeg * Math.PI) / 180;
+    const cos = Math.cos(angleRad);
+    const sin = Math.sin(angleRad);
+    const align: SpokeLabelPosition["align"] = cos > 0.35 ? "left" : cos < -0.35 ? "right" : "center";
+    return {
+      dimension: dim,
+      leftPct: 50 + radiusPct * cos,
+      topPct: 50 + radiusPct * sin,
+      align,
+    };
+  });
 }

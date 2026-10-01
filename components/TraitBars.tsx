@@ -1,13 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { DIMENSION_DISPLAY_LABEL } from "@/lib/courtPrint";
+import type { TraitDimension } from "@/lib/config";
 
 interface TraitBarsProps {
   traits: Record<string, number | null | undefined>;
   compact?: boolean;
 }
 
-const ORDER = ["Scoring", "Efficiency", "Playmaking", "Rebounding", "Defensive Activity", "Rim Pressure", "Perimeter Profile"];
+const ORDER: TraitDimension[] = ["Scoring", "Efficiency", "Playmaking", "Rebounding", "Defensive Activity", "Rim Pressure", "Perimeter Profile"];
 
 export default function TraitBars({ traits, compact = false }: TraitBarsProps) {
   return (
@@ -17,7 +19,7 @@ export default function TraitBars({ traits, compact = false }: TraitBarsProps) {
         return (
           <div key={dim}>
             <div className="mb-1 flex items-center justify-between text-xs">
-              <span className="text-stone">{dim}</span>
+              <span className="text-stone">{DIMENSION_DISPLAY_LABEL[dim]}</span>
               <span className="tabular font-semibold text-ink-light">{Math.round(val)}</span>
             </div>
             <div className={`w-full overflow-hidden rounded-full bg-arena-panel-strong ${compact ? "h-1.5" : "h-2"}`}>

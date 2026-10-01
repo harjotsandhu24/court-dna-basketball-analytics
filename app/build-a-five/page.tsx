@@ -7,12 +7,12 @@ import { zToApproxPercentile } from "@/lib/stats";
 import type { PlayerSeasonRecord, PlayersIndex } from "@/lib/types";
 
 const DIMENSIONS = [
-  { key: "Playmaking", label: "Creation" },
-  { key: "Perimeter Profile", label: "Perimeter Shooting" },
-  { key: "Rim Pressure", label: "Rim Pressure" },
+  { key: "Playmaking", label: "Passing & Creation" },
+  { key: "Perimeter Profile", label: "Three-Point Shooting" },
+  { key: "Rim Pressure", label: "Attacking the Basket" },
   { key: "Rebounding", label: "Rebounding" },
-  { key: "Defensive Activity", label: "Defensive Activity" },
-  { key: "__ball_dominance", label: "Ball Dominance" },
+  { key: "Defensive Activity", label: "Defense" },
+  { key: "__ball_dominance", label: "How Much They Handle the Ball" },
 ] as const;
 
 export default function BuildAFivePage() {
@@ -74,26 +74,26 @@ export default function BuildAFivePage() {
     if (!dimensionScores || selected.length < 3) return [];
     const obs: string[] = [];
     const highUsageCreators = selected.filter((p) => (p.traits["Playmaking"] ?? 0) >= 70 && zToApproxPercentile(p.vector.usg_percent ?? 0) >= 70).length;
-    if (highUsageCreators >= 2) obs.push(`Multiple high-usage creators (${highUsageCreators} of ${selected.length})`);
+    if (highUsageCreators >= 2) obs.push(`Several players who handle the ball and create shots often (${highUsageCreators} of ${selected.length})`);
 
-    if (dimensionScores["Perimeter Profile"] >= 65) obs.push("Strong perimeter shot profile across the lineup");
-    if (dimensionScores["Rebounding"] < 40) obs.push("Limited rebounding relative to the selected player pool");
-    if (dimensionScores["Defensive Activity"] >= 65) obs.push("High collective defensive activity (steals + blocks)");
-    if (dimensionScores["Rim Pressure"] >= 65) obs.push("Multiple players who pressure the rim frequently");
+    if (dimensionScores["Perimeter Profile"] >= 65) obs.push("The lineup takes a lot of three-point shots");
+    if (dimensionScores["Rebounding"] < 40) obs.push("Fewer rebounds than most players in the dataset");
+    if (dimensionScores["Defensive Activity"] >= 65) obs.push("The lineup produces a high number of steals and blocks");
+    if (dimensionScores["Rim Pressure"] >= 65) obs.push("Several players attack the basket often");
 
     const posGroups = selected.map((p) => p.pos_group);
     const uniquePos = new Set(posGroups).size;
-    if (uniquePos === 1) obs.push(`All five selections share one position group (${posGroups[0]})`);
+    if (uniquePos === 1) obs.push(`All five players share one position group (${posGroups[0]})`);
 
     return obs.slice(0, 5);
   }, [dimensionScores, selected]);
 
   return (
     <div className="mx-auto max-w-[1200px] px-5 py-10 md:px-8">
-      <h1 className="font-display text-4xl text-ink mb-1">Build a Five</h1>
+      <h1 className="font-display text-4xl text-ink mb-1">Build a Lineup</h1>
       <p className="mb-8 max-w-2xl text-sm text-stone-light">
-        Select five different player-seasons to generate a statistical lineup identity — a style profile drawn from
-        real box-score data, not a win/loss or net-rating prediction.
+        Pick five different players and see what their combined playing style looks like — based on real stats,
+        not a prediction of wins or performance.
       </p>
 
       {selected.length < 5 && (
@@ -185,8 +185,8 @@ export default function BuildAFivePage() {
           )}
 
           <p className="mt-6 text-xs text-stone-light">
-            This is a lineup style profile built from average statistical traits, not a performance simulator — it
-            does not predict wins, championships, or an actual net rating.
+            This shows the combined playing style of the selected players. It does not predict how many games the
+            lineup would win.
           </p>
         </div>
       )}

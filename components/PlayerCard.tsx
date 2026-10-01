@@ -32,7 +32,7 @@ export default function PlayerCard({ record, similarity, reasons, showCourtPrint
             <div className="font-display text-2xl leading-none text-court-orange-bright tabular">
               {Math.round(similarity)}
             </div>
-            <div className="text-[10px] uppercase tracking-wide text-stone-light">Similarity</div>
+            <div className="text-[10px] uppercase tracking-wide text-stone-light">Style Match</div>
           </div>
         )}
       </div>

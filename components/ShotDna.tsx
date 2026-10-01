@@ -38,9 +38,13 @@ export default function ShotDna({ data, compact = false }: { data: ShotDnaData; 
 
   return (
     <div className="w-full">
-      <div className="flex items-center justify-between mb-1.5">
-        <span className="text-eyebrow">Shot DNA — Shot Range Profile</span>
-        {!compact && <span className="text-[11px] text-stone-light">width = attempt share · color = FG%</span>}
+      <div className="mb-1.5">
+        <span className="text-eyebrow">Shooting Profile</span>
+        {!compact && (
+          <p className="mt-0.5 text-xs text-stone-light">
+            See where the player took their shots and how often they made them.
+          </p>
+        )}
       </div>
 
       <div className="flex h-9 w-full overflow-hidden rounded-md border border-line" role="img" aria-label={shotDnaAltText(data)}>

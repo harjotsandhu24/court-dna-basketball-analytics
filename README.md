@@ -1,21 +1,20 @@
 # COURT DNA — Basketball Player Style Explorer
 
-![COURT DNA — LeBron James Player DNA page](docs/screenshots/player-dna.png)
+![COURT DNA — LeBron James Player Profile page](docs/screenshots/player-dna.png)
 
 > Independent basketball analytics project. Not affiliated with or endorsed
 > by the NBA or any NBA team.
 
 ## What COURT DNA is
 
-**Explore how basketball players score, create, defend, and evolve.**
+**COURT DNA is an interactive NBA player comparison tool built from more
+than 25 years of player data.**
 
-COURT DNA builds a transparent statistical fingerprint for every qualifying
-NBA player-season from 2000-01 through 2025-26, then answers three
-questions with real math, not a black box: what makes a player's game
-statistically unique, who actually resembles them, and where that
-comparison comes from. A documented, weighted-distance formula — not an
-opaque ML model — finds the matches, and a deterministic template layer
-explains exactly which stats drive each one.
+Search players, compare playing styles, find similar players, explore how
+careers changed, and build lineups. Every comparison is backed by a
+documented, transparent formula (not an opaque model) that explains exactly
+which stats drive each result — see [`docs/methodology.md`](docs/methodology.md)
+for the full technical writeup.
 
 ## Live experience
 
@@ -23,29 +22,29 @@ Eight real, working screens, not a static dashboard:
 
 | Screen | What it does |
 |---|---|
-| **Home / Discover** | Global search, featured player-seasons, entry points |
-| **Player DNA** | Court Print, percentile traits, Shot DNA, closest statistical matches with live filters |
-| **Head-to-Head** | Split-screen matchup: Court Prints, trait bars, Shot DNA, deterministic match/separate explanations |
-| **Player Galaxy** | Every qualified season for a year, plotted via deterministic PCA, zoom/pan/search/filter, nearest-neighbor highlighting |
-| **Career Evolution** | Season-by-season timeline, Court Print evolution, objective statistical callouts |
-| **Build a Five** | Assemble 5 player-seasons into a lineup identity card with deterministic observations |
-| **Methodology** | The full analytical writeup, in plain language |
+| **Home / Discover** | Global search, featured players, entry points |
+| **Player Profile** | Court Print, player traits, Shooting Profile, similar players with live filters |
+| **Compare Players** | Split-screen matchup: Court Prints, trait bars, Shooting Profile, plain-language match/separate explanations |
+| **Player Map** | Every player for a season, plotted by playing style, zoom/pan/search/filter, most-similar-player highlighting |
+| **Career Over Time** | Season-by-season timeline, Playing Style changes, plain-language callouts |
+| **Build a Lineup** | Assemble 5 players into a lineup identity card with plain-language observations |
+| **How It Works** | The full analytical writeup, in plain language |
 | **Photo Credits** | Searchable attribution for every real player photo used |
 
 ## Screenshots
 
 <table>
 <tr>
-<td width="50%"><img src="docs/screenshots/head-to-head.png" alt="Head-to-Head comparison of LeBron James (2008-09) and Kevin Durant (2013-14)"/><br/><sub>Head-to-Head</sub></td>
-<td width="50%"><img src="docs/screenshots/galaxy.png" alt="Player Galaxy showing the 2023-24 qualified player pool as a constellation"/><br/><sub>Player Galaxy</sub></td>
+<td width="50%"><img src="docs/screenshots/head-to-head.png" alt="Compare Players matchup of LeBron James (2008-09) and Kevin Durant (2013-14)"/><br/><sub>Compare Players</sub></td>
+<td width="50%"><img src="docs/screenshots/galaxy.png" alt="Player Map showing the 2023-24 players as a constellation"/><br/><sub>Player Map</sub></td>
 </tr>
 <tr>
-<td width="50%"><img src="docs/screenshots/career-evolution.png" alt="Career Evolution page for Stephen Curry"/><br/><sub>Career Evolution</sub></td>
-<td width="50%"><img src="docs/screenshots/build-a-five.png" alt="Build a Five lineup identity card"/><br/><sub>Build a Five</sub></td>
+<td width="50%"><img src="docs/screenshots/career-evolution.png" alt="Career Over Time page for Stephen Curry"/><br/><sub>Career Over Time</sub></td>
+<td width="50%"><img src="docs/screenshots/build-a-five.png" alt="Build a Lineup identity card"/><br/><sub>Build a Lineup</sub></td>
 </tr>
 </table>
 
-<img src="docs/screenshots/mobile-player-dna.png" alt="Player DNA page at 390px mobile width" width="280"/>
+<img src="docs/screenshots/mobile-player-dna.png" alt="Player Profile page at 390px mobile width" width="280"/>
 
 ## How the player fingerprint works
 
@@ -78,7 +77,7 @@ real counts: [`docs/data.md`](docs/data.md).
 |---|---|
 | Unique players (detail page) | **1,900** |
 | Canonical player-seasons | **12,810** |
-| Qualified comparison/Galaxy player-seasons | **8,923** |
+| Qualified comparison/Player Map player-seasons | **8,923** |
 
 ## Similarity methodology
 
@@ -107,7 +106,7 @@ never breaks layout. Full honest account:
 
 ## Tech stack
 
-**Frontend:** Next.js · React · TypeScript · Tailwind CSS · D3 (Galaxy) ·
+**Frontend:** Next.js · React · TypeScript · Tailwind CSS · D3 (Player Map) ·
 Framer Motion
 **Analysis:** Python · Pandas · NumPy · scikit-learn (deterministic PCA)
 **Photos:** Wikimedia Commons / Wikidata APIs
@@ -163,8 +162,8 @@ python3 scripts/resolve_photos.py --all
 
 **20/20** Python pipeline tests, **47/47** TypeScript tests (including 32
 Python↔TypeScript similarity-parity checks), clean lint/typecheck/production
-build, zero horizontal overflow across 32 width×route combinations
-(1440/1024/768/390px), verified keyboard focus states and
+build, zero horizontal overflow across 48 width×route combinations
+(360/390/430/768/1024/1280px — 6 widths × 8 routes), verified keyboard focus states and
 `prefers-reduced-motion` handling. One real overflow bug and one real
 archetype-mislabeling bug were found and fixed during development, each with
 a regression test. Full results, including what could and couldn't be

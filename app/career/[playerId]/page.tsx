@@ -8,6 +8,7 @@ import { loadCareer } from "@/lib/dataLoader";
 import type { PlayerSeasonRecord } from "@/lib/types";
 import { fmt1 } from "@/lib/format";
 import { TRAIT_DIMENSIONS } from "@/lib/config";
+import { DIMENSION_DISPLAY_LABEL } from "@/lib/courtPrint";
 
 const CALLOUT_THRESHOLD = 15; // percentile points
 
@@ -23,7 +24,7 @@ function generateCallouts(seasons: PlayerSeasonRecord[]): string[] {
   deltas.sort((x, y) => Math.abs(y.delta) - Math.abs(x.delta));
   return deltas.slice(0, 4).map((d) => {
     const dir = d.delta > 0 ? "increased" : "decreased";
-    return `${d.dim} ${dir} ${Math.abs(Math.round(d.delta))} percentile points from ${first.season_label} to ${last.season_label}`;
+    return `${DIMENSION_DISPLAY_LABEL[d.dim]} ${dir} by ${Math.abs(Math.round(d.delta))} points from ${first.season_label} to ${last.season_label}`;
   });
 }
 
@@ -54,11 +55,13 @@ export default function CareerPage({ params }: { params: Promise<{ playerId: str
       <div className="mb-8 flex items-center gap-4">
         <PlayerPhoto playerId={playerId} name={active.player} posGroup={active.pos_group} size={72} />
         <div>
+          <p className="text-eyebrow text-court-orange-bright">Career Over Time</p>
           <h1 className="font-display text-4xl text-ink leading-none">{active.player}</h1>
-          <p className="mt-1 text-sm text-stone">Career Evolution · {seasons[0].season_label} – {seasons[seasons.length - 1].season_label}</p>
+          <p className="mt-1 text-sm text-stone">{seasons[0].season_label} – {seasons[seasons.length - 1].season_label}</p>
+          <p className="mt-1 text-xs text-stone-light">See how the player&rsquo;s role and style changed from season to season.</p>
         </div>
         <Link href={`/player/${playerId}/${active.season}`} className="btn btn-secondary ml-auto px-4 py-2 text-sm">
-          Open {active.season_label} Player DNA →
+          View {active.season_label} Player Profile →
         </Link>
       </div>
 
@@ -83,20 +86,20 @@ export default function CareerPage({ params }: { params: Promise<{ playerId: str
       {/* Objective callouts */}
       {callouts.length > 0 && (
         <div className="mb-10 rounded-xl bg-arena-panel p-5">
-          <h2 className="font-display text-xl text-ink mb-3">What changed, statistically</h2>
+          <h2 className="font-display text-xl text-ink mb-3">What changed</h2>
           <ul className="flex flex-col gap-1.5 text-sm text-ink-light">
             {callouts.map((c, i) => <li key={i}>• {c}</li>)}
           </ul>
           <p className="mt-3 text-xs text-stone-light">
-            Objective, numbers-only observations comparing {seasons[0].season_label} to {seasons[seasons.length - 1].season_label}.
-            No cause (role change, injury, coaching, etc.) is claimed or implied — only what the statistics show.
+            These changes come directly from the player&rsquo;s statistics. They show what changed, not why it
+            changed.
           </p>
         </div>
       )}
 
       {/* Court Print evolution strip */}
       <div className="mb-10">
-        <h2 className="font-display text-xl text-ink mb-4">Court Print Evolution</h2>
+        <h2 className="font-display text-xl text-ink mb-4">Playing Style Over Time</h2>
         <div className="flex gap-4 overflow-x-auto pb-2">
           {seasons.map((s, i) => (
             <button key={s.season} onClick={() => setActiveIdx(i)} className="shrink-0 text-center">

@@ -17,9 +17,9 @@ const FEATURED: Array<{ id: string; season: number }> = [
 ];
 
 const ENTRY_POINTS = [
-  { href: "/galaxy", title: "Player Galaxy", desc: "Every qualified season plotted as a constellation." },
-  { href: "/build-a-five", title: "Build a Five", desc: "Assemble a lineup and read its statistical identity." },
-  { href: "/methodology", title: "Methodology", desc: "How the fingerprint, similarity, and archetypes actually work." },
+  { href: "/galaxy", title: "Player Map", desc: "Explore players by playing style and see who appears close together." },
+  { href: "/build-a-five", title: "Build a Lineup", desc: "Pick five players and see what their lineup looks like." },
+  { href: "/methodology", title: "How It Works", desc: "A plain-language look at how players are compared." },
 ];
 
 export default function HomePage() {
@@ -61,10 +61,18 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.15 }}
-            className="mt-6 max-w-xl text-lg text-stone md:text-xl"
+            className="font-display mt-6 max-w-2xl text-3xl leading-tight text-ink sm:text-4xl"
           >
-            Explore how basketball players score, create, defend, and evolve — from the
-            2000-01 season through 2025-26.
+            Compare NBA players by how they play.
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="mt-4 max-w-xl text-lg text-stone md:text-xl"
+          >
+            Search a player to see their strengths, find similar players, compare careers, and
+            build a lineup.
           </motion.p>
 
           <motion.div
@@ -74,6 +82,9 @@ export default function HomePage() {
             className="mt-10 max-w-xl"
           >
             <SearchBar size="lg" />
+            <Link href="/galaxy" className="btn btn-primary mt-4 px-6 py-3">
+              Explore Players
+            </Link>
           </motion.div>
 
           {meta && (
@@ -84,7 +95,7 @@ export default function HomePage() {
               className="mt-8 flex flex-wrap gap-x-8 gap-y-2 text-sm text-stone-light"
             >
               <span><span className="tabular font-semibold text-ink-light">{meta.unique_players.toLocaleString()}</span> players</span>
-              <span><span className="tabular font-semibold text-ink-light">{meta.canonical_player_seasons.toLocaleString()}</span> player-seasons</span>
+              <span><span className="tabular font-semibold text-ink-light">{meta.canonical_player_seasons.toLocaleString()}</span> player records</span>
               <span><span className="tabular font-semibold text-ink-light">{meta.season_range_label[0]}</span> – <span className="tabular font-semibold text-ink-light">{meta.season_range_label[1]}</span></span>
             </motion.div>
           )}
@@ -102,12 +113,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FEATURED PLAYER-SEASONS */}
+      {/* FEATURED PLAYERS */}
       <section className="mx-auto max-w-[1400px] px-5 py-16 md:px-8">
         <div className="mb-6 flex items-end justify-between">
-          <h2 className="font-display text-3xl text-ink">Featured Player-Seasons</h2>
+          <h2 className="font-display text-3xl text-ink">Featured Players</h2>
           <Link href="/galaxy" className="text-sm font-medium text-court-orange-bright hover:underline">
-            Explore the full Galaxy →
+            Explore the Player Map →
           </Link>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -138,14 +149,12 @@ export default function HomePage() {
         <div className="max-w-2xl">
           <h2 className="font-display text-3xl text-ink mb-4">What makes a player&rsquo;s game unique?</h2>
           <p className="text-stone leading-relaxed">
-            COURT DNA builds a transparent statistical fingerprint for every qualifying NBA
-            player-season since 2000-01 — scoring load, efficiency, shot profile, playmaking,
-            rebounding, and defensive activity, all calculated relative to that season&rsquo;s
-            league environment. A documented, weighted formula (not a black-box model) finds
-            who actually resembles whom, and explains exactly where the comparison comes from.
+            COURT DNA uses more than 25 years of NBA data to compare how players score, shoot,
+            pass, rebound, and defend. It turns those numbers into simple player profiles, finds
+            similar playing styles, and shows where the similarities come from.
           </p>
           <Link href="/methodology" className="mt-4 inline-block text-sm font-medium text-court-orange-bright hover:underline">
-            Read the full methodology →
+            See how it works →
           </Link>
         </div>
       </section>
