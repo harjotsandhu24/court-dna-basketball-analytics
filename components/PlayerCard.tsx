@@ -45,11 +45,25 @@ export default function PlayerCard({ record, similarity, reasons, showCourtPrint
           <p className="mb-1 inline-block rounded-full border border-line-strong px-2 py-0.5 text-[11px] font-medium text-ink-light">
             {record.archetype}
           </p>
-          <div className="mt-1.5 grid grid-cols-3 gap-1 tabular text-stone">
-            <span>{fmt1(record.basic.pts)} PTS</span>
-            <span>{fmt1(record.basic.trb)} REB</span>
-            <span>{fmt1(record.basic.ast)} AST</span>
-          </div>
+        </div>
+      </div>
+
+      {/* Full card width, not squeezed into the sliver beside the Court
+          Print -- at the card's narrowest real-world width that sliver is
+          only ~60px total for all three stats, not enough for "28.4" etc.
+          to render without overflowing into the next column. */}
+      <div className="grid grid-cols-3 gap-2 text-center">
+        <div>
+          <p className="text-[9px] uppercase tracking-wide text-stone-light">PTS</p>
+          <p className="tabular text-xs font-semibold text-ink-light">{fmt1(record.basic.pts)}</p>
+        </div>
+        <div>
+          <p className="text-[9px] uppercase tracking-wide text-stone-light">REB</p>
+          <p className="tabular text-xs font-semibold text-ink-light">{fmt1(record.basic.trb)}</p>
+        </div>
+        <div>
+          <p className="text-[9px] uppercase tracking-wide text-stone-light">AST</p>
+          <p className="tabular text-xs font-semibold text-ink-light">{fmt1(record.basic.ast)}</p>
         </div>
       </div>
 

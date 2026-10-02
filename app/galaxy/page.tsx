@@ -169,12 +169,25 @@ export default function GalaxyPage() {
               );
             })}
 
+            {/* soft halo behind the selected point, so it stays visible
+                against nearby dots without changing any unselected dot's
+                color */}
+            {selected && visiblePoints.some((p) => p.player_id === selected.player_id) && (
+              <circle
+                cx={xScale(selected.x)}
+                cy={yScale(selected.y)}
+                r={15}
+                fill="#fff"
+                fillOpacity={0.16}
+              />
+            )}
+
             {visiblePoints.map((p) => {
               const isSelected = selected?.player_id === p.player_id;
               const isNeighbor = neighborIds.has(p.player_id);
               const isMatched = matchedIds.has(p.player_id);
               const hue = hueForPosGroup(p.pos_group);
-              const r = isSelected ? 7 : isNeighbor ? 5.5 : isMatched ? 5.5 : 3.2;
+              const r = isSelected ? 9 : isNeighbor ? 5.5 : isMatched ? 5.5 : 3.2;
               const opacity = query.trim().length >= 2 && !isMatched && !isSelected ? 0.18 : 0.88;
               return (
                 <circle
@@ -182,21 +195,62 @@ export default function GalaxyPage() {
                   cx={xScale(p.x)}
                   cy={yScale(p.y)}
                   r={r}
-                  fill={`hsl(${hue} 90% ${isSelected || isMatched ? 70 : 58}%)`}
-                  fillOpacity={opacity}
-                  stroke={isSelected ? "#fff" : "none"}
-                  strokeWidth={isSelected ? 1.5 : 0}
+                  fill={isSelected ? "#ffffff" : `hsl(${hue} 90% ${isMatched ? 70 : 58}%)`}
+                  fillOpacity={isSelected ? 1 : opacity}
+                  stroke={isSelected ? `hsl(${hue} 90% 60%)` : "none"}
+                  strokeWidth={isSelected ? 2 : 0}
                   className="cursor-pointer transition-[r] duration-150"
                   onClick={() => setSelected(p)}
                   onMouseEnter={() => setHovered(p)}
                   onMouseLeave={() => setHovered(null)}
                   tabIndex={0}
                   role="button"
-                  aria-label={`${p.player}, ${p.archetype}`}
+                  aria-label={`${p.player}, ${p.archetype}${isSelected ? " (selected)" : ""}`}
                   onKeyDown={(e) => e.key === "Enter" && setSelected(p)}
                 />
               );
             })}
+            {/* persistent selected-player label -- stays visible without
+                hover. Rendered as a foreignObject inside the same <g>
+                transform as the dots (not a separately-positioned HTML
+                overlay), so it shares their exact coordinate space and
+                stays correctly aligned with the dot at any container
+                width or zoom/pan state, with no separate scale math that
+                could drift out of sync. Flips to the left side near the
+                map's right edge so it never runs off the map. */}
+            {selected && visiblePoints.some((p) => p.player_id === selected.player_id) && (() => {
+              const px = xScale(selected.x);
+              const py = yScale(selected.y);
+              // Sized generously for the <640px tier (see className below):
+              // this foreignObject box is a positioning estimate only
+              // (content uses overflow-visible and is inline-block, so it
+              // never gets clipped by it) -- a conservative size here just
+              // keeps the flip/clamp math sensible at every scale.
+              const labelW = 230;
+              const labelH = 90;
+              const flipLeft = px > WIDTH - 60 - labelW;
+              const fx = flipLeft ? px - labelW - 12 : px + 12;
+              const fy = Math.max(4, Math.min(HEIGHT - labelH - 4, py - labelH / 2));
+              return (
+                <foreignObject x={fx} y={fy} width={labelW} height={labelH} className="pointer-events-none overflow-visible">
+                  {/* Content inside a <foreignObject> renders at whatever
+                      scale the SVG itself is currently drawn at -- on a
+                      360-430px phone the map draws at roughly a third of
+                      its viewBox size, so a plain text-xs here would
+                      shrink to ~4px and become unreadable. These sizes are
+                      deliberately larger at the base (<640px) tier and
+                      step back down as the map's actual rendered scale
+                      grows, so the label reads at a consistent, readable
+                      size (verified ~11-15px rendered) across phone,
+                      tablet, and desktop alike -- not simply "whatever
+                      12px looks like once shrunk." */}
+                  <div className="inline-block rounded-lg border border-line-strong bg-arena-panel-strong px-3 py-2 text-[34px] leading-tight shadow-xl md:text-[16px] lg:text-xs">
+                    <p className="font-semibold text-ink-light">{selected.player}</p>
+                    <p className="tabular text-stone-light">{seasonLabel(season)}</p>
+                  </div>
+                </foreignObject>
+              );
+            })()}
           </g>
         </svg>
 
