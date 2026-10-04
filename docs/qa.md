@@ -1,7 +1,10 @@
 # COURT DNA — QA
 
-Results below are from an actual run against the current build. Re-run any
-of them with the commands shown.
+Re-run any of the checks below with the commands shown. The Responsive QA,
+Accessibility and Browser coverage sections below are from the earlier QA pass;
+they were not re-run after the final surgical correction (Player Map filter
+validation and wheel behavior, search punctuation matching, photo credit
+popup, Compare setup, navigation).
 
 ## Python tests — 20/20 passing
 
@@ -29,22 +32,31 @@ Then: `python3 -m pytest ../tests/test_pipeline.py -v`
 | Similarity formula | Identical vectors score exactly 100; symmetric; bounded [0, 100]; weights match spec exactly |
 | Archetypes | Spot-checked against real players (e.g. Curry 2015-16 → Primary Creator, Gobert 2017-18 → Defensive Anchor); regression test for a past mislabeling bug |
 
-## TypeScript tests — 47/47 passing
+## TypeScript tests — 79 tests across 6 files
 
 `npm test`
+
+The per-file counts below are counted from the test files (the parity file
+is 1 sanity test plus 1 test per fixture pair). **The pass/fail result must
+come from a real `npm test` run**; the final correction pass was prepared in
+an environment where the npm registry was unreachable, so it was not run
+there. Record the actual result here after running it.
 
 | File | Tests | Verifies |
 |---|---|---|
 | `similarity.parity.test.ts` | 33 | Python and TypeScript similarity engines agree on 32 real player-season pairs |
 | `similarity.behavior.test.ts` | 11 | Self-match exclusion, filters, result ordering, feature-count regression |
 | `explain.test.ts` | 3 | Deterministic match-explanation generator |
+| `search.test.ts` | 22 | Player search ranking, partial names, diacritics, punctuation/separator-forgiving matching (`O'Neal`/`oneal`/`o neal`, `D'Angelo`, `Al-Farouq`), map vs all scope, cross-season resolution |
+| `mapView.test.ts` | 9 | Player Map sizing (`mapHeight`, incl. the 80%-viewport cap: `mapHeight(1200, 900)` = 720), URL params, hit-testing, overlay placement |
+| `loaders.test.ts` | 1 | A failed photo-manifest request is never cached; the next call refetches |
 
 ## Lint / typecheck / build
 
 ```bash
-npm run lint       # 0 errors, 0 warnings
-npx tsc --noEmit    # 0 errors
-npm run build       # succeeds, all 9 routes
+npm run lint
+npx tsc --noEmit
+npm run build
 ```
 
 ## Responsive QA

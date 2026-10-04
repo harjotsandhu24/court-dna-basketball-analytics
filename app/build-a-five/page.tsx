@@ -1,10 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import PlayerPhoto from "@/components/PlayerPhoto";
-import { loadPlayersIndex, loadSeason, searchPlayers } from "@/lib/dataLoader";
+import PlayerAutocomplete, { type PlayerAutocompleteSelection } from "@/components/PlayerAutocomplete";
+import { loadPlayersIndex, loadSeason } from "@/lib/dataLoader";
 import { zToApproxPercentile } from "@/lib/stats";
-import type { PlayerSeasonRecord, PlayersIndex } from "@/lib/types";
+import { SEASON_MAX, SEASON_MIN, seasonLabel } from "@/lib/config";
+import type { PlayerSeasonRecord } from "@/lib/types";
 
 const DIMENSIONS = [
   { key: "Playmaking", label: "Passing & Creation" },
@@ -15,152 +17,218 @@ const DIMENSIONS = [
   { key: "__ball_dominance", label: "How Much They Handle the Ball" },
 ] as const;
 
-export default function BuildAFivePage() {
-  const [selected, setSelected] = useState<PlayerSeasonRecord[]>([]);
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState<Array<{ id: string; name: string; latest_team: string }>>([]);
-  const [indexCache, setIndexCache] = useState<PlayersIndex | null>(null);
+const MAX_PLAYERS = 5;
 
-  async function handleSearch(v: string) {
-    setQuery(v);
-    if (v.trim().length < 2) {
-      setResults([]);
-      return;
-    }
-    let idx = indexCache;
-    if (!idx) {
-      idx = await loadPlayersIndex();
-      setIndexCache(idx);
-    }
-    setResults(searchPlayers(idx, v, 6));
+interface Slot {
+  id: string;
+  name: string;
+  season: number;
+  status: "loading" | "ready" | "error";
+  record: PlayerSeasonRecord | null;
+  /** Seasons this player can be switched to. */
+  options: number[];
+}
+
+const ALL_SEASONS = Array.from({ length: SEASON_MAX - SEASON_MIN + 1 }, (_, i) => SEASON_MAX - i);
+
+export default function BuildAFivePage() {
+  const [slots, setSlots] = useState<Slot[]>([]);
+  const [notice, setNotice] = useState<string | null>(null);
+  // Season used when adding a new player: "latest" = each player's most
+  // recent qualified season, otherwise the nearest qualified season to it.
+  const [pickSeason, setPickSeason] = useState<"latest" | number>("latest");
+
+  // Each slot load takes a globally unique ticket; only the newest ticket
+  // for that player may apply, so rapid season changes (or remove + re-add)
+  // can never be overwritten by an older, slower response.
+  const counterRef = useRef(0);
+  const ticketsRef = useRef<Record<string, number>>({});
+
+  function patchSlot(id: string, patch: Partial<Slot>) {
+    setSlots((prev) => prev.map((s) => (s.id === id ? { ...s, ...patch } : s)));
   }
 
-  async function addPlayer(id: string) {
-    if (selected.length >= 5) return;
-    if (selected.some((s) => s.player_id === id)) return; // prevent duplicate player
-    const idx = indexCache ?? (await loadPlayersIndex());
-    const seasons = idx[id]?.qualified_seasons ?? idx[id]?.seasons ?? [];
-    const season = seasons[seasons.length - 1];
-    if (!season) return;
-    const seasonData = await loadSeason(season);
-    const rec = seasonData.find((r) => r.player_id === id);
-    if (rec) {
-      setSelected((prev) => [...prev, rec]);
-      setQuery("");
-      setResults([]);
+  async function loadSlot(id: string, season: number) {
+    const ticket = ++counterRef.current;
+    ticketsRef.current[id] = ticket;
+    try {
+      const [seasonData, idx] = await Promise.all([loadSeason(season), loadPlayersIndex()]);
+      if (ticketsRef.current[id] !== ticket) return;
+      const record = seasonData.find((r) => r.player_id === id) ?? null;
+      const entry = idx[id];
+      const options = entry && entry.qualified_seasons.length > 0 ? entry.qualified_seasons : [season];
+      patchSlot(id, record ? { record, season, status: "ready", options } : { status: "error", options });
+    } catch {
+      if (ticketsRef.current[id] === ticket) patchSlot(id, { status: "error" });
     }
+  }
+
+  function addPlayer(picked: PlayerAutocompleteSelection) {
+    const existing = slots.find((s) => s.id === picked.id);
+    if (existing) {
+      setNotice(
+        `${picked.name} is already in your lineup (${seasonLabel(existing.season)}). Use that card’s season menu to change the season, or remove them first.`,
+      );
+      return;
+    }
+    if (slots.length >= MAX_PLAYERS) {
+      setNotice("Your lineup already has five players. Remove one to add another.");
+      return;
+    }
+    setNotice(null);
+    setSlots((prev) => [...prev, { id: picked.id, name: picked.name, season: picked.season, status: "loading", record: null, options: [picked.season] }]);
+    void loadSlot(picked.id, picked.season);
+  }
+
+  function changeSeason(id: string, season: number) {
+    setNotice(null);
+    patchSlot(id, { season, status: "loading" });
+    void loadSlot(id, season);
   }
 
   function removePlayer(id: string) {
-    setSelected((prev) => prev.filter((p) => p.player_id !== id));
+    delete ticketsRef.current[id]; // drop any in-flight response for this player
+    setNotice(null);
+    setSlots((prev) => prev.filter((s) => s.id !== id));
   }
 
+  // Only fully loaded, current-season slots feed the lineup numbers.
+  const ready = useMemo(
+    () => slots.filter((s) => s.status === "ready" && s.record && s.record.season === s.season).map((s) => s.record!),
+    [slots],
+  );
+  const updating = slots.some((s) => s.status === "loading");
+
   const dimensionScores = useMemo(() => {
-    if (selected.length === 0) return null;
+    if (ready.length === 0) return null;
     const out: Record<string, number> = {};
     for (const dim of DIMENSIONS) {
-      const vals = selected.map((p) => {
-        if (dim.key === "__ball_dominance") {
-          return zToApproxPercentile(p.vector.usg_percent ?? 0);
-        }
-        return p.traits[dim.key] ?? 0;
-      });
+      const vals = ready.map((p) =>
+        dim.key === "__ball_dominance" ? zToApproxPercentile(p.vector.usg_percent ?? 0) : p.traits[dim.key] ?? 0,
+      );
       out[dim.key] = vals.reduce((a, b) => a + b, 0) / vals.length;
     }
     return out;
-  }, [selected]);
+  }, [ready]);
 
   const observations = useMemo(() => {
-    if (!dimensionScores || selected.length < 3) return [];
+    if (!dimensionScores || ready.length < 3) return [];
     const obs: string[] = [];
-    const highUsageCreators = selected.filter((p) => (p.traits["Playmaking"] ?? 0) >= 70 && zToApproxPercentile(p.vector.usg_percent ?? 0) >= 70).length;
-    if (highUsageCreators >= 2) obs.push(`Several players who handle the ball and create shots often (${highUsageCreators} of ${selected.length})`);
-
+    const highUsageCreators = ready.filter(
+      (p) => (p.traits["Playmaking"] ?? 0) >= 70 && zToApproxPercentile(p.vector.usg_percent ?? 0) >= 70,
+    ).length;
+    if (highUsageCreators >= 2) obs.push(`Several players who handle the ball and create shots often (${highUsageCreators} of ${ready.length})`);
     if (dimensionScores["Perimeter Profile"] >= 65) obs.push("The lineup takes a lot of three-point shots");
     if (dimensionScores["Rebounding"] < 40) obs.push("Fewer rebounds than most players in the dataset");
     if (dimensionScores["Defensive Activity"] >= 65) obs.push("The lineup produces a high number of steals and blocks");
     if (dimensionScores["Rim Pressure"] >= 65) obs.push("Several players attack the basket often");
 
-    const posGroups = selected.map((p) => p.pos_group);
-    const uniquePos = new Set(posGroups).size;
-    if (uniquePos === 1) obs.push(`All five players share one position group (${posGroups[0]})`);
-
+    const posGroups = ready.map((p) => p.pos_group);
+    if (new Set(posGroups).size === 1) {
+      // Only say "five" when five players are actually selected.
+      const who = ready.length === MAX_PLAYERS ? "All five players" : "All selected players";
+      obs.push(`${who} share one position group (${posGroups[0]})`);
+    }
     return obs.slice(0, 5);
-  }, [dimensionScores, selected]);
+  }, [dimensionScores, ready]);
 
   return (
-    <div className="mx-auto max-w-[1200px] px-5 py-10 md:px-8">
-      <h1 className="font-display text-4xl text-ink mb-1">Build a Lineup</h1>
-      <p className="mb-8 max-w-2xl text-sm text-stone-light">
+    <div className="mx-auto max-w-[1200px] px-4 py-8 sm:px-5 md:px-8 md:py-10">
+      <h1 className="font-display mb-1 text-4xl text-ink">Build a Lineup</h1>
+      <p className="mb-6 max-w-2xl text-sm text-stone">
         Pick five different players and see what their combined playing style looks like — based on real stats,
-        not a prediction of wins or performance.
+        not a prediction of wins or performance. Each player is shown for one season; you can change it on their card.
       </p>
 
-      {selected.length < 5 && (
-        <div className="relative mb-8 max-w-md">
-          <input
-            type="search"
-            placeholder="Add a player…"
-            value={query}
-            onChange={(e) => handleSearch(e.target.value)}
-            className="w-full rounded-lg border border-line-strong bg-arena-panel px-4 py-3 text-ink placeholder:text-stone-light outline-none focus:border-court-orange"
+      <div className="mb-3 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-[1fr_auto] sm:items-end">
+        <div>
+          <p className="text-eyebrow mb-1.5">Add a player ({slots.length} of {MAX_PLAYERS})</p>
+          <PlayerAutocomplete
+            scope="map"
+            preferredSeason={pickSeason === "latest" ? undefined : pickSeason}
+            onSelect={addPlayer}
+            placeholder={slots.length >= MAX_PLAYERS ? "Lineup is full — remove a player to add another" : "Add a player…"}
+            ariaLabel="Add a player to the lineup"
+            disabled={slots.length >= MAX_PLAYERS}
           />
-          {results.length > 0 && (
-            <ul className="absolute z-20 mt-1 w-full overflow-hidden rounded-lg border border-line-strong bg-arena-panel-strong shadow-xl">
-              {results.map((r) => (
-                <li key={r.id}>
-                  <button
-                    onClick={() => addPlayer(r.id)}
-                    disabled={selected.some((s) => s.player_id === r.id)}
-                    className="flex w-full items-center justify-between px-4 py-2.5 text-left text-sm text-ink-light hover:bg-arena-panel disabled:opacity-40"
-                  >
-                    <span>{r.name}</span>
-                    <span className="text-xs text-stone-light">{r.latest_team}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
         </div>
-      )}
+        <label className="block">
+          <span className="text-eyebrow mb-1.5 block">Season for new picks</span>
+          <select
+            value={pickSeason}
+            onChange={(e) => setPickSeason(e.target.value === "latest" ? "latest" : parseInt(e.target.value, 10))}
+            className="min-h-11 w-full rounded-md border border-line-strong bg-arena-panel px-3 text-base text-ink-light outline-none focus:border-court-orange sm:w-auto sm:text-sm"
+          >
+            <option value="latest">Each player&rsquo;s latest</option>
+            {ALL_SEASONS.map((s) => <option key={s} value={s}>{seasonLabel(s)}</option>)}
+          </select>
+        </label>
+      </div>
 
-      {/* Selected roster */}
-      <div className="mb-10 grid grid-cols-1 gap-3 sm:grid-cols-5">
-        {Array.from({ length: 5 }).map((_, i) => {
-          const p = selected[i];
+      <div className="mb-6 min-h-6 max-w-2xl" role="status" aria-live="polite">
+        {notice && <p className="text-sm text-court-orange-bright">{notice}</p>}
+      </div>
+
+      {/* 2 columns on phones, 3 at tablet widths, 5 only at lg+ */}
+      <ul className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        {Array.from({ length: MAX_PLAYERS }).map((_, i) => {
+          const s = slots[i];
           return (
-            <div key={i} className="flex flex-col items-center gap-2 rounded-xl border border-line bg-arena-panel p-4">
-              {p ? (
+            <li key={s ? s.id : `empty-${i}`} className="flex min-w-0 flex-col items-center gap-2 rounded-xl border border-line bg-arena-panel p-3 sm:p-4">
+              {s ? (
                 <>
-                  <PlayerPhoto playerId={p.player_id} name={p.player} posGroup={p.pos_group} size={64} />
-                  <p className="text-center text-xs font-semibold text-ink-light">{p.player}</p>
-                  <p className="text-[10px] text-stone-light">{p.season_label}</p>
-                  <button onClick={() => removePlayer(p.player_id)} className="text-[11px] text-court-orange-bright hover:underline">
+                  <PlayerPhoto playerId={s.id} name={s.name} posGroup={s.record?.pos_group} size={64} />
+                  <p className="break-words text-center text-sm font-semibold text-ink-light">{s.name}</p>
+                  <label className="block w-full">
+                    <span className="mb-1 block text-center text-xs text-stone">Season</span>
+                    <select
+                      value={s.season}
+                      disabled={s.options.length <= 1}
+                      onChange={(e) => changeSeason(s.id, parseInt(e.target.value, 10))}
+                      className="min-h-11 w-full rounded-md border border-line-strong bg-arena-panel-strong px-2 text-center text-base text-ink-light outline-none focus:border-court-orange disabled:opacity-100 sm:text-sm"
+                    >
+                      {s.options.map((o) => <option key={o} value={o}>{seasonLabel(o)}</option>)}
+                    </select>
+                  </label>
+                  {s.status === "loading" && <p role="status" className="text-xs text-stone">Loading…</p>}
+                  {s.status === "error" && (
+                    <div role="alert" className="flex flex-col items-center gap-1 text-center text-xs text-court-orange-bright">
+                      <span>Couldn&rsquo;t load {seasonLabel(s.season)}.</span>
+                      <button type="button" onClick={() => changeSeason(s.id, s.season)} className="min-h-11 px-2 underline">Retry</button>
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => removePlayer(s.id)}
+                    aria-label={`Remove ${s.name}`}
+                    className="min-h-11 px-2 text-sm text-court-orange-bright hover:underline"
+                  >
                     Remove
                   </button>
                 </>
               ) : (
-                <div className="flex h-[124px] items-center justify-center text-xs text-stone-light">Empty slot</div>
+                <div className="flex h-[140px] items-center justify-center text-sm text-stone">Empty slot</div>
               )}
-            </div>
+            </li>
           );
         })}
-      </div>
+      </ul>
 
-      {/* Lineup identity card */}
       {dimensionScores && (
-        <div className="rounded-2xl border border-court-orange/30 bg-gradient-to-br from-arena-panel to-arena-panel-strong p-8">
+        <div className="rounded-2xl border border-court-orange/30 bg-gradient-to-br from-arena-panel to-arena-panel-strong p-5 sm:p-8">
           <p className="text-eyebrow mb-1">Lineup Identity Card</p>
-          <h2 className="font-display text-3xl text-ink mb-6">
-            {selected.length === 5 ? "Full Five" : `${selected.length} of 5 Selected`}
+          <h2 className="font-display mb-1 text-3xl text-ink">
+            {ready.length === MAX_PLAYERS ? "Full Five" : `${ready.length} of ${MAX_PLAYERS} Selected`}
           </h2>
+          {updating && <p role="status" className="mb-4 text-sm text-stone">Updating…</p>}
+          <div className="mb-5" />
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             {DIMENSIONS.map((dim) => {
               const v = Math.max(0, Math.min(100, dimensionScores[dim.key]));
               return (
                 <div key={dim.key}>
-                  <div className="mb-1 flex justify-between text-xs">
+                  <div className="mb-1 flex justify-between gap-3 text-sm">
                     <span className="text-stone">{dim.label}</span>
                     <span className="tabular font-semibold text-ink-light">{Math.round(v)}</span>
                   </div>
@@ -184,7 +252,7 @@ export default function BuildAFivePage() {
             </div>
           )}
 
-          <p className="mt-6 text-xs text-stone-light">
+          <p className="mt-6 text-sm text-stone">
             This shows the combined playing style of the selected players. It does not predict how many games the
             lineup would win.
           </p>

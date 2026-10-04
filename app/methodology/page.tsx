@@ -1,23 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { loadMeta } from "@/lib/dataLoader";
-import type { DatasetMeta } from "@/lib/types";
-import { FEATURE_GROUPS, GALAXY_MIN_MINUTES, GALAXY_MIN_GAMES, CAREER_DISPLAY_MIN_MINUTES, SIMILARITY_SCALE } from "@/lib/config";
+import { useAsync } from "@/lib/useAsync";
+import { normalizeSeasonText, FEATURE_GROUPS, GALAXY_MIN_MINUTES, GALAXY_MIN_GAMES, CAREER_DISPLAY_MIN_MINUTES, SIMILARITY_SCALE } from "@/lib/config";
 
 export default function MethodologyPage() {
-  const [meta, setMeta] = useState<DatasetMeta | null>(null);
-  useEffect(() => { loadMeta().then(setMeta); }, []);
+  const metaState = useAsync("methodology-meta", loadMeta);
+  const meta = metaState.status === "ready" ? metaState.data ?? null : null;
 
   return (
     <div className="mx-auto max-w-3xl px-5 py-14 md:px-8">
       <p className="text-eyebrow mb-2">How It Works</p>
-      <h1 className="font-display text-5xl text-ink mb-8">How COURT DNA works</h1>
+      <h1 className="font-display text-4xl text-ink mb-8 sm:text-5xl">How COURT DNA works</h1>
+
+      {metaState.status === "error" && (
+        <div role="alert" className="mb-8 flex flex-wrap items-center gap-3 rounded-lg border border-line-strong bg-arena-panel px-4 py-3 text-sm text-stone">
+          <span>Live dataset counts couldn&rsquo;t load. The explanation below still applies.</span>
+          <button type="button" onClick={metaState.retry} className="btn btn-secondary min-h-11 px-4 py-2 text-sm">Retry</button>
+        </div>
+      )}
 
       <Section title="Data source">
         <p>
-          Player-season statistics from Basketball-Reference.com, NBA regular seasons {meta?.season_range_label[0] ?? "2000-01"}
-          {" "}through {meta?.season_range_label[1] ?? "2025-26"}. ABA/BAA-era leagues are excluded — they ceased to
+          Player-season statistics from Basketball-Reference.com, NBA regular seasons {normalizeSeasonText(meta?.season_range_label[0] ?? "2000-01")}
+          {" "}through {normalizeSeasonText(meta?.season_range_label[1] ?? "2025-26")}. ABA/BAA-era leagues are excluded — they ceased to
           exist decades before this window, so no non-NBA rows appear in the dataset at all. Six primary tables are
           combined: Advanced, Per 100 Possessions, Player Shooting, Player Per Game, Player Season Info, and Player
           Career Info.
@@ -37,7 +43,7 @@ export default function MethodologyPage() {
 
       <Section title="Qualification thresholds">
         <ul className="list-disc pl-5 space-y-1">
-          <li>Comparison / Galaxy pool: at least {GALAXY_MIN_MINUTES} minutes and {GALAXY_MIN_GAMES} games in the season.</li>
+          <li>Comparison / Player Map pool: at least {GALAXY_MIN_MINUTES} minutes and {GALAXY_MIN_GAMES} games in the season.</li>
           <li>Player detail / career display: at least {CAREER_DISPLAY_MIN_MINUTES} minutes — below the comparison bar, a season still gets
             a detail page but is visibly flagged &ldquo;small sample&rdquo; and is never used as a candidate in someone
             else&rsquo;s closest matches.</li>
@@ -46,7 +52,7 @@ export default function MethodologyPage() {
           <p className="mt-3 text-sm text-stone-light">
             Currently: {meta.unique_players.toLocaleString()} players with a detail page,{" "}
             {meta.canonical_player_seasons.toLocaleString()} display-eligible player-seasons,{" "}
-            {meta.qualified_comparison_player_seasons.toLocaleString()} qualified for the comparison/Galaxy pool.
+            {meta.qualified_comparison_player_seasons.toLocaleString()} qualified for the comparison/Player Map pool.
           </p>
         )}
       </Section>
@@ -63,18 +69,20 @@ export default function MethodologyPage() {
 
       <Section title="Similarity formula">
         <p>Six feature groups, each divided evenly across its listed features:</p>
-        <table className="mt-3 w-full text-sm">
-          <thead><tr className="border-b border-line text-left text-stone-light"><th className="py-1.5">Group</th><th className="py-1.5">Weight</th><th className="py-1.5">Features</th></tr></thead>
-          <tbody>
-            {FEATURE_GROUPS.map((g) => (
-              <tr key={g.name} className="border-b border-line/50">
-                <td className="py-1.5 text-ink-light">{g.name}</td>
-                <td className="py-1.5 tabular text-ink-light">{Math.round(g.weight * 100)}%</td>
-                <td className="py-1.5 text-stone">{g.features.join(", ")}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="mt-3 overflow-x-auto">
+          <table className="w-full min-w-[480px] text-sm">
+            <thead><tr className="border-b border-line text-left text-stone-light"><th className="py-1.5">Group</th><th className="py-1.5">Weight</th><th className="py-1.5">Features</th></tr></thead>
+            <tbody>
+              {FEATURE_GROUPS.map((g) => (
+                <tr key={g.name} className="border-b border-line/50">
+                  <td className="py-1.5 pr-3 text-ink-light">{g.name}</td>
+                  <td className="py-1.5 pr-3 tabular text-ink-light">{Math.round(g.weight * 100)}%</td>
+                  <td className="py-1.5 text-stone">{g.features.join(", ")}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         <p className="mt-3">
           A weighted RMS distance is calculated between two players&rsquo; standardized vectors, then converted to a
           0–100 Similarity Index: <code className="rounded bg-arena-panel px-1.5 py-0.5">Similarity Index = max(0, 100 − {SIMILARITY_SCALE} × weighted_RMS_distance)</code>.
@@ -122,7 +130,7 @@ export default function MethodologyPage() {
 
       <Section title="Player Map and PCA">
         <p>
-          The Galaxy plots each season&rsquo;s qualified pool in 2D using deterministic PCA (fixed random state) on
+          The Player Map plots each season&rsquo;s qualified pool in 2D using deterministic PCA (fixed random state) on
           the same standardized features used everywhere else. This is for visualization only — proximity in the 2D
           projection is approximate, and the app&rsquo;s actual similarity rankings always use the full
           12-dimensional formula above, never 2D distance.

@@ -18,7 +18,12 @@
   --ink: #f4f2ec;
   --ink-light: #e7e4da;
   --stone: #9aa0b4;
-  --stone-light: #6c7288;
+  /* Lightened from #6c7288 (4.07:1 against --arena-bg, failing WCAG AA's
+     4.5:1 for normal text) to a verified 6.9:1 -- still clearly the more
+     muted/secondary tone relative to --stone and --ink-light, just
+     actually readable at the small sizes it's used at (captions, filter
+     labels, helper text). */
+  --stone-light: #9499b5;
 
   --court-orange: #ff6a1a;
   --court-orange-bright: #ff8a3d;
@@ -204,6 +209,37 @@ button {
     opacity: 1;
     transform: none;
   }
+}
+
+/* iOS Safari auto-zooms the page on focusing any form control rendered
+   smaller than 16px -- not a design choice we can override, only avoid by
+   never rendering form text under that size on phones. Scoped to the
+   phone-width range so desktop/tablet keep their normal (often smaller,
+   text-sm) sizing; browser zoom itself is never disabled anywhere. */
+@media (max-width: 768px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Expands a small interactive element's actual touch hit area to the
+   ~44x44px Apple/WCAG-recommended minimum via an invisible pseudo-element,
+   without changing how large the element itself looks. Apply to any
+   `position: relative` (or made relative here) small control -- pills,
+   icon buttons, checkboxes -- that should stay visually compact. */
+.tap-target-44 {
+  position: relative;
+}
+.tap-target-44::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100%, 44px);
+  height: max(100%, 44px);
+  transform: translate(-50%, -50%);
 }
 
 ::selection {

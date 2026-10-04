@@ -55,8 +55,9 @@ npm run build
 
 ## QA
 
-20/20 Python tests and 47/47 TypeScript tests pass, along with lint,
-typecheck, and the production build. Responsive overflow QA passed across
+The repo has 20 Python tests and 79 TypeScript tests (6 files). Run
+`npm test`, `npm run lint`, `npx tsc --noEmit` and `npm run build` to
+verify; `docs/qa.md` lists what each test file covers. Responsive overflow QA passed across
 48 width × route combinations. Full results: [`docs/qa.md`](docs/qa.md).
 
 ## Known limitations

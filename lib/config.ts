@@ -13,9 +13,18 @@
 export const SEASON_MIN = 2001; // 2000-01
 export const SEASON_MAX = 2026; // 2025-26
 
+/** Basketball season label for a season-end year: 2009 -> "2008–09"
+ * (en dash). Use this everywhere a season is shown to a person, never the
+ * raw year. */
 export function seasonLabel(seasonEndYear: number): string {
   const start = seasonEndYear - 1;
-  return `${start}-${String(seasonEndYear).slice(-2)}`;
+  return `${start}\u2013${String(seasonEndYear).slice(-2)}`;
+}
+
+/** Converts hyphenated season text coming from data files ("2008-09") to
+ * the same en-dash form seasonLabel() produces. */
+export function normalizeSeasonText(text: string): string {
+  return text.replace(/(\d{4})-(\d{2})/g, "$1\u2013$2");
 }
 
 export const GALAXY_MIN_MINUTES = 500;
