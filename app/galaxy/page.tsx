@@ -35,6 +35,11 @@ const ALPHA_OTHER_SEASON = 0.45;
 const ALPHA_OTHER_SEASON_FULL_HISTORY = 0.28;
 const HIT_RADIUS_MOUSE = 12;
 const HIT_RADIUS_TOUCH = 24;
+// Faint background dots get half the hit radius, so a quiet point is never a
+// large invisible target and empty-looking map space stays clearable.
+const BACKGROUND_HIT_FACTOR = 0.5;
+const CLICK_SLOP = 6; // px of pointer travel beyond which a press is a pan, not a click
+const EMPTY_CLICK_DELAY = 220; // ms; lets a double-click zoom cancel the clear
 
 const WINDOW_LABELS: Record<CompareWindow, string> = {
   season: "Season",
@@ -277,6 +282,9 @@ function GalaxyPageInner() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const zoomRef = useRef<d3.ZoomBehavior<HTMLCanvasElement, unknown> | null>(null);
+  const labelRectsRef = useRef<Map<string, Rect>>(new Map());
+  const pointerDownRef = useRef<{ x: number; y: number } | null>(null);
+  const pendingClearRef = useRef(0);
   const [size, setSize] = useState({ w: 1000, h: MAX_HEIGHT });
   const [transform, setTransform] = useState<d3.ZoomTransform>(d3.zoomIdentity);
   const [hoveredKey, setHoveredKey] = useState<string | null>(null);
@@ -306,6 +314,8 @@ function GalaxyPageInner() {
     };
   }, []);
 
+  useEffect(() => () => window.clearTimeout(pendingClearRef.current), []);
+
   const scales = useMemo(() => {
     const xe = d3.extent(basePoints, (p) => p.x) as [number | undefined, number | undefined];
     const ye = d3.extent(basePoints, (p) => p.y) as [number | undefined, number | undefined];
@@ -334,6 +344,7 @@ function GalaxyPageInner() {
     canvas.height = Math.round(size.h * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, size.w, size.h);
+    labelRectsRef.current = new Map();
 
     const dotR = visiblePoints.length > 2500 ? 2 : 3;
     const refSeason = view.season;
@@ -410,6 +421,7 @@ function GalaxyPageInner() {
         );
         if (!box) return;
         placed.push(box);
+        labelRectsRef.current.set(playerSeasonKey(n.player_id, n.season), box);
         ctx.lineWidth = 3;
         ctx.strokeStyle = "rgba(11,13,18,0.9)";
         ctx.strokeText(n.player, box.x + 3, ny);
@@ -441,27 +453,37 @@ function GalaxyPageInner() {
     }
   }, [visiblePoints, size, screenOf, selectedKey, selectedPoint, hoveredPoint, matchRank, neighbors, pointByKey, view.season, view.window]);
 
-  /** Nearest visible dot in rendered pixels, so a tap is forgiving without
-   * enlarging any dot and zoom level never changes the target size. */
+  /** The one hit test: top-match labels first (they are drawn on the canvas),
+   * then the nearest visible dot in rendered pixels, so a tap is forgiving
+   * without enlarging any dot and zoom level never changes the target size.
+   * Emphasised dots get the full radius, faint background dots half. */
   const nearestPoint = useCallback(
     (clientX: number, clientY: number, radius: number): MapPoint | null => {
       const rect = canvasRef.current?.getBoundingClientRect();
       if (!rect) return null;
       const px = clientX - rect.left;
       const py = clientY - rect.top;
+      for (const [key, r] of labelRectsRef.current) {
+        if (px >= r.x && px <= r.x + r.w && py >= r.y && py <= r.y + r.h) {
+          const p = pointByKey.get(key);
+          if (p) return p;
+        }
+      }
       let best: MapPoint | null = null;
-      let bestD = radius * radius;
+      let bestD = Infinity;
       for (const p of visiblePoints) {
+        const emphasised = p.key === selectedKey || matchRank.has(p.key) || p.entry.season === view.season;
+        const limit = emphasised ? radius : radius * BACKGROUND_HIT_FACTOR;
         const [sx, sy] = screenOf(p);
         const d = (sx - px) ** 2 + (sy - py) ** 2;
-        if (d < bestD || (d === bestD && best && p.key < best.key)) {
+        if (d <= limit * limit && (d < bestD || (d === bestD && best && p.key < best.key))) {
           best = p;
           bestD = d;
         }
       }
       return best;
     },
-    [visiblePoints, screenOf],
+    [visiblePoints, screenOf, pointByKey, matchRank, selectedKey, view.season],
   );
 
   const hoverFrameRef = useRef(0);
@@ -474,11 +496,32 @@ function GalaxyPageInner() {
     });
   }
 
+  // Click priority: a hit on a point or label decides first (selected -> toggle
+  // off, another -> switch); only a true click on empty map clears. A press that
+  // travelled past CLICK_SLOP was a pan and changes nothing.
   function handleCanvasClick(e: React.MouseEvent<HTMLCanvasElement>) {
+    const down = pointerDownRef.current;
+    pointerDownRef.current = null;
+    if (down && Math.hypot(e.clientX - down.x, e.clientY - down.y) > CLICK_SLOP) return;
+    window.clearTimeout(pendingClearRef.current);
+    if (e.detail > 1) return; // second click of a double-click: that is a zoom
     const native = e.nativeEvent as PointerEvent;
     const radius = native.pointerType && native.pointerType !== "mouse" ? HIT_RADIUS_TOUCH : HIT_RADIUS_MOUSE;
     const hit = nearestPoint(e.clientX, e.clientY, radius);
-    if (hit) update({ season: hit.entry.season, player: hit.entry.player_id });
+    if (hit) {
+      if (hit.key === selectedKey) update({ player: null });
+      else update({ season: hit.entry.season, player: hit.entry.player_id });
+      return;
+    }
+    if (!selectedPoint) return;
+    // The name card sits over the map but is not "empty space".
+    const rect = e.currentTarget.getBoundingClientRect();
+    const [sx, sy] = screenOf(selectedPoint);
+    const card = selectedCardRect(sx, sy, size.w, size.h);
+    const px = e.clientX - rect.left;
+    const py = e.clientY - rect.top;
+    if (px >= card.x && px <= card.x + card.w && py >= card.y && py <= card.y + card.h) return;
+    pendingClearRef.current = window.setTimeout(() => update({ player: null }), EMPTY_CLICK_DELAY);
   }
 
   function resetMapPosition() {
@@ -646,7 +689,11 @@ function GalaxyPageInner() {
             cancelAnimationFrame(hoverFrameRef.current);
             setHoveredKey(null);
           }}
+          onPointerDown={(e) => {
+            pointerDownRef.current = { x: e.clientX, y: e.clientY };
+          }}
           onClick={handleCanvasClick}
+          onDoubleClick={() => window.clearTimeout(pendingClearRef.current)}
         />
 
         {selectedPoint && (() => {
