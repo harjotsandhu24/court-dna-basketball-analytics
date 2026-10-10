@@ -191,7 +191,7 @@ export default function CourtPrint({
       {showHeading && (
         <div className="w-full max-w-[320px] text-center">
           <p className="font-display text-lg tracking-wide text-ink">Playing Style</p>
-          <p className="mt-0.5 text-sm text-stone">
+          <p className="mt-0.5 text-xs text-stone-light">
             See where this player stands across seven parts of the game.
           </p>
         </div>
@@ -284,7 +284,7 @@ export default function CourtPrint({
                 <div
                   key={lp.dimension}
                   aria-hidden="true"
-                  className="pointer-events-none absolute w-max max-w-[104px] text-xs leading-tight"
+                  className="pointer-events-none absolute w-max max-w-[88px] text-[9px] leading-tight"
                   style={{
                     left: `${lp.leftPct}%`,
                     top: `${lp.topPct}%`,

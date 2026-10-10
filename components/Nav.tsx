@@ -4,15 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-function isActive(pathname: string, href: string): boolean {
-  if (href === "/") return pathname === "/";
-  return pathname === href || pathname.startsWith(`${href}/`);
-}
-
 const LINKS = [
   { href: "/", label: "Discover" },
   { href: "/galaxy", label: "Player Map" },
-  { href: "/compare", label: "Compare Players" },
   { href: "/build-a-five", label: "Build a Lineup" },
   { href: "/methodology", label: "How It Works" },
   { href: "/credits", label: "Credits" },
@@ -22,7 +16,6 @@ export default function Nav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
-  const toggleRef = useRef<HTMLButtonElement>(null);
 
   // Close on outside tap/click and on Escape -- a simple inline panel
   // (not a full-screen overlay) so it never blocks the rest of the page,
@@ -33,11 +26,7 @@ export default function Nav() {
       if (headerRef.current && !headerRef.current.contains(e.target as Node)) setOpen(false);
     }
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") {
-        setOpen(false);
-        // Focus returns to the control that opened the menu.
-        toggleRef.current?.focus();
-      }
+      if (e.key === "Escape") setOpen(false);
     }
     document.addEventListener("pointerdown", handlePointerDown);
     document.addEventListener("keydown", handleKeyDown);
@@ -65,14 +54,14 @@ export default function Nav() {
           </span>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-1" aria-label="Primary">
+        <nav className="hidden md:flex items-center gap-1" aria-label="Primary">
           {LINKS.map((l) => {
-            const active = isActive(pathname, l.href);
+            const active = pathname === l.href;
             return (
               <Link
                 key={l.href}
                 href={l.href}
-                className={`flex min-h-11 items-center rounded-md px-3 text-sm font-medium transition-colors ${
+                className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                   active ? "text-court-orange-bright" : "text-stone hover:text-ink-light"
                 }`}
                 aria-current={active ? "page" : undefined}
@@ -84,34 +73,31 @@ export default function Nav() {
         </nav>
 
         <button
-          ref={toggleRef}
-          type="button"
-          className="btn btn-secondary h-11 min-w-11 px-3 lg:hidden"
+          className="btn btn-secondary md:hidden px-3 py-2"
           onClick={() => setOpen((o) => !o)}
           aria-expanded={open}
-          aria-controls={open ? "mobile-nav" : undefined}
-          aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+          aria-controls="mobile-nav"
+          aria-label="Toggle navigation menu"
         >
-          <span aria-hidden="true" className="text-xl leading-none">{open ? "✕" : "☰"}</span>
+          <span aria-hidden="true">{open ? "✕" : "☰"}</span>
         </button>
       </div>
 
       {open && (
-        <nav id="mobile-nav" className="lg:hidden border-t border-line px-5 py-3 flex flex-col gap-1" aria-label="Primary mobile">
+        <nav id="mobile-nav" className="md:hidden border-t border-line px-5 py-3 flex flex-col gap-1" aria-label="Primary mobile">
           {LINKS.map((l) => {
-            const active = isActive(pathname, l.href);
+            const active = pathname === l.href;
             return (
               <Link
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
                 aria-current={active ? "page" : undefined}
-                className={`flex min-h-12 items-center justify-between rounded-md px-3 text-base font-medium ${
+                className={`tap-target-44 rounded-md px-3 py-2.5 text-sm font-medium ${
                   active ? "bg-court-orange/10 text-court-orange-bright" : "text-stone hover:bg-arena-panel hover:text-ink-light"
                 }`}
               >
-                <span>{l.label}</span>
-                {active && <span className="text-sm" aria-hidden="true">● Current page</span>}
+                {l.label}
               </Link>
             );
           })}

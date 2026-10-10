@@ -136,11 +136,39 @@ Built from Basketball-Reference's shot-range breakdown (0-3 ft, 3-10 ft,
 has no x/y shot coordinates, only attempt-share and FG% per range. Segment
 width = share of attempts; color intensity = FG%.
 
+## Cross-era comparison (Player Map "Compare across")
+
+Every player-season is its own observation, keyed `playerId_season`. The
+Player Map can compare the selected player-season against: the same season,
+±5 seasons, ±10 seasons, or 2000-01 through the latest season. Relative
+windows are centred on the selected season and clamped to the dataset.
+
+**Cross-era normalization is the existing season-relative standardization
+above** (Normalization): every feature is already a z-score against that
+season's qualified players, so matching across seasons compares how far
+each player sat from *their own* league environment, not raw production. No
+further adjustment is applied. Limitation: this controls for league-wide shifts in
+the 12 similarity features, but not for rule changes or role definitions
+that change what a given z-score means; the dataset has no extra signal to
+correct for those and none is invented.
+
+Rules for the match list: one season per matched player; the selected
+player's other seasons are excluded; observations missing any feature are
+skipped; ties break by player id then season. The candidate pool is
+qualified player-seasons only (>=500 MP, >=20 G).
+
+The latest season (2025-26) is treated as complete: no in-progress flag
+exists in the source, and its games-played distribution matches the previous
+season (guarded by a test in `tests/crossEra.test.ts`).
+
 ## Player Map and PCA
 
 Deterministic 2D PCA (`sklearn.decomposition.PCA`, fixed `random_state=42`)
 on the same 12 standardized features, computed per season against that
-season's qualified pool. PCA is for visualization only — "most similar
+season's qualified pool. For multi-season windows, the map instead
+projects all qualified player-seasons onto one shared 2-component basis
+(`lib/embedding.ts`) so points keep their positions as the window changes.
+PCA is for visualization only — "most similar
 player" highlighting uses the full similarity formula, never 2D distance.
 Average variance explained by the 2 plotted components across all 26
 seasons: **58.6%** (range 56.4%-61.1%).

@@ -216,7 +216,7 @@ button {
    never rendering form text under that size on phones. Scoped to the
    phone-width range so desktop/tablet keep their normal (often smaller,
    text-sm) sizing; browser zoom itself is never disabled anywhere. */
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   input,
   select,
   textarea {

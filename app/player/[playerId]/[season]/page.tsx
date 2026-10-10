@@ -1,6 +1,6 @@
 "use client";
 
-import { use } from "react";
+import { use, useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import PlayerPhoto from "@/components/PlayerPhoto";
@@ -10,7 +10,6 @@ import TraitBars from "@/components/TraitBars";
 import ClosestMatches from "@/components/ClosestMatches";
 import { loadCareer, findPlayerSeason } from "@/lib/dataLoader";
 import { seasonLabel } from "@/lib/config";
-import { useAsync } from "@/lib/useAsync";
 import type { PlayerSeasonRecord } from "@/lib/types";
 import { fmt1, fmtInt, heightLabel } from "@/lib/format";
 
@@ -22,35 +21,30 @@ export default function PlayerDnaPage({
   const { playerId, season: seasonStr } = use(params);
   const season = parseInt(seasonStr, 10);
 
-  // Keyed by player + season: navigating to another player/season shows the
-  // loading state immediately and can never leave the previous player's data
-  // on screen; late responses are dropped; Retry genuinely refetches.
-  const validSeason = Number.isFinite(season);
-  const recordState = useAsync<PlayerSeasonRecord | null>(
-    validSeason ? `${playerId}-${season}` : null,
-    () => findPlayerSeason(playerId, season),
-  );
-  const careerState = useAsync<PlayerSeasonRecord[]>(`career-${playerId}`, () => loadCareer(playerId));
-  const record = recordState.status === "ready" ? recordState.data : undefined;
-  const allSeasons = careerState.status === "ready" ? (careerState.data ?? []).map((r) => r.season) : [];
+  const [record, setRecord] = useState<PlayerSeasonRecord | null | undefined>(undefined);
+  const [allSeasons, setAllSeasons] = useState<number[]>([]);
 
-  if (!validSeason) {
-    return <NotFound />;
-  }
-  if (recordState.status === "error") {
-    return (
-      <div className="mx-auto max-w-[1400px] px-5 py-20 text-center md:px-8">
-        <p className="font-display text-3xl text-ink">Couldn&rsquo;t load this player</p>
-        <p className="mt-2 text-stone">Check your connection and try again.</p>
-        <button type="button" onClick={recordState.retry} className="btn btn-primary mt-6 min-h-11 px-5 py-2.5">Retry</button>
-      </div>
-    );
-  }
+  useEffect(() => {
+    // intentional synchronous reset to a loading state when navigating to a
+    // different player/season, so the previous player is never shown
+    // mid-fetch
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setRecord(undefined);
+    findPlayerSeason(playerId, season).then(setRecord);
+    loadCareer(playerId).then((c) => setAllSeasons(c.map((r) => r.season)));
+  }, [playerId, season]);
+
   if (record === undefined) {
     return <div className="mx-auto max-w-[1400px] px-5 py-20 md:px-8"><LoadingSkeleton /></div>;
   }
   if (record === null) {
-    return <NotFound />;
+    return (
+      <div className="mx-auto max-w-[1400px] px-5 py-20 text-center md:px-8">
+        <p className="font-display text-3xl text-ink">Player profile not found</p>
+        <p className="mt-2 text-stone">This player may not have reached the 250-minute display threshold that season.</p>
+        <Link href="/" className="mt-6 inline-block btn btn-primary px-5 py-2.5">Back to Discover</Link>
+      </div>
+    );
   }
 
   return (
@@ -67,15 +61,15 @@ export default function PlayerDnaPage({
               {record.team_stints.length > 1 ? record.team_stints.join(" · ") : record.team} · {record.pos}
             </p>
             {record.small_sample && (
-              <span className="rounded-full border border-court-orange/50 bg-court-orange/10 px-2 py-0.5 text-xs font-medium text-court-orange-bright">
+              <span className="rounded-full border border-court-orange/50 bg-court-orange/10 px-2 py-0.5 text-[11px] font-medium text-court-orange-bright">
                 Small sample ({fmtInt(record.mp)} min)
               </span>
             )}
           </div>
-          <h1 className="font-display break-words text-4xl leading-none text-ink sm:text-6xl">{record.player}</h1>
-          <p className="mt-2 text-lg text-stone">{seasonLabel(record.season)} season · Age {fmtInt(record.age)}</p>
+          <h1 className="font-display text-5xl leading-none text-ink sm:text-6xl">{record.player}</h1>
+          <p className="mt-2 text-lg text-stone">{record.season_label} season · Age {fmtInt(record.age)}</p>
 
-          <div className="mt-5 grid grid-cols-3 gap-x-6 gap-y-3 sm:flex sm:flex-wrap sm:gap-x-8">
+          <div className="mt-5 flex flex-wrap gap-x-8 gap-y-2">
             <Stat label="PPG" value={fmt1(record.basic.pts)} />
             <Stat label="RPG" value={fmt1(record.basic.trb)} />
             <Stat label="APG" value={fmt1(record.basic.ast)} />
@@ -83,25 +77,20 @@ export default function PlayerDnaPage({
             <Stat label="3P%" value={record.basic.x3p_percent != null ? `${(record.basic.x3p_percent * 100).toFixed(1)}%` : "—"} />
           </div>
 
-          <div className="mt-4 flex flex-wrap items-center gap-2">
-            <p className="rounded-full border border-line-strong px-3 py-1 text-sm font-medium text-ink-light">
-              {record.archetype}
-            </p>
-            {record.trait_tags.map((t) => (
-              <span key={t} className="rounded-full bg-arena-panel px-3 py-1 text-sm text-stone">{t}</span>
-            ))}
-          </div>
+          <p className="mt-4 inline-block rounded-full border border-line-strong px-3 py-1 text-sm font-medium text-ink-light">
+            {record.archetype}
+          </p>
+          <span className="ml-2 text-sm text-stone-light">{record.trait_tags.join(" · ")}</span>
 
           {allSeasons.length > 1 && (
-            <div className="mt-5 flex flex-col gap-2 text-sm sm:flex-row sm:items-center">
-              <span className="text-stone">Season:</span>
-              <div className="flex flex-wrap gap-1.5">
+            <div className="mt-5 flex items-center gap-2 text-sm">
+              <span className="text-stone-light">Season:</span>
+              <div className="flex flex-wrap gap-1">
                 {allSeasons.map((s) => (
                   <Link
                     key={s}
                     href={`/player/${playerId}/${s}`}
-                    aria-current={s === season ? "page" : undefined}
-                    className={`flex min-h-11 items-center rounded-md px-3 tabular ${s === season ? "bg-court-orange text-[#14100a] font-semibold" : "bg-arena-panel/60 text-stone hover:bg-arena-panel"}`}
+                    className={`tap-target-44 rounded-md px-2 py-1 tabular ${s === season ? "bg-court-orange text-[#14100a] font-semibold" : "text-stone hover:bg-arena-panel"}`}
                   >
                     {seasonLabel(s)}
                   </Link>
@@ -109,13 +98,7 @@ export default function PlayerDnaPage({
               </div>
             </div>
           )}
-          {careerState.status === "error" && (
-            <div role="alert" className="mt-5 flex flex-wrap items-center gap-3 text-sm text-stone">
-              <span>Couldn&rsquo;t load the season list.</span>
-              <button type="button" onClick={careerState.retry} className="btn btn-secondary min-h-11 px-4 py-2 text-sm">Retry</button>
-            </div>
-          )}
-          <Link href={`/career/${playerId}`} className="mt-3 inline-flex min-h-11 items-center text-sm font-medium text-court-orange-bright hover:underline">
+          <Link href={`/career/${playerId}`} className="mt-3 inline-block text-sm font-medium text-court-orange-bright hover:underline">
             View career over time →
           </Link>
         </div>
@@ -150,7 +133,7 @@ export default function PlayerDnaPage({
             player_id: record.player_id,
             player: record.player,
             season: record.season,
-            season_label: seasonLabel(record.season),
+            season_label: record.season_label,
             pos_group: record.pos_group,
             archetype: record.archetype,
             vector: record.vector,
@@ -165,7 +148,7 @@ export default function PlayerDnaPage({
         <div className="grid grid-cols-2 gap-4 text-sm sm:grid-cols-4">
           <Stat label="Height" value={heightLabel(record.career.ht_in_in)} />
           <Stat label="Weight" value={record.career.wt ? `${fmtInt(record.career.wt)} lb` : "—"} />
-          <Stat label="Career span" value={record.career.from_year && record.career.to_year ? `${seasonLabel(record.career.from_year)} to ${seasonLabel(record.career.to_year)}` : "—"} />
+          <Stat label="Career span" value={record.career.from_year && record.career.to_year ? `${record.career.from_year}–${record.career.to_year}` : "—"} />
           <Stat label="Hall of Fame" value={record.career.hof ? "Yes" : "—"} />
         </div>
         {record.team_stints.length > 1 && (
@@ -184,21 +167,11 @@ export default function PlayerDnaPage({
   );
 }
 
-function NotFound() {
-  return (
-    <div className="mx-auto max-w-[1400px] px-5 py-20 text-center md:px-8">
-      <p className="font-display text-3xl text-ink">Player profile not found</p>
-      <p className="mt-2 text-stone">This player may not have reached the 250-minute display threshold that season.</p>
-      <Link href="/" className="btn btn-primary mt-6 inline-flex min-h-11 px-5 py-2.5">Back to Discover</Link>
-    </div>
-  );
-}
-
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div>
       <p className="text-eyebrow">{label}</p>
-      <p className="tabular font-display break-words text-2xl text-ink-light">{value}</p>
+      <p className="tabular font-display text-2xl text-ink-light">{value}</p>
     </div>
   );
 }

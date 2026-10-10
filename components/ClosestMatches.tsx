@@ -1,13 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { loadSimilarityPool } from "@/lib/dataLoader";
 import { findClosestMatches, type SimilarityPoolEntry, type CandidateFilters } from "@/lib/similarity";
 import { explainMatch } from "@/lib/explain";
 import PlayerPhoto from "./PlayerPhoto";
-import { ERA_WINDOW_SEASONS, seasonLabel } from "@/lib/config";
-import { useAsync } from "@/lib/useAsync";
+import { ERA_WINDOW_SEASONS } from "@/lib/config";
 
 interface Props {
   query: SimilarityPoolEntry;
@@ -15,11 +14,18 @@ interface Props {
 }
 
 export default function ClosestMatches({ query, queryName }: Props) {
-  const poolState = useAsync<SimilarityPoolEntry[]>("similarity-pool", loadSimilarityPool);
-  const pool = useMemo(() => (poolState.status === "ready" ? poolState.data ?? [] : []), [poolState.status, poolState.data]);
+  const [pool, setPool] = useState<SimilarityPoolEntry[]>([]);
+  const [loading, setLoading] = useState(true);
   const [includeOtherSeasons, setIncludeOtherSeasons] = useState(false);
   const [seasonMode, setSeasonMode] = useState<CandidateFilters["seasonMode"]>("all");
   const [positionFilter, setPositionFilter] = useState<string | null>(null);
+
+  useEffect(() => {
+    loadSimilarityPool().then((p) => {
+      setPool(p);
+      setLoading(false);
+    });
+  }, []);
 
   const matches = useMemo(() => {
     if (pool.length === 0) return [];
@@ -38,7 +44,7 @@ export default function ClosestMatches({ query, queryName }: Props) {
 
   return (
     <div>
-      <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1">
+      <div className="mb-4 flex flex-wrap items-center gap-3">
         <FilterSelect
           label="Seasons"
           value={seasonMode ?? "all"}
@@ -60,24 +66,19 @@ export default function ClosestMatches({ query, queryName }: Props) {
             { value: "Big", label: "Bigs" },
           ]}
         />
-        <label className="flex min-h-11 items-center gap-2 text-sm text-stone">
+        <label className="flex items-center gap-2 text-sm text-stone">
           <input
             type="checkbox"
             checked={includeOtherSeasons}
             onChange={(e) => setIncludeOtherSeasons(e.target.checked)}
-            className="h-5 w-5 accent-court-orange"
+            className="h-4 w-4 accent-court-orange"
           />
           Include other seasons of {queryName}
         </label>
       </div>
 
-      {poolState.status === "error" ? (
-        <div role="alert" className="flex flex-wrap items-center gap-3 rounded-lg border border-line-strong bg-arena-panel px-4 py-3 text-sm text-stone">
-          <span>Couldn&rsquo;t load similar players.</span>
-          <button type="button" onClick={poolState.retry} className="btn btn-secondary min-h-11 px-4 py-2 text-sm">Retry</button>
-        </div>
-      ) : poolState.status !== "ready" ? (
-        <div role="status" aria-label="Loading similar players" className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      {loading ? (
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {Array.from({ length: 4 }).map((_, i) => <div key={i} className="h-24 animate-pulse rounded-xl bg-arena-panel" />)}
         </div>
       ) : (
@@ -97,8 +98,8 @@ export default function ClosestMatches({ query, queryName }: Props) {
                     <p className="truncate text-sm font-semibold text-ink-light">{m.player}</p>
                     <span className="font-display shrink-0 text-lg text-court-orange-bright tabular">{Math.round(m.similarity)}</span>
                   </div>
-                  <p className="text-xs text-stone">{seasonLabel(m.season)} · {m.archetype}</p>
-                  <ul className="mt-1 text-xs text-stone">
+                  <p className="text-xs text-stone-light">{m.season_label} · {m.archetype}</p>
+                  <ul className="mt-1 text-[11px] text-stone">
                     {reasons.map((r, i) => <li key={i} className="truncate">• {r}</li>)}
                   </ul>
                 </div>
@@ -106,7 +107,7 @@ export default function ClosestMatches({ query, queryName }: Props) {
             );
           })}
           {matches.length === 0 && (
-            <p className="text-sm text-stone sm:col-span-2">No candidates match these filters.</p>
+            <p className="col-span-2 text-sm text-stone-light">No candidates match these filters.</p>
           )}
         </div>
       )}
@@ -131,7 +132,7 @@ function FilterSelect({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="min-h-11 rounded-md border border-line-strong bg-arena-panel px-3 text-base text-ink-light outline-none focus:border-court-orange sm:text-sm"
+        className="rounded-md border border-line-strong bg-arena-panel px-2.5 py-1.5 text-ink-light outline-none focus:border-court-orange"
       >
         {options.map((o) => (
           <option key={o.value} value={o.value}>{o.label}</option>

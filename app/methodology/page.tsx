@@ -1,29 +1,23 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { loadMeta } from "@/lib/dataLoader";
-import { useAsync } from "@/lib/useAsync";
-import { normalizeSeasonText, FEATURE_GROUPS, GALAXY_MIN_MINUTES, GALAXY_MIN_GAMES, CAREER_DISPLAY_MIN_MINUTES, SIMILARITY_SCALE } from "@/lib/config";
+import type { DatasetMeta } from "@/lib/types";
+import { FEATURE_GROUPS, GALAXY_MIN_MINUTES, GALAXY_MIN_GAMES, CAREER_DISPLAY_MIN_MINUTES, SIMILARITY_SCALE } from "@/lib/config";
 
 export default function MethodologyPage() {
-  const metaState = useAsync("methodology-meta", loadMeta);
-  const meta = metaState.status === "ready" ? metaState.data ?? null : null;
+  const [meta, setMeta] = useState<DatasetMeta | null>(null);
+  useEffect(() => { loadMeta().then(setMeta); }, []);
 
   return (
     <div className="mx-auto max-w-3xl px-5 py-14 md:px-8">
       <p className="text-eyebrow mb-2">How It Works</p>
-      <h1 className="font-display text-4xl text-ink mb-8 sm:text-5xl">How COURT DNA works</h1>
-
-      {metaState.status === "error" && (
-        <div role="alert" className="mb-8 flex flex-wrap items-center gap-3 rounded-lg border border-line-strong bg-arena-panel px-4 py-3 text-sm text-stone">
-          <span>Live dataset counts couldn&rsquo;t load. The explanation below still applies.</span>
-          <button type="button" onClick={metaState.retry} className="btn btn-secondary min-h-11 px-4 py-2 text-sm">Retry</button>
-        </div>
-      )}
+      <h1 className="font-display text-5xl text-ink mb-8">How COURT DNA works</h1>
 
       <Section title="Data source">
         <p>
-          Player-season statistics from Basketball-Reference.com, NBA regular seasons {normalizeSeasonText(meta?.season_range_label[0] ?? "2000-01")}
-          {" "}through {normalizeSeasonText(meta?.season_range_label[1] ?? "2025-26")}. ABA/BAA-era leagues are excluded — they ceased to
+          Player-season statistics from Basketball-Reference.com, NBA regular seasons {meta?.season_range_label[0] ?? "2000-01"}
+          {" "}through {meta?.season_range_label[1] ?? "2025-26"}. ABA/BAA-era leagues are excluded — they ceased to
           exist decades before this window, so no non-NBA rows appear in the dataset at all. Six primary tables are
           combined: Advanced, Per 100 Possessions, Player Shooting, Player Per Game, Player Season Info, and Player
           Career Info.

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { searchPlayers, nearestQualifiedSeason, resolveSeason, comparableSeasons, isComparisonQualified } from "../lib/dataLoader";
+import { searchPlayers, nearestQualifiedSeason } from "../lib/dataLoader";
 import type { PlayersIndex } from "../lib/types";
 
 const INDEX: PlayersIndex = {
@@ -51,64 +51,6 @@ describe("searchPlayers ranking", () => {
   it("respects the limit parameter", () => {
     const results = searchPlayers(INDEX, "a", 2);
     expect(results.length).toBeLessThanOrEqual(2);
-  });
-});
-
-describe("searchPlayers partial names and scope", () => {
-  it("finds partial first and last names, in either order", () => {
-    expect(searchPlayers(INDEX, "kob")[0].id).toBe("bryanko01");
-    expect(searchPlayers(INDEX, "bryant ko")[0].id).toBe("bryanko01");
-    expect(searchPlayers(INDEX, "kobe b")[0].id).toBe("bryanko01");
-  });
-
-  it("ranks a full-name prefix above a later-word match", () => {
-    const idx: PlayersIndex = {
-      a: { name: "Anthony Davis", seasons: [2010], qualified_seasons: [2010], latest_team: "X" },
-      b: { name: "Baron Davis", seasons: [2002, 2003, 2004], qualified_seasons: [2002], latest_team: "X" },
-      c: { name: "Davis Bertans", seasons: [2019], qualified_seasons: [2019], latest_team: "X" },
-    };
-    expect(searchPlayers(idx, "davis")[0].id).toBe("c");
-  });
-
-  it("ignores punctuation and hyphens", () => {
-    const idx: PlayersIndex = { x: { name: "Shaquille O'Neal", seasons: [2001], qualified_seasons: [2001], latest_team: "L" } };
-    expect(searchPlayers(idx, "oneal")).toHaveLength(1);
-    expect(searchPlayers(idx, "o neal")).toHaveLength(1);
-    expect(searchPlayers(idx, "O'Neal")).toHaveLength(1);
-    expect(searchPlayers(idx, "o\u2019neal")).toHaveLength(1);
-  });
-
-  it("resolves apostrophe and hyphen names consistently however they are typed", () => {
-    const idx: PlayersIndex = {
-      d: { name: "D'Angelo Russell", seasons: [2019], qualified_seasons: [2019], latest_team: "X" },
-      f: { name: "Al-Farouq Aminu", seasons: [2019], qualified_seasons: [2019], latest_team: "X" },
-    };
-    for (const q of ["D'Angelo", "dangelo", "d angelo", "d-angelo", "dangelo russ"]) {
-      expect(searchPlayers(idx, q).map((r) => r.id), q).toEqual(["d"]);
-    }
-    for (const q of ["Al-Farouq", "alfarouq", "al farouq", "al farouq am", "alfarouq aminu"]) {
-      expect(searchPlayers(idx, q).map((r) => r.id), q).toEqual(["f"]);
-    }
-  });
-
-  it("map scope hides players with no map-qualified season; all scope keeps them", () => {
-    expect(searchPlayers(INDEX, "nobody", 20, { scope: "map" })).toHaveLength(0);
-    expect(searchPlayers(INDEX, "nobody", 20, { scope: "all" })).toHaveLength(1);
-  });
-});
-
-describe("resolveSeason", () => {
-  it("map: nearest qualified season to the viewed one (Kobe viewed from 2018 -> 2016)", () => {
-    expect(resolveSeason(INDEX.bryanko01, 2018, "map")).toBe(2016);
-  });
-  it("map: defaults to the latest qualified season with no target", () => {
-    expect(resolveSeason(INDEX.bryanko01, undefined, "map")).toBe(2016);
-  });
-  it("map: null when nothing qualifies", () => {
-    expect(resolveSeason(INDEX.noqual01, 2005, "map")).toBeNull();
-  });
-  it("all: falls back to a profile season for unqualified players", () => {
-    expect(resolveSeason(INDEX.noqual01, 2005, "all")).toBe(2005);
   });
 });
 
@@ -182,28 +124,5 @@ describe("dataLoader: failed requests are never permanently cached", () => {
     await loadSeason(8888);
     await loadSeason(8888);
     expect(callCount).toBe(1);
-  });
-});
-
-describe("Compare eligibility", () => {
-  it("offers only qualified seasons, never profile-only seasons", () => {
-    const idx: PlayersIndex = {
-      mixed: { name: "Mixed", seasons: [2003, 2004, 2005], qualified_seasons: [2003, 2005], latest_team: "X" },
-      none: { name: "None", seasons: [2005], qualified_seasons: [], latest_team: "X" },
-    };
-    expect(comparableSeasons(idx, "mixed")).toEqual([2005, 2003]);
-    expect(comparableSeasons(idx, "none")).toEqual([]);
-    expect(comparableSeasons(idx, "missing")).toEqual([]);
-    expect(comparableSeasons(undefined, "mixed")).toEqual([]);
-  });
-
-  it("flags a non-qualified comparison season so no Style Match is shown", () => {
-    expect(isComparisonQualified({ qualified: false })).toBe(false);
-    expect(isComparisonQualified({ qualified: true })).toBe(true);
-  });
-
-  it("map scope (used by Compare autocomplete) excludes profile-only players; all scope keeps them", () => {
-    expect(searchPlayers(INDEX, "Nobody", 20, { scope: "map" })).toHaveLength(0);
-    expect(searchPlayers(INDEX, "Nobody", 20, { scope: "all" })).toHaveLength(1);
   });
 });
