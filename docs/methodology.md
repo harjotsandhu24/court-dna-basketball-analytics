@@ -7,7 +7,10 @@ plain-language version of this document.
 ## Data source
 
 Player-season statistics from Basketball-Reference.com (via the Kaggle "NBA
-Stats" dataset), covering NBA regular seasons **2000-01 through 2025-26**.
+Stats" dataset), covering NBA regular seasons **1996-97 through 2025-26**. COURT DNA
+begins with 1996-97, the starting point for the historical advanced-stat
+coverage used by this model (see `docs/data.md`); it is not all-time NBA
+history.
 Six primary tables are combined: `Advanced.csv`, `Per 100 Poss.csv`,
 `Player Shooting.csv`, `Player Per Game.csv`, `Player Season Info.csv`,
 `Player Career Info.csv`. Six supplementary tables are available in `raw/`
@@ -23,8 +26,8 @@ Individual team rows are kept only in `data/team_stints.csv` for
 team-history display, never used in any calculation — verified with James
 Harden's 2025-26 season (`2TM`, 2,438 minutes) as a regression test.
 
-16,130 raw in-range NBA rows − 3,320 individual-team rows absorbed into
-1,605 aggregate rows = **12,810 canonical player-seasons**, with zero
+18,254 raw in-range NBA rows − 3,685 individual-team rows absorbed into
+1,782 aggregate rows = **14,569 canonical player-seasons**, with zero
 duplicate `(player_id, season)` pairs.
 
 ## Qualification thresholds
@@ -61,7 +64,7 @@ comparison candidate.
 
 Within each season, restricted to that season's qualified pool: each
 feature is winsorized at the 1st/99th percentile, then standardized
-(z-scored) against that season only — never the full 26-season history,
+(z-scored) against that season only — never the full multi-season history,
 since league environments shifted substantially over this window (e.g.
 three-point rate roughly tripled). Small-sample rows are standardized
 against the qualified pool's mean/std but never contribute to it.
@@ -140,7 +143,7 @@ width = share of attempts; color intensity = FG%.
 
 Every player-season is its own observation, keyed `playerId_season`. The
 Player Map can compare the selected player-season against: the same season,
-±5 seasons, ±10 seasons, or 2000-01 through the latest season. Relative
+±5 seasons, ±10 seasons, or All seasons (1996-97 through the latest season). Relative
 windows are centred on the selected season and clamped to the dataset.
 
 **Cross-era normalization is the existing season-relative standardization
@@ -170,8 +173,8 @@ projects all qualified player-seasons onto one shared 2-component basis
 (`lib/embedding.ts`) so points keep their positions as the window changes.
 PCA is for visualization only — "most similar
 player" highlighting uses the full similarity formula, never 2D distance.
-Average variance explained by the 2 plotted components across all 26
-seasons: **58.6%** (range 56.4%-61.1%).
+Average variance explained by the 2 plotted components across all 30
+seasons: **58.3%** (range 55.0%-61.1%).
 
 ## Build a Lineup
 
@@ -192,5 +195,18 @@ rules — never a win/loss prediction.
   incomplete measure of defensive activity.
 - A high Similarity Index reflects these 12 features only, not a claim
   that two players play alike in every respect.
+- Style similarity is not a claim of equal player quality, and raw values
+  from different eras are not necessarily directly comparable; Court DNA
+  compares season-relative standardized traits.
+- 1998-99 (lockout-shortened, at most 50 games) uses the same thresholds as
+  every other season (≥500 minutes, ≥20 games). No proration is applied, so
+  its qualified pool (265) is smaller than neighbouring seasons (about 310).
+- Raw `avg_dist_fga` (and, less strongly, the 0-3 ft shot share) shows a
+  level shift between 1999-00 and 2000-01 that is not explained by a change
+  in three-point share. Whether it is a source/measurement difference or a
+  league-environment change is not established. Within-season ordering is
+  continuous across the boundary, and season-relative standardization
+  neutralizes the level difference; no adjustment is applied and raw
+  cross-season shot distance is not interpreted directly.
 
 See `docs/limitations.md` for the complete list.

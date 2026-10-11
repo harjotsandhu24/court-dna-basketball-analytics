@@ -8,6 +8,8 @@ const INDEX: PlayersIndex = {
   curryde01: { name: "Dell Curry", seasons: [1990], qualified_seasons: [1990], latest_team: "TOR" },
   jokicni01: { name: "Nikola Jokić", seasons: [2016], qualified_seasons: [2016], latest_team: "DEN" },
   bryanko01: { name: "Kobe Bryant", seasons: [2001, 2016], qualified_seasons: [2001, 2016], latest_team: "LAL" },
+  ewingpa01: { name: "Patrick Ewing", seasons: [1997, 2002], qualified_seasons: [1997, 2002], latest_team: "ORL" },
+  ewingpa02: { name: "Patrick Ewing", seasons: [2009, 2015], qualified_seasons: [2009], latest_team: "HOU" },
   noqual01: { name: "Nobody Qualified", seasons: [2005], qualified_seasons: [], latest_team: "XXX" },
 };
 
@@ -41,6 +43,14 @@ describe("searchPlayers ranking", () => {
   it("is case-insensitive", () => {
     const results = searchPlayers(INDEX, "LEBRON");
     expect(results.some((r) => r.id === "jamesle01")).toBe(true);
+  });
+
+  it("keeps same-name players as separate results keyed by player id", () => {
+    const results = searchPlayers(INDEX, "patrick ewing");
+    expect(results.map((r) => r.id).sort()).toEqual(["ewingpa01", "ewingpa02"]);
+    expect(new Set(results.map((r) => r.name))).toEqual(new Set(["Patrick Ewing"]));
+    // deterministic order for identical names
+    expect(searchPlayers(INDEX, "patrick ewing").map((r) => r.id)).toEqual(results.map((r) => r.id));
   });
 
   it("returns nothing for an empty or whitespace-only query", () => {

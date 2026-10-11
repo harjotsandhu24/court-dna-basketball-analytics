@@ -28,7 +28,7 @@ const PAD = 36;
 const MATCH_COUNT = 6;
 const LABELLED_MATCHES = 5;
 // Background dot opacity: the reference season stays strongest; other seasons
-// are quieter, and quietest in the full 2000-present cloud so thousands of
+// are quieter, and quietest in the All seasons cloud so thousands of
 // points read as a distribution rather than competing objects.
 const ALPHA_REFERENCE_SEASON = 0.88;
 const ALPHA_OTHER_SEASON = 0.45;
@@ -45,7 +45,7 @@ const WINDOW_LABELS: Record<CompareWindow, string> = {
   season: "Season",
   "5": "±5 years",
   "10": "±10 years",
-  all: `${SEASON_MIN - 1}–present`,
+  all: "All seasons",
 };
 
 interface MapView {
@@ -566,9 +566,7 @@ function GalaxyPageInner() {
   const rangeLabel =
     view.window === "season"
       ? `${seasonLabel(view.season)} only`
-      : view.window === "all"
-        ? WINDOW_LABELS.all
-        : `${seasonLabel(lo)} to ${seasonLabel(hi)}`;
+      : `${seasonLabel(lo)} to ${seasonLabel(hi)}`;
 
   const loadFailed = poolError || galaxyFailed;
   const loading = !loadFailed && (pool.length === 0 || (needsGalaxy && !galaxyForSeason));

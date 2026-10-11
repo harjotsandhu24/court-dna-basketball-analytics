@@ -10,7 +10,7 @@
  * explanation of every value below.
  */
 
-export const SEASON_MIN = 2001; // 2000-01
+export const SEASON_MIN = 1997; // 1996-97
 export const SEASON_MAX = 2026; // 2025-26
 
 export function seasonLabel(seasonEndYear: number): string {

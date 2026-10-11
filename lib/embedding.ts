@@ -3,7 +3,7 @@
  *
  * The per-season PCA coordinates in public/data/galaxy/ are fit separately for
  * each season, so axes differ from season to season and their points cannot be
- * drawn together. For ±5 / ±10 / 2000-present the map instead projects every
+ * drawn together. For ±5 / ±10 / All seasons the map instead projects every
  * qualified player-season's season-standardized vector (the same 12 features
  * the similarity score uses) onto ONE principal-component basis fit on the
  * whole pool. Positions therefore stay fixed while the window changes.

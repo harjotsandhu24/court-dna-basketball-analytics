@@ -7,6 +7,7 @@ import SearchBar from "@/components/SearchBar";
 import CourtPrint from "@/components/CourtPrint";
 import PlayerCard from "@/components/PlayerCard";
 import { loadSeason, loadMeta } from "@/lib/dataLoader";
+import { SEASON_MIN, seasonLabel } from "@/lib/config";
 import type { PlayerSeasonRecord, DatasetMeta } from "@/lib/types";
 
 const FEATURED: Array<{ id: string; season: number }> = [
@@ -149,9 +150,11 @@ export default function HomePage() {
         <div className="max-w-2xl">
           <h2 className="font-display text-3xl text-ink mb-4">What makes a player&rsquo;s game unique?</h2>
           <p className="text-stone leading-relaxed">
-            COURT DNA uses more than 25 years of NBA data to compare how players score, shoot,
-            pass, rebound, and defend. It turns those numbers into simple player profiles, finds
-            similar playing styles, and shows where the similarities come from.
+            COURT DNA compares NBA player-seasons from {seasonLabel(SEASON_MIN)} to present, beginning
+            with the earliest season supported by the advanced-stat coverage used in the model. Its 12
+            features capture how players score, shoot, pass, rebound, and defend. It turns those numbers
+            into simple player profiles, finds similar playing styles, and shows where the similarities
+            come from.
           </p>
           <Link href="/methodology" className="mt-4 inline-block text-sm font-medium text-court-orange-bright hover:underline">
             See how it works →

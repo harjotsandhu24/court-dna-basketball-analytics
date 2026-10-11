@@ -3,11 +3,12 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import MotionProvider from "@/components/MotionProvider";
+import { SEASON_MAX, SEASON_MIN, seasonLabel } from "@/lib/config";
 
 export const metadata: Metadata = {
   title: "COURT DNA — Basketball Player Style Explorer",
   description:
-    "Explore how basketball players score, create, defend, and evolve. An interactive analytics experience covering NBA player style, similarity, shot profiles, career evolution, and lineup identity from 2000-01 through 2025-26.",
+    `Explore how basketball players score, create, defend, and evolve. An interactive analytics experience covering NBA player style, similarity, shot profiles, career evolution, and lineup identity from ${seasonLabel(SEASON_MIN)} through ${seasonLabel(SEASON_MAX)}.`,
   openGraph: {
     title: "COURT DNA — Basketball Player Style Explorer",
     description: "Explore how basketball players score, create, defend, and evolve.",

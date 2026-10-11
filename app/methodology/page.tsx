@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { loadMeta } from "@/lib/dataLoader";
 import type { DatasetMeta } from "@/lib/types";
-import { FEATURE_GROUPS, GALAXY_MIN_MINUTES, GALAXY_MIN_GAMES, CAREER_DISPLAY_MIN_MINUTES, SIMILARITY_SCALE } from "@/lib/config";
+import { FEATURE_GROUPS, GALAXY_MIN_MINUTES, GALAXY_MIN_GAMES, CAREER_DISPLAY_MIN_MINUTES, SIMILARITY_SCALE, SEASON_MAX, SEASON_MIN, seasonLabel } from "@/lib/config";
 
 export default function MethodologyPage() {
   const [meta, setMeta] = useState<DatasetMeta | null>(null);
@@ -16,8 +16,10 @@ export default function MethodologyPage() {
 
       <Section title="Data source">
         <p>
-          Player-season statistics from Basketball-Reference.com, NBA regular seasons {meta?.season_range_label[0] ?? "2000-01"}
-          {" "}through {meta?.season_range_label[1] ?? "2025-26"}. ABA/BAA-era leagues are excluded — they ceased to
+          Player-season statistics from Basketball-Reference.com, NBA regular seasons {meta?.season_range_label[0] ?? seasonLabel(SEASON_MIN)}
+          {" "}through {meta?.season_range_label[1] ?? seasonLabel(SEASON_MAX)}. COURT DNA begins with the {seasonLabel(SEASON_MIN)} season, the
+          starting point for the historical advanced-stat coverage used by this model; it is not an all-time NBA
+          history. ABA/BAA-era leagues are excluded — they ceased to
           exist decades before this window, so no non-NBA rows appear in the dataset at all. Six primary tables are
           combined: Advanced, Per 100 Possessions, Player Shooting, Player Per Game, Player Season Info, and Player
           Career Info.
@@ -41,6 +43,8 @@ export default function MethodologyPage() {
           <li>Player detail / career display: at least {CAREER_DISPLAY_MIN_MINUTES} minutes — below the comparison bar, a season still gets
             a detail page but is visibly flagged &ldquo;small sample&rdquo; and is never used as a candidate in someone
             else&rsquo;s closest matches.</li>
+          <li>The same thresholds apply to every season, including the lockout-shortened 1998-99 season, which
+            therefore has a smaller qualified pool.</li>
         </ul>
         {meta && (
           <p className="mt-3 text-sm text-stone-light">
@@ -53,11 +57,13 @@ export default function MethodologyPage() {
 
       <Section title="Features and season-relative normalization">
         <p>
-          League environments changed substantially between 2000-01 and 2025-26 — three-point rate alone roughly
+          League environments changed substantially between {seasonLabel(SEASON_MIN)} and {seasonLabel(SEASON_MAX)} — three-point rate alone roughly
           tripled. Every similarity feature is therefore winsorized at the 1st/99th percentile and standardized
           (z-scored) <em>within its own season</em>, against that season&rsquo;s qualified pool only — never against
-          the full 26-season history. A player is only ever compared to how unusual their number was in their own
-          league environment.
+          the full multi-season history. A player is only ever compared to how unusual their number was in their own
+          league environment. This measures playing-style similarity, not equal quality, and raw values from different
+          eras are not necessarily directly comparable — shot-distance levels in particular shift around 1999-00 /
+          2000-01, which season-relative standardization is designed to absorb.
         </p>
       </Section>
 

@@ -7,8 +7,9 @@
 
 **Live app: [court-dna-basketball-analytics.vercel.app](https://court-dna-basketball-analytics.vercel.app/)**
 
-COURT DNA is an interactive NBA player comparison tool built from more than
-25 years of player data. Search players, compare playing styles, find
+COURT DNA is an interactive NBA player comparison tool covering the
+advanced-stat era, 1996-97 to present, with one consistent 12-feature model.
+Search players, compare playing styles, find
 similar players, explore career changes, and build lineups.
 
 ## What it does
@@ -29,8 +30,10 @@ formula and methodology: [`docs/methodology.md`](docs/methodology.md).
 
 ## Data
 
-2000-01 through 2025-26 · 12,810 canonical player-seasons · 1,900 players
-with profile pages · 8,923 comparison-eligible player-seasons. Source:
+1996-97 through 2025-26 (30 seasons) · 14,569 canonical player-seasons ·
+2,093 players with profile pages · 10,121 comparison-eligible player-seasons.
+1996-97 is the start of the historical advanced-stat coverage used by the
+12-feature model; this is not all-time NBA history. Source:
 Kaggle NBA Stats dataset (CC0). Full detail and reproduction steps:
 [`docs/data.md`](docs/data.md).
 

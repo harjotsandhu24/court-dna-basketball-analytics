@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import {
@@ -12,7 +13,7 @@ import {
   type SimilarityPoolEntry,
 } from "../lib/similarity";
 import { computeSharedEmbedding } from "../lib/embedding";
-import { SIMILARITY_FEATURES, SEASON_MIN, SEASON_MAX } from "../lib/config";
+import { SIMILARITY_FEATURES, SEASON_MIN, SEASON_MAX, seasonLabel } from "../lib/config";
 
 function vec(seed: number): Record<string, number> {
   const out: Record<string, number> = {};
@@ -31,7 +32,9 @@ describe("compare-across windows", () => {
   it("clamps relative windows to the dataset", () => {
     expect(windowBounds("5", SEASON_MIN, SEASON_MIN, SEASON_MAX)).toEqual([SEASON_MIN, SEASON_MIN + 5]);
     expect(windowBounds("10", SEASON_MAX, SEASON_MIN, SEASON_MAX)).toEqual([SEASON_MAX - 10, SEASON_MAX]);
-    expect(windowBounds("10", 2009, SEASON_MIN, SEASON_MAX)).toEqual([SEASON_MIN, 2019]);
+    // 2009 - 10 = 1999, which is inside the dataset, so ±10 does not clamp here.
+    expect(windowBounds("10", 2009, SEASON_MIN, SEASON_MAX)).toEqual([1999, 2019]);
+    expect(windowBounds("10", 2003, SEASON_MIN, SEASON_MAX)).toEqual([SEASON_MIN, 2013]);
     expect(windowBounds("all", 2009, SEASON_MIN, SEASON_MAX)).toEqual([SEASON_MIN, SEASON_MAX]);
     expect(windowBounds("season", 2009, SEASON_MIN, SEASON_MAX)).toEqual([2009, 2009]);
   });
@@ -42,7 +45,19 @@ describe("compare-across windows", () => {
     expect(inSeasonWindow(2015, 2009, f5)).toBe(false);
     expect(inSeasonWindow(2009, 2009, windowToFilters("season"))).toBe(true);
     expect(inSeasonWindow(2010, 2009, windowToFilters("season"))).toBe(false);
-    expect(inSeasonWindow(2026, 2001, windowToFilters("all"))).toBe(true);
+    expect(inSeasonWindow(SEASON_MAX, SEASON_MIN, windowToFilters("all"))).toBe(true);
+  });
+
+  it("starts at 1996-97 and clamps every window at both boundaries", () => {
+    expect(seasonLabel(SEASON_MIN)).toBe("1996-97");
+    expect(SEASON_MAX).toBeGreaterThan(SEASON_MIN);
+    expect(windowBounds("season", SEASON_MIN, SEASON_MIN, SEASON_MAX)).toEqual([SEASON_MIN, SEASON_MIN]);
+    expect(windowBounds("5", SEASON_MIN, SEASON_MIN, SEASON_MAX)).toEqual([SEASON_MIN, SEASON_MIN + 5]);
+    expect(windowBounds("10", SEASON_MIN, SEASON_MIN, SEASON_MAX)).toEqual([SEASON_MIN, SEASON_MIN + 10]);
+    expect(windowBounds("all", SEASON_MIN, SEASON_MIN, SEASON_MAX)).toEqual([SEASON_MIN, SEASON_MAX]);
+    expect(windowBounds("season", SEASON_MAX, SEASON_MIN, SEASON_MAX)).toEqual([SEASON_MAX, SEASON_MAX]);
+    expect(windowBounds("5", SEASON_MAX, SEASON_MIN, SEASON_MAX)).toEqual([SEASON_MAX - 5, SEASON_MAX]);
+    expect(windowBounds("all", SEASON_MAX, SEASON_MIN, SEASON_MAX)).toEqual([SEASON_MIN, SEASON_MAX]);
   });
 
   it("falls back to Season for unknown URL values", () => {
@@ -150,6 +165,53 @@ describe("shipped data", () => {
   it("covers every season from the first to the last", () => {
     const seasons = new Set(pool.map((e) => e.season));
     for (let s = SEASON_MIN; s <= SEASON_MAX; s++) expect(seasons.has(s)).toBe(true);
+  });
+
+  it("keeps every 2001+ standardized vector, archetype and position group exactly as before the 1996-97 expansion", () => {
+    // Fingerprint of the 8,923 pre-expansion pool rows (season >= 2001), recorded
+    // from the committed 2000-01..2025-26 data. Adding earlier seasons must not
+    // change any season-relative value, so this hash must never move.
+    const legacy = pool
+      .filter((e) => e.season >= 2001)
+      .sort((a, b) => (a.player_id < b.player_id ? -1 : a.player_id > b.player_id ? 1 : a.season - b.season));
+    expect(legacy).toHaveLength(8923);
+    const hash = createHash("sha256")
+      .update(JSON.stringify(legacy.map((e) => [e.player_id, e.season, e.archetype, e.pos_group, ...SIMILARITY_FEATURES.map((f) => e.vector[f])])))
+      .digest("hex");
+    expect(hash).toBe("c8eade62492fde402d05b54049e21c8447f0e6923d97bf7c3c4a8bdd6d73d7fd");
+  });
+
+  it("pool membership follows the unchanged 500 minute / 20 game rule in every season, including lockout 1998-99", () => {
+    for (let s = SEASON_MIN; s <= SEASON_MAX; s++) {
+      const rows = read<{ player_id: string; mp: number; g: number; qualified: boolean }[]>(`seasons/${s}.json`);
+      const expected = rows.filter((r) => r.mp >= 500 && r.g >= 20).map((r) => r.player_id).sort();
+      expect(rows.filter((r) => r.qualified).map((r) => r.player_id).sort()).toEqual(expected);
+      expect(pool.filter((e) => e.season === s).map((e) => e.player_id).sort()).toEqual(expected);
+    }
+    const lockout = pool.filter((e) => e.season === 1999);
+    expect(lockout.length).toBeGreaterThan(200);
+    expect(lockout.length).toBeLessThan(pool.filter((e) => e.season === 2000).length);
+  });
+
+  it("keeps player ids stable across the 1999-00 / 2000-01 boundary", () => {
+    const index = read<Record<string, { name: string; seasons: number[] }>>("players_index.json");
+    for (const id of ["bryanko01", "onealsh01", "garneke01", "iversal01", "duncati01", "kiddja01", "hillgr01", "cartevi01"]) {
+      // A player can miss the 250-minute display floor in one season (Grant Hill
+      // played 4 games in 2000-01), so require 1999-00 plus later seasons under
+      // the same id rather than 2000-01 specifically.
+      expect(index[id].seasons).toContain(2000);
+      expect(index[id].seasons.some((season) => season >= 2001)).toBe(true);
+      const career = read<{ player_id: string; season: number }[]>(`career/${id}.json`);
+      expect(new Set(career.map((r) => r.player_id))).toEqual(new Set([id]));
+    }
+  });
+
+  it("returns one season per matched player when searching the real full-range pool", () => {
+    const query = pool.find((e) => e.player_id === "bryanko01" && e.season === 1999)!;
+    const matches = findClosestMatches(query, pool, { ...windowToFilters("all"), onePerPlayer: true }, 20);
+    expect(matches).toHaveLength(20);
+    expect(new Set(matches.map((m) => m.player_id)).size).toBe(20);
+    expect(matches.every((m) => m.player_id !== "bryanko01")).toBe(true);
   });
 
   it("per-season map coordinates cover exactly the qualified pool", () => {

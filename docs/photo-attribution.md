@@ -32,7 +32,7 @@ instead, using the same verification standard:
 | Giannis Antetokounmpo | `Giannis Antetokounmpo (51915264514).jpg` | Erik Drost | CC BY 2.0 |
 | Luka Dončić | `Luka Doncic.jpg` | Erik Drost | CC BY 2.0 |
 
-**Coverage: 5 of 1,900 players (0.26%).** Every other player uses the
+**Coverage: 5 of 2,093 players (0.24%).** Every other player uses the
 fallback graphic.
 
 ## Fallback behavior

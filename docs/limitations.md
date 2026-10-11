@@ -12,18 +12,30 @@
   is 91/100 on this project's formula — not a 91% chance two players are
   alike.
 - **The Player Map (PCA) is a visualization only.** Two components explain
-  an average of 58.6% of variance across seasons (range 56.4%-61.1%) —
+  an average of 58.3% of variance across seasons (range 55.0%-61.1%) —
   the app always uses the full similarity formula for actual rankings,
   never 2D distance.
 - **"How Much They Handle the Ball" (Build a Lineup)** is a z-score
   approximation, not the same season-rank computation as the other six
   trait dimensions.
+- **Coverage starts in 1996-97.** That is the start of the historical
+  advanced-stat coverage the 12-feature model relies on; earlier seasons
+  are not included and the project is not all-time NBA history.
+- **Eras are compared by style, not quality.** Matches use season-relative
+  standardized traits; raw values from different eras are not necessarily
+  directly comparable, and equal similarity does not mean equal talent.
+- **1998-99 is a shortened (lockout) season** with the same qualification
+  thresholds as every other season, so its comparison pool (265) is smaller.
+- **Shot-distance level shift around 1999-00 / 2000-01.** Raw
+  `avg_dist_fga` drops by roughly a foot at the boundary without a matching
+  change in three-point share. Season-relative standardization neutralizes
+  the level difference; raw cross-season shot distance is not interpreted.
 - **Correlation is not causation.** Career Over Time callouts state
   numeric changes only, never a cause (role change, coaching, injury).
 
 ## Photo coverage
 
-5 of 1,900 players have a real, license-verified photo; every other
+5 of 2,093 players have a real, license-verified photo; every other
 player uses the fallback graphic. See `docs/photo-attribution.md`.
 
 ## Browser/device QA

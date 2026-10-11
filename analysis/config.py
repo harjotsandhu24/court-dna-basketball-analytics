@@ -11,7 +11,7 @@ from dataclasses import dataclass, field
 # ---------------------------------------------------------------------------
 # Season range
 # ---------------------------------------------------------------------------
-SEASON_MIN = 2001  # 2000-01
+SEASON_MIN = 1997  # 1996-97
 SEASON_MAX = 2026  # 2025-26
 LEAGUE = "NBA"      # excludes ABA/BAA rows entirely
 

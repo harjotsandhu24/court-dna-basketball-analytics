@@ -55,15 +55,27 @@ CSVs and writes to `data/` or `public/data/`.
 
 | Metric | Value |
 |---|---|
-| Season range | 2000-01 – 2025-26 |
-| Unique players (profile page, ≥250 min in ≥1 season) | 1,900 |
-| Unique players, full canonical dataset | 2,584 |
-| Canonical player-seasons | 12,810 |
-| Display-eligible player-seasons (≥250 min) | 10,236 |
-| Comparison-eligible player-seasons (≥500 min, ≥20 games) | 8,923 |
-| Flagged small-sample seasons | 1,313 |
+| Season range | 1996-97 – 2025-26 (30 seasons) |
+| Unique players (profile page, ≥250 min in ≥1 season) | 2,093 |
+| Unique players, full canonical dataset | 2,859 |
+| Canonical player-seasons | 14,569 |
+| Display-eligible player-seasons (≥250 min) | 11,635 |
+| Comparison-eligible player-seasons (≥500 min, ≥20 games) | 10,121 |
+| Flagged small-sample seasons | 1,514 |
 
-Calculated by the pipeline (`step6`), not hardcoded.
+Calculated by the pipeline (`step6`), not hardcoded. Comparison-eligible
+seasons for the four earliest seasons: 1996-97 → 312, 1997-98 → 309,
+1998-99 → 265 (lockout-shortened, same thresholds), 1999-00 → 312.
+
+## Why the range begins in 1996-97
+
+COURT DNA begins with the 1996-97 season, the starting point for the
+historical advanced-stat coverage used by this model: every one of the 12
+similarity features is present for every comparison-eligible player-season
+from 1996-97 onward in this source. The range is set by `SEASON_MIN` in
+`analysis/config.py` / `lib/config.ts`. It is not a claim that advanced
+statistics did not exist earlier, and the project does not cover all of NBA
+history.
 
 ## Output files (`public/data/`)
 

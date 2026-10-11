@@ -217,6 +217,11 @@ export default function PlayerAutocomplete({
 
   const sizeClasses = size === "lg" ? "px-4 py-3 text-base" : "px-3 py-2 text-base sm:text-sm";
 
+  // Players who share a display name (e.g. father/son pairs) are told apart by
+  // their career span; identity stays the player id, never the name.
+  const nameCounts = new Map<string, number>();
+  for (const r of results) nameCounts.set(r.name, (nameCounts.get(r.name) ?? 0) + 1);
+
   const showDropdown = open && (status === "loading" || status === "error" || results.length > 0 || (status === "ready" && results.length === 0));
 
   return (
@@ -275,6 +280,10 @@ export default function PlayerAutocomplete({
             const resolvedSeason = entry
               ? nearestQualifiedSeason(entry, preferredSeason ?? entry.qualified_seasons[entry.qualified_seasons.length - 1])
               : null;
+            const careerSpan =
+              entry && (nameCounts.get(r.name) ?? 0) > 1
+                ? `${seasonLabel(entry.seasons[0])} to ${seasonLabel(entry.seasons[entry.seasons.length - 1])}`
+                : null;
             const willSwitchSeason = preferredSeason != null && resolvedSeason != null && resolvedSeason !== preferredSeason;
             return (
               <li
@@ -294,7 +303,10 @@ export default function PlayerAutocomplete({
                   isActive ? "bg-court-orange/15 text-ink" : "text-ink-light"
                 }`}
               >
-                <span className="truncate">{r.name}</span>
+                <span className="min-w-0">
+                  <span className="block truncate">{r.name}</span>
+                  {careerSpan && <span className="block truncate text-xs text-stone-light">Career {careerSpan}</span>}
+                </span>
                 <span className="flex shrink-0 items-center gap-1.5 text-xs">
                   {resolvedSeason != null && (
                     <span className={willSwitchSeason ? "font-medium text-court-orange-bright" : "text-stone-light"}>

@@ -245,3 +245,58 @@ def test_low_usage_low_turnover_shooter_not_mislabeled_creator(features):
     row = features[(features.player_id == "thompkl01") & (features.season == 2016)]
     assert len(row) == 1
     assert row.iloc[0]["archetype"] != "Primary Creator"
+
+
+# ---------------------------------------------------------------------------
+# Full-range (1996-97 -> latest) data integrity
+# ---------------------------------------------------------------------------
+
+def test_every_supported_season_exists(canonical, features):
+    expected = set(range(config.SEASON_MIN, config.SEASON_MAX + 1))
+    assert set(canonical["season"].unique()) == expected
+    assert set(features["season"].unique()) == expected
+    for s in (1997, 1998, 1999, 2000):
+        assert features[(features.season == s) & features.qualified].shape[0] > 200
+
+
+def test_qualified_similarity_features_are_complete_and_finite(features):
+    q = features[features["qualified"]]
+    for f in config.SIMILARITY_FEATURES:
+        for col in (f, f"std_{f}"):
+            vals = q[col].astype(float)
+            assert vals.notna().all(), f"missing {col}"
+            assert np.isfinite(vals).all(), f"non-finite {col}"
+
+
+def test_qualification_thresholds_unchanged_for_every_season_including_lockout(features):
+    assert config.GALAXY_MIN_MINUTES == 500 and config.GALAXY_MIN_GAMES == 20
+    expected = (features["mp"] >= 500) & (features["g"] >= 20)
+    assert (features["qualified"] == expected).all()
+    lockout = features[(features.season == 1999) & features.qualified]
+    assert 200 < len(lockout) < len(features[(features.season == 2000) & features.qualified])
+
+
+def test_standardized_values_have_unit_variance_per_season(features):
+    for season, d in features[features["qualified"]].groupby("season"):
+        for f in config.SIMILARITY_FEATURES:
+            col = d[f"std_{f}"]
+            assert abs(col.mean()) < 1e-6 and abs(col.std(ddof=0) - 1) < 1e-6, (season, f)
+
+
+def test_percentile_traits_in_range_for_every_season(features):
+    for col in [c for c in features.columns if c.startswith("pctile_")]:
+        assert features[col].between(0, 100).all(), col
+
+
+def test_player_ids_are_stable_across_the_2000_boundary(canonical):
+    for pid in ["bryanko01", "onealsh01", "garneke01", "iversal01", "duncati01", "kiddja01", "hillgr01", "cartevi01"]:
+        rows = canonical[canonical.player_id == pid]
+        assert {2000, 2001} <= set(rows.season), pid
+        assert rows.player.nunique() == 1, pid
+
+
+def test_no_name_is_used_as_identity(canonical):
+    # Same display name may belong to different players; ids must differ.
+    ewing = canonical[canonical.player == "Patrick Ewing"]
+    assert ewing.player_id.nunique() >= 2
+    assert not ewing.duplicated(subset=["player_id", "season"]).any()

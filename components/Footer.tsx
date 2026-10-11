@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SEASON_MAX, SEASON_MIN, seasonLabel } from "@/lib/config";
 
 export default function Footer() {
   return (
@@ -23,7 +24,7 @@ export default function Footer() {
           </nav>
         </div>
         <p className="mt-6 text-xs text-stone-light">
-          Data: Basketball-Reference.com player statistics, 2000-01 through 2025-26 regular seasons. © 2026
+          Data: Basketball-Reference.com player statistics, {seasonLabel(SEASON_MIN)} through {seasonLabel(SEASON_MAX)} regular seasons. © 2026
         </p>
       </div>
     </footer>

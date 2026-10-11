@@ -3,11 +3,11 @@ Step 3 — season-relative feature standardization, percentile traits, and
 deterministic archetypes.
 
 Why season-relative: league averages, pace, and role definitions shifted
-substantially between 2000-01 and 2025-26 (three-point rate alone roughly
+substantially between 1996-97 and 2025-26 (three-point rate alone roughly
 tripled). Comparing raw numbers across eras would silently favor recent
 players. Every similarity feature and every trait percentile is therefore
 calculated relative to the OTHER QUALIFYING PLAYERS IN THAT SAME SEASON,
-never against the full 26-season pool.
+never against the full multi-season pool.
 
 Pipeline per season, restricted to the qualified pool (>=500 MP, >=20 G):
   1. Winsorize each raw feature at the 1st/99th percentile (season-relative)
@@ -51,15 +51,16 @@ def main():
 
     features = config.SIMILARITY_FEATURES
 
-    # Defensive check before we begin: are there any missing values in the
-    # qualified pool for a required feature? (Expected: zero, per data
-    # exploration -- but this must never silently pass if that changes.)
+    # Hard stop: a required similarity feature must be present and finite for
+    # every qualified row. Nothing is imputed, zero-filled, or silently
+    # excluded -- if this ever fails, the source data needs investigation.
     qualified_pool = display_pool[display_pool["qualified"]]
     for f in features:
-        n_missing = qualified_pool[f].isna().sum()
-        if n_missing:
-            print(f"WARNING: {n_missing} missing values for required feature '{f}' "
-                  f"in the qualified pool -- excluding those rows from similarity.", file=sys.stderr)
+        bad = int((~np.isfinite(qualified_pool[f].astype(float))).sum())
+        if bad:
+            print(f"FAIL: {bad} missing/non-finite values for required feature '{f}' "
+                  f"in the qualified pool.", file=sys.stderr)
+            sys.exit(1)
 
     std_cols = {f: [] for f in features}
     pct_cols = {dim: [] for dim in config.TRAIT_DIMENSIONS}
@@ -77,15 +78,15 @@ def main():
         for f in features:
             valid_qual = qual_df[f].dropna()
             if len(valid_qual) < 5:
-                # Not enough qualified rows this season for this feature
-                # (should not happen post-2001, but guarded anyway).
-                season_std[f] = np.nan
-                continue
+                print(f"FAIL: only {len(valid_qual)} qualified rows for '{f}' in season {season}.", file=sys.stderr)
+                sys.exit(1)
             lo = valid_qual.quantile(config.WINSOR_LOWER_PCTILE)
             hi = valid_qual.quantile(config.WINSOR_UPPER_PCTILE)
             mean = valid_qual.clip(lo, hi).mean()
             std = valid_qual.clip(lo, hi).std(ddof=0)
-            std = std if std > 1e-9 else 1.0  # guard against zero-variance columns
+            if not std > 1e-9:
+                print(f"FAIL: zero-variance feature '{f}' in season {season}.", file=sys.stderr)
+                sys.exit(1)
 
             clipped_all = season_df[f].clip(lo, hi)
             season_std[f] = (clipped_all - mean) / std

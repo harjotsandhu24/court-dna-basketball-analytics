@@ -3,7 +3,7 @@
 Results below are from an actual run against the current build. Re-run any
 of them with the commands shown.
 
-## Python tests — 20/20 passing
+## Python tests — 27/27 passing
 
 **Prerequisite**: these tests read `raw/*.csv` and `data/*.csv`, both
 excluded from Git (see `docs/data.md`). Generate them first:
@@ -22,14 +22,15 @@ Then: `python3 -m pytest ../tests/test_pipeline.py -v`
 | Test group | Verifies |
 |---|---|
 | Canonicalization | One row per (player_id, season); traded-player aggregate selection verified against a real example (James Harden 2025-26, 2TM/LAC/CLE); no multi-team double counting across 100+ cases |
-| Season/league scope | NBA-only filtering; season-label conversion (2001→"2000-01") |
-| Qualification | Comparison pool strictly meets the 500-min/20-game bar; no tiny sample slips through |
+| Season/league scope | NBA-only filtering; season-label conversion (2001→"2000-01"); every season 1996-97 → latest exists |
+| Qualification | Comparison pool strictly meets the 500-min/20-game bar in every season, including lockout 1998-99; no tiny sample slips through |
 | Feature integrity | Zero NaN/Inf across all 12 similarity features; all 7 trait percentiles stay within [0, 100]; exactly 12 similarity features (regression test) |
+| Full-range integrity | Complete finite features for every qualified row; unit-variance standardization per season; stable player ids across the 2000 boundary; same-name players keep distinct ids |
 | Determinism | Byte-identical percentiles, archetypes, and PCA coordinates across a full pipeline rerun |
 | Similarity formula | Identical vectors score exactly 100; symmetric; bounded [0, 100]; weights match spec exactly |
 | Archetypes | Spot-checked against real players (e.g. Curry 2015-16 → Primary Creator, Gobert 2017-18 → Defensive Anchor); regression test for a past mislabeling bug |
 
-## TypeScript tests — 47/47 passing
+## TypeScript tests — 83/83 passing (5 files)
 
 `npm test`
 
@@ -38,6 +39,8 @@ Then: `python3 -m pytest ../tests/test_pipeline.py -v`
 | `similarity.parity.test.ts` | 33 | Python and TypeScript similarity engines agree on 32 real player-season pairs |
 | `similarity.behavior.test.ts` | 11 | Self-match exclusion, filters, result ordering, feature-count regression |
 | `explain.test.ts` | 3 | Deterministic match-explanation generator |
+| `search.test.ts` | 14 | Search ranking, diacritics, same-name players keyed by id |
+| `crossEra.test.ts` | 22 | Window clamping at both season bounds, shared map layout, one season per match, shipped-data checks: 2001+ vectors unchanged (hash), qualification rule per season, stable ids |
 
 ## Lint / typecheck / build
 

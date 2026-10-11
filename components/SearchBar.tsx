@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { SEASON_MAX, SEASON_MIN, seasonLabel } from "@/lib/config";
 import PlayerAutocomplete, { type PlayerAutocompleteSelection } from "./PlayerAutocomplete";
 
 /** Homepage/global search -- a thin wrapper around the shared
@@ -20,7 +21,7 @@ export default function SearchBar({ size = "md", autoFocus = false }: { size?: "
   return (
     <PlayerAutocomplete
       onSelect={handleSelect}
-      placeholder="Search any player, 2000-01 to 2025-26…"
+      placeholder={`Search any player, ${seasonLabel(SEASON_MIN)} to ${seasonLabel(SEASON_MAX)}…`}
       size={size === "lg" ? "lg" : "sm"}
       autoFocus={autoFocus}
     />
