@@ -7,22 +7,101 @@ import PlayerPhoto from "@/components/PlayerPhoto";
 import CourtPrint from "@/components/CourtPrint";
 import ShotDna from "@/components/ShotDna";
 import PlayerAutocomplete, { type PlayerAutocompleteSelection } from "@/components/PlayerAutocomplete";
-import { findPlayerSeason } from "@/lib/dataLoader";
-import { similarityIndex } from "@/lib/similarity";
+import { findPlayerSeason, loadPlayersIndex } from "@/lib/dataLoader";
+import { isSamePlayerSeason, parsePlayerSeasonKey, playerSeasonKey, similarityIndex } from "@/lib/similarity";
 import { explainMatch } from "@/lib/explain";
-import { TRAIT_DIMENSIONS } from "@/lib/config";
+import { TRAIT_DIMENSIONS, seasonLabel } from "@/lib/config";
 import { DIMENSION_DISPLAY_LABEL } from "@/lib/courtPrint";
 import type { PlayerSeasonRecord } from "@/lib/types";
 import { fmt1 } from "@/lib/format";
 
-function parseSlug(slug: string | null): { id: string; season: number } | null {
-  if (!slug) return null;
-  const idx = slug.lastIndexOf("_");
-  if (idx === -1) return null;
-  const id = slug.slice(0, idx);
-  const season = parseInt(slug.slice(idx + 1), 10);
-  if (!id || Number.isNaN(season)) return null;
-  return { id, season };
+const SELECT_CLASS =
+  "rounded-md border border-line-strong bg-arena-panel px-3 py-2 text-base text-ink-light outline-none focus:border-court-orange sm:text-sm";
+
+/** One comparison slot's search. Picking a player lets the user confirm the
+ * exact season (defaulting to the season search resolves to) before it is
+ * used; a player with a single season is used immediately. The same
+ * player-season as `blockedKey` is never accepted. */
+function SlotPicker({
+  placeholder,
+  confirmLabel,
+  blockedKey,
+  onConfirm,
+}: {
+  placeholder: string;
+  confirmLabel: string;
+  blockedKey?: string;
+  onConfirm: (id: string, season: number) => void;
+}) {
+  const [pick, setPick] = useState<{ id: string; name: string; seasons: number[] } | null>(null);
+  const [season, setSeason] = useState(0);
+  const [message, setMessage] = useState("");
+
+  function commit(id: string, s: number) {
+    if (blockedKey === playerSeasonKey(id, s)) {
+      setMessage("That is the same player-season as Player 1. Choose a different season or player.");
+      return;
+    }
+    setMessage("");
+    onConfirm(id, s);
+  }
+
+  function handleSelect(sel: PlayerAutocompleteSelection) {
+    loadPlayersIndex()
+      .then((idx) => {
+        const seasons = idx[sel.id]?.seasons ?? [sel.season];
+        if (seasons.length <= 1) {
+          commit(sel.id, sel.season);
+          return;
+        }
+        setPick({ id: sel.id, name: sel.name, seasons });
+        setSeason(sel.season);
+        setMessage("");
+      })
+      .catch(() => commit(sel.id, sel.season));
+  }
+
+  return (
+    <div>
+      {pick ? (
+        <div className="flex flex-wrap items-center gap-2 rounded-md border border-line-strong bg-arena-panel px-4 py-3">
+          <span className="mr-auto text-sm font-medium text-ink-light">{pick.name}</span>
+          <select
+            aria-label={`Season for ${pick.name}`}
+            value={season}
+            onChange={(e) => setSeason(parseInt(e.target.value, 10))}
+            className={SELECT_CLASS}
+          >
+            {[...pick.seasons].reverse().map((s) => (
+              <option key={s} value={s} disabled={blockedKey === playerSeasonKey(pick.id, s)}>
+                {seasonLabel(s)}
+              </option>
+            ))}
+          </select>
+          <button type="button" onClick={() => commit(pick.id, season)} className="btn btn-primary min-h-11 px-4 py-2 text-sm">
+            {confirmLabel}
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setPick(null);
+              setMessage("");
+            }}
+            className="tap-target-44 text-xs text-stone-light hover:text-court-orange-bright"
+          >
+            Change
+          </button>
+        </div>
+      ) : (
+        <PlayerAutocomplete onSelect={handleSelect} placeholder={placeholder} autoFocus />
+      )}
+      {message && (
+        <p role="status" className="mt-2 text-sm text-court-orange-bright">
+          {message}
+        </p>
+      )}
+    </div>
+  );
 }
 
 function ComparePageInner() {
@@ -31,53 +110,77 @@ function ComparePageInner() {
   const aSlug = params.get("a");
   const bSlug = params.get("b");
 
-  const [a, setA] = useState<PlayerSeasonRecord | null>(null);
-  const [b, setB] = useState<PlayerSeasonRecord | null>(null);
+  // undefined = still loading, null = the key is invalid or that player has no
+  // such season (the slot is then left empty, never substituted).
+  const [a, setA] = useState<PlayerSeasonRecord | null | undefined>(undefined);
+  const [b, setB] = useState<PlayerSeasonRecord | null | undefined>(undefined);
 
   useEffect(() => {
-    const pa = parseSlug(aSlug);
+    const pa = parsePlayerSeasonKey(aSlug);
+    let live = true;
     if (pa) {
-      findPlayerSeason(pa.id, pa.season).then(setA);
-    } else {
-      // synchronous reset when the URL has no valid slug (not a stale
-      // fetch response) -- intentional, not a data race
       // eslint-disable-next-line react-hooks/set-state-in-effect
+      setA(undefined);
+      findPlayerSeason(pa.id, pa.season).then((r) => live && setA(r)).catch(() => live && setA(null));
+    } else {
       setA(null);
     }
+    return () => {
+      live = false;
+    };
   }, [aSlug]);
 
   useEffect(() => {
-    const pb = parseSlug(bSlug);
+    const pb = parsePlayerSeasonKey(bSlug);
+    let live = true;
     if (pb) {
-      findPlayerSeason(pb.id, pb.season).then(setB);
-    } else {
       // eslint-disable-next-line react-hooks/set-state-in-effect
+      setB(undefined);
+      findPlayerSeason(pb.id, pb.season).then((r) => live && setB(r)).catch(() => live && setB(null));
+    } else {
       setB(null);
     }
+    return () => {
+      live = false;
+    };
   }, [bSlug]);
 
-  if (!a || !b) {
-    // An explicit Player 1 -> Player 2 -> Compare flow -- the previous
-    // empty state used the generic site search here, which navigated
-    // straight to a Player Profile page on selection (a real, misleading
-    // bug: "comparing" someone just took you to their solo profile with
-    // no second slot filled). aSlug present but `a` not yet resolved just
-    // means the fetch for it is in flight; both of those only count as
-    // "already have a first pick" once the slug itself is set.
-    const haveFirst = !!aSlug;
-    const pickedFirstId = haveFirst ? parseSlug(aSlug)?.id : null;
+  const pa = parsePlayerSeasonKey(aSlug);
+  const pb = parsePlayerSeasonKey(bSlug);
+  const aBad = !!aSlug && a === null;
+  const bBad = !!bSlug && b === null;
+  const duplicate = !!(pa && pb && isSamePlayerSeason(pa, pb));
 
-    function pickFirst(sel: PlayerAutocompleteSelection) {
-      router.push(`/compare?a=${sel.id}_${sel.season}`);
+  if (!a || !b || duplicate) {
+    // An explicit Player 1 -> Player 2 -> Compare flow (the generic site
+    // search used here before navigated straight to a profile). An unusable
+    // key in the URL leaves its slot empty with a short note.
+    const haveFirst = !!pa && !aBad;
+    const notice = aBad
+      ? "The first player-season in that link isn't available, so it was skipped."
+      : duplicate
+        ? "Player 2 is the same player-season as Player 1. Choose a different season or player."
+        : bBad
+          ? "The second player-season in that link isn't available. Choose Player 2 below."
+          : null;
+
+    function pickFirst(id: string, season: number) {
+      router.push(`/compare?a=${playerSeasonKey(id, season)}`);
     }
-    function pickSecond(sel: PlayerAutocompleteSelection) {
-      router.push(`/compare?a=${aSlug}&b=${sel.id}_${sel.season}`);
+    function pickSecond(id: string, season: number) {
+      router.push(`/compare?a=${aSlug}&b=${playerSeasonKey(id, season)}`);
     }
 
     return (
       <div className="mx-auto max-w-2xl px-5 py-20 md:px-8">
         <h1 className="font-display text-4xl text-ink mb-2 text-center">Compare Players</h1>
         <p className="mb-8 text-center text-stone">Pick two players to compare side by side.</p>
+
+        {notice && (
+          <p role="status" className="mb-5 rounded-md border border-line-strong bg-arena-panel px-4 py-3 text-sm text-ink-light">
+            {notice}
+          </p>
+        )}
 
         <div className="flex flex-col gap-5">
           <div>
@@ -87,7 +190,7 @@ function ComparePageInner() {
             {haveFirst ? (
               <div className="flex items-center justify-between rounded-md border border-line-strong bg-arena-panel px-4 py-3">
                 <span className="text-sm font-medium text-ink-light">
-                  {a ? `${a.player} · ${a.season_label}` : pickedFirstId ?? "Loading…"}
+                  {a ? `${a.player} · ${a.season_label}` : "Loading…"}
                 </span>
                 <button
                   type="button"
@@ -98,14 +201,19 @@ function ComparePageInner() {
                 </button>
               </div>
             ) : (
-              <PlayerAutocomplete onSelect={pickFirst} placeholder="Search for the first player…" autoFocus />
+              <SlotPicker placeholder="Search for the first player…" confirmLabel="Select" onConfirm={pickFirst} />
             )}
           </div>
 
           {haveFirst && (
             <div>
               <p className="text-eyebrow mb-2">Player 2 — search to choose</p>
-              <PlayerAutocomplete onSelect={pickSecond} placeholder="Search for the second player…" autoFocus />
+              <SlotPicker
+                placeholder="Search for the second player…"
+                confirmLabel="Compare"
+                blockedKey={aSlug ?? undefined}
+                onConfirm={pickSecond}
+              />
             </div>
           )}
 

@@ -9,7 +9,7 @@
  * not a probability model. A score of 91 means 91/100 on this project's
  * statistical similarity index -- not a 91% chance two players are alike.
  */
-import { FEATURE_WEIGHTS, SIMILARITY_FEATURES, SIMILARITY_SCALE } from "./config";
+import { FEATURE_WEIGHTS, SEASON_MAX, SEASON_MIN, SIMILARITY_FEATURES, SIMILARITY_SCALE } from "./config";
 
 export type FeatureVector = Readonly<Record<string, number | null | undefined>>;
 
@@ -93,6 +93,22 @@ export function hasUsableVector(v: FeatureVector): boolean {
 /** Stable identity of one player-season. Never use a name for this. */
 export function playerSeasonKey(playerId: string, season: number): string {
   return `${playerId}_${season}`;
+}
+
+/** Parses a `playerId_season` key, the URL contract used by /compare. Returns
+ * null unless the id is well formed and the season is a four-digit year inside
+ * the supported range; whether that player actually has that season is checked
+ * against the data by the caller. */
+export function parsePlayerSeasonKey(raw: string | null | undefined): { id: string; season: number } | null {
+  const m = raw ? /^([a-z0-9]+)_(\d{4})$/.exec(raw) : null;
+  if (!m) return null;
+  const season = Number(m[2]);
+  return season >= SEASON_MIN && season <= SEASON_MAX ? { id: m[1], season } : null;
+}
+
+/** Identity of a comparison slot is player id + season, never the name. */
+export function isSamePlayerSeason(a: { id: string; season: number }, b: { id: string; season: number }): boolean {
+  return a.id === b.id && a.season === b.season;
 }
 
 /**

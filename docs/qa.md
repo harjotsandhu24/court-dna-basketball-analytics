@@ -30,7 +30,7 @@ Then: `python3 -m pytest ../tests/test_pipeline.py -v`
 | Similarity formula | Identical vectors score exactly 100; symmetric; bounded [0, 100]; weights match spec exactly |
 | Archetypes | Spot-checked against real players (e.g. Curry 2015-16 → Primary Creator, Gobert 2017-18 → Defensive Anchor); regression test for a past mislabeling bug |
 
-## TypeScript tests — 83/83 passing (5 files)
+## TypeScript tests — 93/93 passing (6 files)
 
 `npm test`
 
@@ -40,6 +40,7 @@ Then: `python3 -m pytest ../tests/test_pipeline.py -v`
 | `similarity.behavior.test.ts` | 11 | Self-match exclusion, filters, result ordering, feature-count regression |
 | `explain.test.ts` | 3 | Deterministic match-explanation generator |
 | `search.test.ts` | 14 | Search ranking, diacritics, same-name players keyed by id |
+| `compareKey.test.ts` | 10 | `/compare` prefill keys: valid/malformed/out-of-range parsing, first and latest season, nonexistent player-seasons, same player+season blocked, same player different season allowed, same-name ids distinct |
 | `crossEra.test.ts` | 22 | Window clamping at both season bounds, shared map layout, one season per match, shipped-data checks: 2001+ vectors unchanged (hash), qualification rule per season, stable ids |
 
 ## Lint / typecheck / build

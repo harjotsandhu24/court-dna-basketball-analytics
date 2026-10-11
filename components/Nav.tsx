@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 const LINKS = [
   { href: "/", label: "Discover" },
   { href: "/galaxy", label: "Player Map" },
+  { href: "/compare", label: "Compare Players" },
   { href: "/build-a-five", label: "Build a Lineup" },
   { href: "/methodology", label: "How It Works" },
   { href: "/credits", label: "Credits" },
@@ -54,14 +55,14 @@ export default function Nav() {
           </span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-1" aria-label="Primary">
+        <nav className="hidden lg:flex items-center gap-1" aria-label="Primary">
           {LINKS.map((l) => {
             const active = pathname === l.href;
             return (
               <Link
                 key={l.href}
                 href={l.href}
-                className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                className={`whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                   active ? "text-court-orange-bright" : "text-stone hover:text-ink-light"
                 }`}
                 aria-current={active ? "page" : undefined}
@@ -73,7 +74,7 @@ export default function Nav() {
         </nav>
 
         <button
-          className="btn btn-secondary md:hidden px-3 py-2"
+          className="btn btn-secondary lg:hidden! px-3 py-2"
           onClick={() => setOpen((o) => !o)}
           aria-expanded={open}
           aria-controls="mobile-nav"
@@ -84,7 +85,7 @@ export default function Nav() {
       </div>
 
       {open && (
-        <nav id="mobile-nav" className="md:hidden border-t border-line px-5 py-3 flex flex-col gap-1" aria-label="Primary mobile">
+        <nav id="mobile-nav" className="lg:hidden border-t border-line px-5 py-3 flex flex-col gap-1" aria-label="Primary mobile">
           {LINKS.map((l) => {
             const active = pathname === l.href;
             return (

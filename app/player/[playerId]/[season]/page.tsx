@@ -10,6 +10,7 @@ import TraitBars from "@/components/TraitBars";
 import ClosestMatches from "@/components/ClosestMatches";
 import { loadCareer, findPlayerSeason } from "@/lib/dataLoader";
 import { seasonLabel } from "@/lib/config";
+import { playerSeasonKey } from "@/lib/similarity";
 import type { PlayerSeasonRecord } from "@/lib/types";
 import { fmt1, fmtInt, heightLabel } from "@/lib/format";
 
@@ -98,9 +99,17 @@ export default function PlayerDnaPage({
               </div>
             </div>
           )}
-          <Link href={`/career/${playerId}`} className="mt-3 inline-block text-sm font-medium text-court-orange-bright hover:underline">
-            View career over time →
-          </Link>
+          <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
+            <Link
+              href={`/compare?a=${playerSeasonKey(record.player_id, record.season)}`}
+              className="btn btn-secondary px-4 py-2 text-sm"
+            >
+              Compare this season
+            </Link>
+            <Link href={`/career/${playerId}`} className="inline-block text-sm font-medium text-court-orange-bright hover:underline">
+              View career over time →
+            </Link>
+          </div>
         </div>
 
         <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }}>
