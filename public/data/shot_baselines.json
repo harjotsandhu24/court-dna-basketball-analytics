@@ -1,0 +1,2410 @@
+{
+ "source": "Basketball-Reference via Kaggle (Player Shooting + Player Totals)",
+ "season_type": "regular",
+ "population": "all canonical NBA player-seasons (any minutes) with a complete, internally consistent shot distribution",
+ "min_minutes": 0,
+ "attempts_are_estimates": true,
+ "share_tolerance": 0.0025,
+ "seasons": {
+  "1997": {
+   "players": 430,
+   "league_player_seasons": 441,
+   "excluded_missing": 1,
+   "excluded_incomplete": 6,
+   "excluded_overallocated": 4,
+   "fga_covered": 186047,
+   "league_fga": 188594,
+   "fga_coverage": 0.9865,
+   "bands": {
+    "x0_3": {
+     "share": 0.3404,
+     "fg_pct": 0.5532
+    },
+    "x3_10": {
+     "share": 0.1412,
+     "fg_pct": 0.4375
+    },
+    "x10_16": {
+     "share": 0.1486,
+     "fg_pct": 0.3833
+    },
+    "x16_3p": {
+     "share": 0.1568,
+     "fg_pct": 0.4551
+    },
+    "x3p": {
+     "share": 0.2128,
+     "fg_pct": 0.3603
+    }
+   },
+   "shots": {
+    "attempts": 188589,
+    "coverage": 1.0,
+    "exact_counts": true,
+    "makes": 85774,
+    "players": 440,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 188594,
+    "zones": {
+     "x0_3": {
+      "attempts": 68455,
+      "fg_pct": 0.5535,
+      "makes": 37888,
+      "share": 0.363
+     },
+     "x10_16": {
+      "attempts": 28563,
+      "fg_pct": 0.399,
+      "makes": 11396,
+      "share": 0.1515
+     },
+     "x16_3p": {
+      "attempts": 28021,
+      "fg_pct": 0.426,
+      "makes": 11938,
+      "share": 0.1486
+     },
+     "x3_10": {
+      "attempts": 23609,
+      "fg_pct": 0.4308,
+      "makes": 10170,
+      "share": 0.1252
+     },
+     "x3d": {
+      "attempts": 695,
+      "fg_pct": 0.0633,
+      "makes": 44,
+      "share": 0.0037
+     },
+     "x3p": {
+      "attempts": 39246,
+      "fg_pct": 0.3653,
+      "makes": 14338,
+      "share": 0.2081
+     }
+    }
+   }
+  },
+  "1998": {
+   "players": 432,
+   "league_player_seasons": 439,
+   "excluded_missing": 2,
+   "excluded_incomplete": 3,
+   "excluded_overallocated": 2,
+   "fga_covered": 188056,
+   "league_fga": 189537,
+   "fga_coverage": 0.9922,
+   "bands": {
+    "x0_3": {
+     "share": 0.2862,
+     "fg_pct": 0.6276
+    },
+    "x3_10": {
+     "share": 0.1781,
+     "fg_pct": 0.3761
+    },
+    "x10_16": {
+     "share": 0.1627,
+     "fg_pct": 0.3541
+    },
+    "x16_3p": {
+     "share": 0.214,
+     "fg_pct": 0.4266
+    },
+    "x3p": {
+     "share": 0.159,
+     "fg_pct": 0.3458
+    }
+   },
+   "shots": {
+    "attempts": 189536,
+    "coverage": 1.0,
+    "exact_counts": true,
+    "makes": 85383,
+    "players": 437,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 189537,
+    "zones": {
+     "x0_3": {
+      "attempts": 59710,
+      "fg_pct": 0.6172,
+      "makes": 36851,
+      "share": 0.315
+     },
+     "x10_16": {
+      "attempts": 30959,
+      "fg_pct": 0.3722,
+      "makes": 11524,
+      "share": 0.1633
+     },
+     "x16_3p": {
+      "attempts": 39012,
+      "fg_pct": 0.4055,
+      "makes": 15818,
+      "share": 0.2058
+     },
+     "x3_10": {
+      "attempts": 29622,
+      "fg_pct": 0.3626,
+      "makes": 10740,
+      "share": 0.1563
+     },
+     "x3d": {
+      "attempts": 776,
+      "fg_pct": 0.0773,
+      "makes": 60,
+      "share": 0.0041
+     },
+     "x3p": {
+      "attempts": 29457,
+      "fg_pct": 0.3527,
+      "makes": 10390,
+      "share": 0.1554
+     }
+    }
+   }
+  },
+  "1999": {
+   "players": 430,
+   "league_player_seasons": 440,
+   "excluded_missing": 3,
+   "excluded_incomplete": 4,
+   "excluded_overallocated": 3,
+   "fga_covered": 111825,
+   "league_fga": 113379,
+   "fga_coverage": 0.9863,
+   "bands": {
+    "x0_3": {
+     "share": 0.2649,
+     "fg_pct": 0.6203
+    },
+    "x3_10": {
+     "share": 0.1874,
+     "fg_pct": 0.365
+    },
+    "x10_16": {
+     "share": 0.1551,
+     "fg_pct": 0.3503
+    },
+    "x16_3p": {
+     "share": 0.2235,
+     "fg_pct": 0.4128
+    },
+    "x3p": {
+     "share": 0.1691,
+     "fg_pct": 0.3391
+    }
+   },
+   "shots": {
+    "attempts": 113377,
+    "coverage": 1.0,
+    "exact_counts": true,
+    "makes": 49549,
+    "players": 437,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 113379,
+    "zones": {
+     "x0_3": {
+      "attempts": 32959,
+      "fg_pct": 0.6112,
+      "makes": 20146,
+      "share": 0.2907
+     },
+     "x10_16": {
+      "attempts": 17844,
+      "fg_pct": 0.3692,
+      "makes": 6588,
+      "share": 0.1574
+     },
+     "x16_3p": {
+      "attempts": 24382,
+      "fg_pct": 0.3919,
+      "makes": 9555,
+      "share": 0.2151
+     },
+     "x3_10": {
+      "attempts": 19113,
+      "fg_pct": 0.3556,
+      "makes": 6797,
+      "share": 0.1686
+     },
+     "x3d": {
+      "attempts": 499,
+      "fg_pct": 0.0721,
+      "makes": 36,
+      "share": 0.0044
+     },
+     "x3p": {
+      "attempts": 18580,
+      "fg_pct": 0.3459,
+      "makes": 6427,
+      "share": 0.1639
+     }
+    }
+   }
+  },
+  "2000": {
+   "players": 434,
+   "league_player_seasons": 439,
+   "excluded_missing": 1,
+   "excluded_incomplete": 0,
+   "excluded_overallocated": 4,
+   "fga_covered": 194043,
+   "league_fga": 195220,
+   "fga_coverage": 0.994,
+   "bands": {
+    "x0_3": {
+     "share": 0.2563,
+     "fg_pct": 0.6326
+    },
+    "x3_10": {
+     "share": 0.1881,
+     "fg_pct": 0.379
+    },
+    "x10_16": {
+     "share": 0.1604,
+     "fg_pct": 0.3655
+    },
+    "x16_3p": {
+     "share": 0.2282,
+     "fg_pct": 0.4285
+    },
+    "x3p": {
+     "share": 0.1671,
+     "fg_pct": 0.353
+    }
+   },
+   "shots": {
+    "attempts": 195220,
+    "coverage": 1.0,
+    "exact_counts": true,
+    "makes": 87591,
+    "players": 438,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 195220,
+    "zones": {
+     "x0_3": {
+      "attempts": 54674,
+      "fg_pct": 0.6262,
+      "makes": 34239,
+      "share": 0.2801
+     },
+     "x10_16": {
+      "attempts": 31880,
+      "fg_pct": 0.3827,
+      "makes": 12200,
+      "share": 0.1633
+     },
+     "x16_3p": {
+      "attempts": 43030,
+      "fg_pct": 0.4078,
+      "makes": 17547,
+      "share": 0.2204
+     },
+     "x3_10": {
+      "attempts": 33021,
+      "fg_pct": 0.3662,
+      "makes": 12092,
+      "share": 0.1691
+     },
+     "x3d": {
+      "attempts": 805,
+      "fg_pct": 0.0646,
+      "makes": 52,
+      "share": 0.0041
+     },
+     "x3p": {
+      "attempts": 31810,
+      "fg_pct": 0.3603,
+      "makes": 11461,
+      "share": 0.1629
+     }
+    }
+   }
+  },
+  "2001": {
+   "players": 436,
+   "league_player_seasons": 441,
+   "excluded_missing": 2,
+   "excluded_incomplete": 3,
+   "excluded_overallocated": 0,
+   "fga_covered": 190644,
+   "league_fga": 191664,
+   "fga_coverage": 0.9947,
+   "bands": {
+    "x0_3": {
+     "share": 0.2727,
+     "fg_pct": 0.6197
+    },
+    "x3_10": {
+     "share": 0.1679,
+     "fg_pct": 0.3595
+    },
+    "x10_16": {
+     "share": 0.1582,
+     "fg_pct": 0.385
+    },
+    "x16_3p": {
+     "share": 0.2319,
+     "fg_pct": 0.4004
+    },
+    "x3p": {
+     "share": 0.1693,
+     "fg_pct": 0.3533
+    }
+   },
+   "shots": {
+    "attempts": 191662,
+    "coverage": 1.0,
+    "exact_counts": true,
+    "makes": 84864,
+    "players": 439,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 191664,
+    "zones": {
+     "x0_3": {
+      "attempts": 52277,
+      "fg_pct": 0.6194,
+      "makes": 32380,
+      "share": 0.2728
+     },
+     "x10_16": {
+      "attempts": 30279,
+      "fg_pct": 0.3852,
+      "makes": 11664,
+      "share": 0.158
+     },
+     "x16_3p": {
+      "attempts": 44395,
+      "fg_pct": 0.4002,
+      "makes": 17768,
+      "share": 0.2316
+     },
+     "x3_10": {
+      "attempts": 32115,
+      "fg_pct": 0.359,
+      "makes": 11528,
+      "share": 0.1676
+     },
+     "x3d": {
+      "attempts": 892,
+      "fg_pct": 0.0729,
+      "makes": 65,
+      "share": 0.0047
+     },
+     "x3p": {
+      "attempts": 31704,
+      "fg_pct": 0.3614,
+      "makes": 11459,
+      "share": 0.1654
+     }
+    }
+   }
+  },
+  "2002": {
+   "players": 436,
+   "league_player_seasons": 440,
+   "excluded_missing": 1,
+   "excluded_incomplete": 1,
+   "excluded_overallocated": 2,
+   "fga_covered": 192210,
+   "league_fga": 193263,
+   "fga_coverage": 0.9946,
+   "bands": {
+    "x0_3": {
+     "share": 0.2867,
+     "fg_pct": 0.6055
+    },
+    "x3_10": {
+     "share": 0.1485,
+     "fg_pct": 0.3819
+    },
+    "x10_16": {
+     "share": 0.1535,
+     "fg_pct": 0.3877
+    },
+    "x16_3p": {
+     "share": 0.2301,
+     "fg_pct": 0.3971
+    },
+    "x3p": {
+     "share": 0.1812,
+     "fg_pct": 0.3534
+    }
+   },
+   "shots": {
+    "attempts": 193251,
+    "coverage": 0.9999,
+    "exact_counts": true,
+    "makes": 86004,
+    "players": 439,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 193263,
+    "zones": {
+     "x0_3": {
+      "attempts": 55411,
+      "fg_pct": 0.6052,
+      "makes": 33532,
+      "share": 0.2867
+     },
+     "x10_16": {
+      "attempts": 29596,
+      "fg_pct": 0.3875,
+      "makes": 11468,
+      "share": 0.1531
+     },
+     "x16_3p": {
+      "attempts": 44524,
+      "fg_pct": 0.3969,
+      "makes": 17671,
+      "share": 0.2304
+     },
+     "x3_10": {
+      "attempts": 28657,
+      "fg_pct": 0.3817,
+      "makes": 10938,
+      "share": 0.1483
+     },
+     "x3d": {
+      "attempts": 875,
+      "fg_pct": 0.0491,
+      "makes": 43,
+      "share": 0.0045
+     },
+     "x3p": {
+      "attempts": 34188,
+      "fg_pct": 0.3613,
+      "makes": 12352,
+      "share": 0.1769
+     }
+    }
+   }
+  },
+  "2003": {
+   "players": 423,
+   "league_player_seasons": 428,
+   "excluded_missing": 1,
+   "excluded_incomplete": 4,
+   "excluded_overallocated": 0,
+   "fga_covered": 191412,
+   "league_fga": 192109,
+   "fga_coverage": 0.9964,
+   "bands": {
+    "x0_3": {
+     "share": 0.2862,
+     "fg_pct": 0.603
+    },
+    "x3_10": {
+     "share": 0.1497,
+     "fg_pct": 0.3842
+    },
+    "x10_16": {
+     "share": 0.1459,
+     "fg_pct": 0.3882
+    },
+    "x16_3p": {
+     "share": 0.2364,
+     "fg_pct": 0.3893
+    },
+    "x3p": {
+     "share": 0.1818,
+     "fg_pct": 0.3495
+    }
+   },
+   "shots": {
+    "attempts": 192109,
+    "coverage": 1.0,
+    "exact_counts": true,
+    "makes": 84937,
+    "players": 427,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 192109,
+    "zones": {
+     "x0_3": {
+      "attempts": 54967,
+      "fg_pct": 0.6027,
+      "makes": 33130,
+      "share": 0.2861
+     },
+     "x10_16": {
+      "attempts": 28061,
+      "fg_pct": 0.388,
+      "makes": 10888,
+      "share": 0.1461
+     },
+     "x16_3p": {
+      "attempts": 45379,
+      "fg_pct": 0.3894,
+      "makes": 17670,
+      "share": 0.2362
+     },
+     "x3_10": {
+      "attempts": 28789,
+      "fg_pct": 0.3838,
+      "makes": 11049,
+      "share": 0.1499
+     },
+     "x3d": {
+      "attempts": 860,
+      "fg_pct": 0.0605,
+      "makes": 52,
+      "share": 0.0045
+     },
+     "x3p": {
+      "attempts": 34053,
+      "fg_pct": 0.3567,
+      "makes": 12148,
+      "share": 0.1773
+     }
+    }
+   }
+  },
+  "2004": {
+   "players": 440,
+   "league_player_seasons": 442,
+   "excluded_missing": 2,
+   "excluded_incomplete": 0,
+   "excluded_overallocated": 0,
+   "fga_covered": 189802,
+   "league_fga": 189802,
+   "fga_coverage": 1.0,
+   "bands": {
+    "x0_3": {
+     "share": 0.2971,
+     "fg_pct": 0.5922
+    },
+    "x3_10": {
+     "share": 0.1465,
+     "fg_pct": 0.3817
+    },
+    "x10_16": {
+     "share": 0.1406,
+     "fg_pct": 0.3775
+    },
+    "x16_3p": {
+     "share": 0.2289,
+     "fg_pct": 0.3881
+    },
+    "x3p": {
+     "share": 0.187,
+     "fg_pct": 0.3471
+    }
+   },
+   "shots": {
+    "attempts": 189803,
+    "coverage": 1.0,
+    "exact_counts": true,
+    "makes": 83255,
+    "players": 440,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 189802,
+    "zones": {
+     "x0_3": {
+      "attempts": 56381,
+      "fg_pct": 0.5922,
+      "makes": 33388,
+      "share": 0.2971
+     },
+     "x10_16": {
+      "attempts": 26693,
+      "fg_pct": 0.3773,
+      "makes": 10071,
+      "share": 0.1406
+     },
+     "x16_3p": {
+      "attempts": 43417,
+      "fg_pct": 0.3882,
+      "makes": 16855,
+      "share": 0.2287
+     },
+     "x3_10": {
+      "attempts": 27819,
+      "fg_pct": 0.3817,
+      "makes": 10619,
+      "share": 0.1466
+     },
+     "x3d": {
+      "attempts": 867,
+      "fg_pct": 0.0588,
+      "makes": 51,
+      "share": 0.0046
+     },
+     "x3p": {
+      "attempts": 34626,
+      "fg_pct": 0.3544,
+      "makes": 12271,
+      "share": 0.1824
+     }
+    }
+   }
+  },
+  "2005": {
+   "players": 462,
+   "league_player_seasons": 464,
+   "excluded_missing": 1,
+   "excluded_incomplete": 1,
+   "excluded_overallocated": 0,
+   "fga_covered": 197272,
+   "league_fga": 197626,
+   "fga_coverage": 0.9982,
+   "bands": {
+    "x0_3": {
+     "share": 0.3032,
+     "fg_pct": 0.5958
+    },
+    "x3_10": {
+     "share": 0.1351,
+     "fg_pct": 0.3913
+    },
+    "x10_16": {
+     "share": 0.129,
+     "fg_pct": 0.3827
+    },
+    "x16_3p": {
+     "share": 0.2362,
+     "fg_pct": 0.4003
+    },
+    "x3p": {
+     "share": 0.1964,
+     "fg_pct": 0.3556
+    }
+   },
+   "shots": {
+    "attempts": 197626,
+    "coverage": 1.0,
+    "exact_counts": true,
+    "makes": 88435,
+    "players": 463,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 197626,
+    "zones": {
+     "x0_3": {
+      "attempts": 60067,
+      "fg_pct": 0.596,
+      "makes": 35798,
+      "share": 0.3039
+     },
+     "x10_16": {
+      "attempts": 25481,
+      "fg_pct": 0.3826,
+      "makes": 9750,
+      "share": 0.1289
+     },
+     "x16_3p": {
+      "attempts": 46601,
+      "fg_pct": 0.4002,
+      "makes": 18651,
+      "share": 0.2358
+     },
+     "x3_10": {
+      "attempts": 26729,
+      "fg_pct": 0.3913,
+      "makes": 10459,
+      "share": 0.1353
+     },
+     "x3d": {
+      "attempts": 951,
+      "fg_pct": 0.0389,
+      "makes": 37,
+      "share": 0.0048
+     },
+     "x3p": {
+      "attempts": 37797,
+      "fg_pct": 0.3635,
+      "makes": 13740,
+      "share": 0.1913
+     }
+    }
+   }
+  },
+  "2006": {
+   "players": 455,
+   "league_player_seasons": 458,
+   "excluded_missing": 3,
+   "excluded_incomplete": 0,
+   "excluded_overallocated": 0,
+   "fga_covered": 194315,
+   "league_fga": 194315,
+   "fga_coverage": 1.0,
+   "bands": {
+    "x0_3": {
+     "share": 0.3092,
+     "fg_pct": 0.6009
+    },
+    "x3_10": {
+     "share": 0.1331,
+     "fg_pct": 0.4002
+    },
+    "x10_16": {
+     "share": 0.119,
+     "fg_pct": 0.3912
+    },
+    "x16_3p": {
+     "share": 0.2365,
+     "fg_pct": 0.4045
+    },
+    "x3p": {
+     "share": 0.2023,
+     "fg_pct": 0.3583
+    }
+   },
+   "shots": {
+    "attempts": 194314,
+    "coverage": 1.0,
+    "exact_counts": true,
+    "makes": 88166,
+    "players": 455,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 194315,
+    "zones": {
+     "x0_3": {
+      "attempts": 60079,
+      "fg_pct": 0.6009,
+      "makes": 36100,
+      "share": 0.3092
+     },
+     "x10_16": {
+      "attempts": 23126,
+      "fg_pct": 0.3913,
+      "makes": 9049,
+      "share": 0.119
+     },
+     "x16_3p": {
+      "attempts": 45929,
+      "fg_pct": 0.4045,
+      "makes": 18580,
+      "share": 0.2364
+     },
+     "x3_10": {
+      "attempts": 25867,
+      "fg_pct": 0.4002,
+      "makes": 10351,
+      "share": 0.1331
+     },
+     "x3d": {
+      "attempts": 943,
+      "fg_pct": 0.0456,
+      "makes": 43,
+      "share": 0.0049
+     },
+     "x3p": {
+      "attempts": 38370,
+      "fg_pct": 0.366,
+      "makes": 14043,
+      "share": 0.1975
+     }
+    }
+   }
+  },
+  "2007": {
+   "players": 458,
+   "league_player_seasons": 458,
+   "excluded_missing": 0,
+   "excluded_incomplete": 0,
+   "excluded_overallocated": 0,
+   "fga_covered": 196073,
+   "league_fga": 196073,
+   "fga_coverage": 1.0,
+   "bands": {
+    "x0_3": {
+     "share": 0.3138,
+     "fg_pct": 0.6099
+    },
+    "x3_10": {
+     "share": 0.1309,
+     "fg_pct": 0.4108
+    },
+    "x10_16": {
+     "share": 0.1133,
+     "fg_pct": 0.3916
+    },
+    "x16_3p": {
+     "share": 0.2295,
+     "fg_pct": 0.4037
+    },
+    "x3p": {
+     "share": 0.2125,
+     "fg_pct": 0.3582
+    }
+   },
+   "shots": {
+    "attempts": 196072,
+    "coverage": 1.0,
+    "exact_counts": true,
+    "makes": 89860,
+    "players": 458,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 196073,
+    "zones": {
+     "x0_3": {
+      "attempts": 61530,
+      "fg_pct": 0.6099,
+      "makes": 37529,
+      "share": 0.3138
+     },
+     "x10_16": {
+      "attempts": 22237,
+      "fg_pct": 0.3916,
+      "makes": 8709,
+      "share": 0.1134
+     },
+     "x16_3p": {
+      "attempts": 44976,
+      "fg_pct": 0.4037,
+      "makes": 18156,
+      "share": 0.2294
+     },
+     "x3_10": {
+      "attempts": 25658,
+      "fg_pct": 0.4108,
+      "makes": 10540,
+      "share": 0.1309
+     },
+     "x3d": {
+      "attempts": 977,
+      "fg_pct": 0.0676,
+      "makes": 66,
+      "share": 0.005
+     },
+     "x3p": {
+      "attempts": 40694,
+      "fg_pct": 0.3652,
+      "makes": 14860,
+      "share": 0.2075
+     }
+    }
+   }
+  },
+  "2008": {
+   "players": 451,
+   "league_player_seasons": 451,
+   "excluded_missing": 0,
+   "excluded_incomplete": 0,
+   "excluded_overallocated": 0,
+   "fga_covered": 200501,
+   "league_fga": 200501,
+   "fga_coverage": 1.0,
+   "bands": {
+    "x0_3": {
+     "share": 0.3078,
+     "fg_pct": 0.6065
+    },
+    "x3_10": {
+     "share": 0.1237,
+     "fg_pct": 0.4079
+    },
+    "x10_16": {
+     "share": 0.1114,
+     "fg_pct": 0.3911
+    },
+    "x16_3p": {
+     "share": 0.2349,
+     "fg_pct": 0.4088
+    },
+    "x3p": {
+     "share": 0.2221,
+     "fg_pct": 0.362
+    }
+   },
+   "shots": {
+    "attempts": 200501,
+    "coverage": 1.0,
+    "exact_counts": true,
+    "makes": 91669,
+    "players": 451,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 200501,
+    "zones": {
+     "x0_3": {
+      "attempts": 61722,
+      "fg_pct": 0.6065,
+      "makes": 37436,
+      "share": 0.3078
+     },
+     "x10_16": {
+      "attempts": 22350,
+      "fg_pct": 0.3911,
+      "makes": 8742,
+      "share": 0.1115
+     },
+     "x16_3p": {
+      "attempts": 47080,
+      "fg_pct": 0.4088,
+      "makes": 19247,
+      "share": 0.2348
+     },
+     "x3_10": {
+      "attempts": 24805,
+      "fg_pct": 0.408,
+      "makes": 10120,
+      "share": 0.1237
+     },
+     "x3d": {
+      "attempts": 1111,
+      "fg_pct": 0.0594,
+      "makes": 66,
+      "share": 0.0055
+     },
+     "x3p": {
+      "attempts": 43433,
+      "fg_pct": 0.3697,
+      "makes": 16058,
+      "share": 0.2166
+     }
+    }
+   }
+  },
+  "2009": {
+   "players": 444,
+   "league_player_seasons": 445,
+   "excluded_missing": 0,
+   "excluded_incomplete": 1,
+   "excluded_overallocated": 0,
+   "fga_covered": 198846,
+   "league_fga": 199054,
+   "fga_coverage": 0.999,
+   "bands": {
+    "x0_3": {
+     "share": 0.3145,
+     "fg_pct": 0.6025
+    },
+    "x3_10": {
+     "share": 0.1244,
+     "fg_pct": 0.4121
+    },
+    "x10_16": {
+     "share": 0.1107,
+     "fg_pct": 0.3951
+    },
+    "x16_3p": {
+     "share": 0.2267,
+     "fg_pct": 0.4071
+    },
+    "x3p": {
+     "share": 0.2236,
+     "fg_pct": 0.3668
+    }
+   },
+   "shots": {
+    "attempts": 199030,
+    "coverage": 0.9999,
+    "exact_counts": true,
+    "makes": 91302,
+    "players": 445,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 199054,
+    "zones": {
+     "x0_3": {
+      "attempts": 62579,
+      "fg_pct": 0.6024,
+      "makes": 37695,
+      "share": 0.3144
+     },
+     "x10_16": {
+      "attempts": 22036,
+      "fg_pct": 0.3949,
+      "makes": 8703,
+      "share": 0.1107
+     },
+     "x16_3p": {
+      "attempts": 45093,
+      "fg_pct": 0.4072,
+      "makes": 18360,
+      "share": 0.2266
+     },
+     "x3_10": {
+      "attempts": 24763,
+      "fg_pct": 0.4119,
+      "makes": 10200,
+      "share": 0.1244
+     },
+     "x3d": {
+      "attempts": 1046,
+      "fg_pct": 0.0554,
+      "makes": 58,
+      "share": 0.0053
+     },
+     "x3p": {
+      "attempts": 43513,
+      "fg_pct": 0.3743,
+      "makes": 16286,
+      "share": 0.2186
+     }
+    }
+   }
+  },
+  "2010": {
+   "players": 437,
+   "league_player_seasons": 442,
+   "excluded_missing": 2,
+   "excluded_incomplete": 3,
+   "excluded_overallocated": 0,
+   "fga_covered": 200385,
+   "league_fga": 200989,
+   "fga_coverage": 0.997,
+   "bands": {
+    "x0_3": {
+     "share": 0.3209,
+     "fg_pct": 0.6133
+    },
+    "x3_10": {
+     "share": 0.1295,
+     "fg_pct": 0.4206
+    },
+    "x10_16": {
+     "share": 0.1104,
+     "fg_pct": 0.4006
+    },
+    "x16_3p": {
+     "share": 0.2178,
+     "fg_pct": 0.402
+    },
+    "x3p": {
+     "share": 0.2214,
+     "fg_pct": 0.3543
+    }
+   },
+   "shots": {
+    "attempts": 200966,
+    "coverage": 0.9999,
+    "exact_counts": true,
+    "makes": 92720,
+    "players": 440,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 200989,
+    "zones": {
+     "x0_3": {
+      "attempts": 64396,
+      "fg_pct": 0.6132,
+      "makes": 39488,
+      "share": 0.3204
+     },
+     "x10_16": {
+      "attempts": 22183,
+      "fg_pct": 0.4,
+      "makes": 8873,
+      "share": 0.1104
+     },
+     "x16_3p": {
+      "attempts": 43769,
+      "fg_pct": 0.4021,
+      "makes": 17600,
+      "share": 0.2178
+     },
+     "x3_10": {
+      "attempts": 26019,
+      "fg_pct": 0.4207,
+      "makes": 10947,
+      "share": 0.1295
+     },
+     "x3d": {
+      "attempts": 1074,
+      "fg_pct": 0.0633,
+      "makes": 68,
+      "share": 0.0053
+     },
+     "x3p": {
+      "attempts": 43525,
+      "fg_pct": 0.3617,
+      "makes": 15744,
+      "share": 0.2166
+     }
+    }
+   }
+  },
+  "2011": {
+   "players": 449,
+   "league_player_seasons": 452,
+   "excluded_missing": 3,
+   "excluded_incomplete": 0,
+   "excluded_overallocated": 0,
+   "fga_covered": 199790,
+   "league_fga": 199790,
+   "fga_coverage": 1.0,
+   "bands": {
+    "x0_3": {
+     "share": 0.2756,
+     "fg_pct": 0.6497
+    },
+    "x3_10": {
+     "share": 0.1784,
+     "fg_pct": 0.3919
+    },
+    "x10_16": {
+     "share": 0.1103,
+     "fg_pct": 0.3981
+    },
+    "x16_3p": {
+     "share": 0.2139,
+     "fg_pct": 0.4031
+    },
+    "x3p": {
+     "share": 0.2218,
+     "fg_pct": 0.3585
+    }
+   },
+   "shots": {
+    "attempts": 199761,
+    "coverage": 0.9999,
+    "exact_counts": true,
+    "makes": 91613,
+    "players": 449,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 199790,
+    "zones": {
+     "x0_3": {
+      "attempts": 55062,
+      "fg_pct": 0.6496,
+      "makes": 35771,
+      "share": 0.2756
+     },
+     "x10_16": {
+      "attempts": 22032,
+      "fg_pct": 0.3982,
+      "makes": 8773,
+      "share": 0.1103
+     },
+     "x16_3p": {
+      "attempts": 42723,
+      "fg_pct": 0.403,
+      "makes": 17218,
+      "share": 0.2139
+     },
+     "x3_10": {
+      "attempts": 35660,
+      "fg_pct": 0.3919,
+      "makes": 13976,
+      "share": 0.1785
+     },
+     "x3d": {
+      "attempts": 1049,
+      "fg_pct": 0.0553,
+      "makes": 58,
+      "share": 0.0053
+     },
+     "x3p": {
+      "attempts": 43235,
+      "fg_pct": 0.3658,
+      "makes": 15817,
+      "share": 0.2164
+     }
+    }
+   }
+  },
+  "2012": {
+   "players": 475,
+   "league_player_seasons": 478,
+   "excluded_missing": 0,
+   "excluded_incomplete": 2,
+   "excluded_overallocated": 1,
+   "fga_covered": 160205,
+   "league_fga": 161225,
+   "fga_coverage": 0.9937,
+   "bands": {
+    "x0_3": {
+     "share": 0.2862,
+     "fg_pct": 0.6339
+    },
+    "x3_10": {
+     "share": 0.1686,
+     "fg_pct": 0.3773
+    },
+    "x10_16": {
+     "share": 0.1102,
+     "fg_pct": 0.3884
+    },
+    "x16_3p": {
+     "share": 0.2086,
+     "fg_pct": 0.3882
+    },
+    "x3p": {
+     "share": 0.2265,
+     "fg_pct": 0.3491
+    }
+   },
+   "shots": {
+    "attempts": 161205,
+    "coverage": 0.9999,
+    "exact_counts": true,
+    "makes": 72207,
+    "players": 478,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 161225,
+    "zones": {
+     "x0_3": {
+      "attempts": 46208,
+      "fg_pct": 0.6341,
+      "makes": 29302,
+      "share": 0.2866
+     },
+     "x10_16": {
+      "attempts": 17794,
+      "fg_pct": 0.3883,
+      "makes": 6910,
+      "share": 0.1104
+     },
+     "x16_3p": {
+      "attempts": 33582,
+      "fg_pct": 0.3879,
+      "makes": 13026,
+      "share": 0.2083
+     },
+     "x3_10": {
+      "attempts": 27246,
+      "fg_pct": 0.3776,
+      "makes": 10287,
+      "share": 0.169
+     },
+     "x3d": {
+      "attempts": 767,
+      "fg_pct": 0.0704,
+      "makes": 54,
+      "share": 0.0048
+     },
+     "x3p": {
+      "attempts": 35608,
+      "fg_pct": 0.3546,
+      "makes": 12628,
+      "share": 0.2209
+     }
+    }
+   }
+  },
+  "2013": {
+   "players": 467,
+   "league_player_seasons": 469,
+   "excluded_missing": 2,
+   "excluded_incomplete": 0,
+   "excluded_overallocated": 0,
+   "fga_covered": 201609,
+   "league_fga": 201609,
+   "fga_coverage": 1.0,
+   "bands": {
+    "x0_3": {
+     "share": 0.293,
+     "fg_pct": 0.6315
+    },
+    "x3_10": {
+     "share": 0.1638,
+     "fg_pct": 0.3811
+    },
+    "x10_16": {
+     "share": 0.1068,
+     "fg_pct": 0.395
+    },
+    "x16_3p": {
+     "share": 0.1931,
+     "fg_pct": 0.393
+    },
+    "x3p": {
+     "share": 0.2434,
+     "fg_pct": 0.3588
+    }
+   },
+   "shots": {
+    "attempts": 201579,
+    "coverage": 0.9999,
+    "exact_counts": true,
+    "makes": 91275,
+    "players": 467,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 201609,
+    "zones": {
+     "x0_3": {
+      "attempts": 59063,
+      "fg_pct": 0.6315,
+      "makes": 37298,
+      "share": 0.293
+     },
+     "x10_16": {
+      "attempts": 21525,
+      "fg_pct": 0.395,
+      "makes": 8502,
+      "share": 0.1068
+     },
+     "x16_3p": {
+      "attempts": 38925,
+      "fg_pct": 0.3929,
+      "makes": 15295,
+      "share": 0.1931
+     },
+     "x3_10": {
+      "attempts": 33029,
+      "fg_pct": 0.381,
+      "makes": 12584,
+      "share": 0.1639
+     },
+     "x3d": {
+      "attempts": 951,
+      "fg_pct": 0.0631,
+      "makes": 60,
+      "share": 0.0047
+     },
+     "x3p": {
+      "attempts": 48086,
+      "fg_pct": 0.3647,
+      "makes": 17536,
+      "share": 0.2385
+     }
+    }
+   }
+  },
+  "2014": {
+   "players": 467,
+   "league_player_seasons": 482,
+   "excluded_missing": 2,
+   "excluded_incomplete": 10,
+   "excluded_overallocated": 3,
+   "fga_covered": 200301,
+   "league_fga": 204172,
+   "fga_coverage": 0.981,
+   "bands": {
+    "x0_3": {
+     "share": 0.2863,
+     "fg_pct": 0.6363
+    },
+    "x3_10": {
+     "share": 0.1694,
+     "fg_pct": 0.3902
+    },
+    "x10_16": {
+     "share": 0.1048,
+     "fg_pct": 0.4005
+    },
+    "x16_3p": {
+     "share": 0.1799,
+     "fg_pct": 0.3947
+    },
+    "x3p": {
+     "share": 0.2596,
+     "fg_pct": 0.36
+    }
+   },
+   "shots": {
+    "attempts": 204126,
+    "coverage": 0.9998,
+    "exact_counts": true,
+    "makes": 92766,
+    "players": 480,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 204172,
+    "zones": {
+     "x0_3": {
+      "attempts": 58733,
+      "fg_pct": 0.6355,
+      "makes": 37324,
+      "share": 0.2877
+     },
+     "x10_16": {
+      "attempts": 21345,
+      "fg_pct": 0.4009,
+      "makes": 8557,
+      "share": 0.1046
+     },
+     "x16_3p": {
+      "attempts": 36806,
+      "fg_pct": 0.3944,
+      "makes": 14517,
+      "share": 0.1803
+     },
+     "x3_10": {
+      "attempts": 34314,
+      "fg_pct": 0.3884,
+      "makes": 13327,
+      "share": 0.1681
+     },
+     "x3d": {
+      "attempts": 1029,
+      "fg_pct": 0.0807,
+      "makes": 83,
+      "share": 0.005
+     },
+     "x3p": {
+      "attempts": 51899,
+      "fg_pct": 0.3653,
+      "makes": 18958,
+      "share": 0.2542
+     }
+    }
+   }
+  },
+  "2015": {
+   "players": 484,
+   "league_player_seasons": 492,
+   "excluded_missing": 2,
+   "excluded_incomplete": 5,
+   "excluded_overallocated": 1,
+   "fga_covered": 203557,
+   "league_fga": 205570,
+   "fga_coverage": 0.9902,
+   "bands": {
+    "x0_3": {
+     "share": 0.2888,
+     "fg_pct": 0.627
+    },
+    "x3_10": {
+     "share": 0.1631,
+     "fg_pct": 0.3822
+    },
+    "x10_16": {
+     "share": 0.1033,
+     "fg_pct": 0.4025
+    },
+    "x16_3p": {
+     "share": 0.1759,
+     "fg_pct": 0.3944
+    },
+    "x3p": {
+     "share": 0.2689,
+     "fg_pct": 0.3504
+    }
+   },
+   "shots": {
+    "attempts": 205550,
+    "coverage": 0.9999,
+    "exact_counts": true,
+    "makes": 92279,
+    "players": 490,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 205570,
+    "zones": {
+     "x0_3": {
+      "attempts": 59388,
+      "fg_pct": 0.6287,
+      "makes": 37337,
+      "share": 0.2889
+     },
+     "x10_16": {
+      "attempts": 21224,
+      "fg_pct": 0.4027,
+      "makes": 8546,
+      "share": 0.1033
+     },
+     "x16_3p": {
+      "attempts": 36001,
+      "fg_pct": 0.3943,
+      "makes": 14194,
+      "share": 0.1751
+     },
+     "x3_10": {
+      "attempts": 33820,
+      "fg_pct": 0.3817,
+      "makes": 12910,
+      "share": 0.1645
+     },
+     "x3d": {
+      "attempts": 973,
+      "fg_pct": 0.0761,
+      "makes": 74,
+      "share": 0.0047
+     },
+     "x3p": {
+      "attempts": 54144,
+      "fg_pct": 0.3549,
+      "makes": 19218,
+      "share": 0.2634
+     }
+    }
+   }
+  },
+  "2016": {
+   "players": 429,
+   "league_player_seasons": 476,
+   "excluded_missing": 1,
+   "excluded_incomplete": 22,
+   "excluded_overallocated": 24,
+   "fga_covered": 191582,
+   "league_fga": 208049,
+   "fga_coverage": 0.9209,
+   "bands": {
+    "x0_3": {
+     "share": 0.2948,
+     "fg_pct": 0.6258
+    },
+    "x3_10": {
+     "share": 0.1595,
+     "fg_pct": 0.3983
+    },
+    "x10_16": {
+     "share": 0.1034,
+     "fg_pct": 0.4071
+    },
+    "x16_3p": {
+     "share": 0.162,
+     "fg_pct": 0.3983
+    },
+    "x3p": {
+     "share": 0.2805,
+     "fg_pct": 0.3535
+    }
+   },
+   "shots": {
+    "attempts": 207893,
+    "coverage": 0.9993,
+    "exact_counts": true,
+    "makes": 94017,
+    "players": 475,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 208049,
+    "zones": {
+     "x0_3": {
+      "attempts": 60863,
+      "fg_pct": 0.6263,
+      "makes": 38117,
+      "share": 0.2928
+     },
+     "x10_16": {
+      "attempts": 21366,
+      "fg_pct": 0.4042,
+      "makes": 8637,
+      "share": 0.1028
+     },
+     "x16_3p": {
+      "attempts": 33610,
+      "fg_pct": 0.3982,
+      "makes": 13385,
+      "share": 0.1617
+     },
+     "x3_10": {
+      "attempts": 32969,
+      "fg_pct": 0.3935,
+      "makes": 12973,
+      "share": 0.1586
+     },
+     "x3d": {
+      "attempts": 1030,
+      "fg_pct": 0.0903,
+      "makes": 93,
+      "share": 0.005
+     },
+     "x3p": {
+      "attempts": 58055,
+      "fg_pct": 0.3585,
+      "makes": 20812,
+      "share": 0.2793
+     }
+    }
+   }
+  },
+  "2017": {
+   "players": 399,
+   "league_player_seasons": 486,
+   "excluded_missing": 1,
+   "excluded_incomplete": 47,
+   "excluded_overallocated": 39,
+   "fga_covered": 179959,
+   "league_fga": 210115,
+   "fga_coverage": 0.8565,
+   "bands": {
+    "x0_3": {
+     "share": 0.2831,
+     "fg_pct": 0.6301
+    },
+    "x3_10": {
+     "share": 0.1494,
+     "fg_pct": 0.4149
+    },
+    "x10_16": {
+     "share": 0.0994,
+     "fg_pct": 0.4147
+    },
+    "x16_3p": {
+     "share": 0.1476,
+     "fg_pct": 0.4054
+    },
+    "x3p": {
+     "share": 0.3203,
+     "fg_pct": 0.359
+    }
+   },
+   "shots": {
+    "attempts": 209929,
+    "coverage": 0.9991,
+    "exact_counts": true,
+    "makes": 95990,
+    "players": 485,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 210115,
+    "zones": {
+     "x0_3": {
+      "attempts": 61052,
+      "fg_pct": 0.6304,
+      "makes": 38489,
+      "share": 0.2908
+     },
+     "x10_16": {
+      "attempts": 20832,
+      "fg_pct": 0.4116,
+      "makes": 8575,
+      "share": 0.0992
+     },
+     "x16_3p": {
+      "attempts": 29926,
+      "fg_pct": 0.4027,
+      "makes": 12050,
+      "share": 0.1426
+     },
+     "x3_10": {
+      "attempts": 31882,
+      "fg_pct": 0.414,
+      "makes": 13199,
+      "share": 0.1519
+     },
+     "x3d": {
+      "attempts": 1217,
+      "fg_pct": 0.1142,
+      "makes": 139,
+      "share": 0.0058
+     },
+     "x3p": {
+      "attempts": 65020,
+      "fg_pct": 0.362,
+      "makes": 23538,
+      "share": 0.3097
+     }
+    }
+   }
+  },
+  "2018": {
+   "players": 510,
+   "league_player_seasons": 540,
+   "excluded_missing": 3,
+   "excluded_incomplete": 17,
+   "excluded_overallocated": 10,
+   "fga_covered": 203380,
+   "league_fga": 211709,
+   "fga_coverage": 0.9607,
+   "bands": {
+    "x0_3": {
+     "share": 0.2779,
+     "fg_pct": 0.6586
+    },
+    "x3_10": {
+     "share": 0.1559,
+     "fg_pct": 0.3947
+    },
+    "x10_16": {
+     "share": 0.1067,
+     "fg_pct": 0.4166
+    },
+    "x16_3p": {
+     "share": 0.1206,
+     "fg_pct": 0.4025
+    },
+    "x3p": {
+     "share": 0.3389,
+     "fg_pct": 0.3619
+    }
+   },
+   "shots": {
+    "attempts": 211707,
+    "coverage": 1.0,
+    "exact_counts": true,
+    "makes": 97435,
+    "players": 537,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 211709,
+    "zones": {
+     "x0_3": {
+      "attempts": 59351,
+      "fg_pct": 0.6592,
+      "makes": 39127,
+      "share": 0.2803
+     },
+     "x10_16": {
+      "attempts": 22487,
+      "fg_pct": 0.4149,
+      "makes": 9329,
+      "share": 0.1062
+     },
+     "x16_3p": {
+      "attempts": 25354,
+      "fg_pct": 0.4003,
+      "makes": 10148,
+      "share": 0.1198
+     },
+     "x3_10": {
+      "attempts": 33176,
+      "fg_pct": 0.3926,
+      "makes": 13024,
+      "share": 0.1567
+     },
+     "x3d": {
+      "attempts": 1465,
+      "fg_pct": 0.1201,
+      "makes": 176,
+      "share": 0.0069
+     },
+     "x3p": {
+      "attempts": 69874,
+      "fg_pct": 0.3668,
+      "makes": 25631,
+      "share": 0.3301
+     }
+    }
+   }
+  },
+  "2019": {
+   "players": 526,
+   "league_player_seasons": 530,
+   "excluded_missing": 4,
+   "excluded_incomplete": 0,
+   "excluded_overallocated": 0,
+   "fga_covered": 219458,
+   "league_fga": 219458,
+   "fga_coverage": 1.0,
+   "bands": {
+    "x0_3": {
+     "share": 0.2922,
+     "fg_pct": 0.6576
+    },
+    "x3_10": {
+     "share": 0.1616,
+     "fg_pct": 0.4
+    },
+    "x10_16": {
+     "share": 0.0959,
+     "fg_pct": 0.4129
+    },
+    "x16_3p": {
+     "share": 0.0915,
+     "fg_pct": 0.4014
+    },
+    "x3p": {
+     "share": 0.3588,
+     "fg_pct": 0.355
+    }
+   },
+   "shots": {
+    "attempts": 219458,
+    "coverage": 1.0,
+    "exact_counts": true,
+    "makes": 101062,
+    "players": 526,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 219458,
+    "zones": {
+     "x0_3": {
+      "attempts": 64097,
+      "fg_pct": 0.6575,
+      "makes": 42143,
+      "share": 0.2921
+     },
+     "x10_16": {
+      "attempts": 21101,
+      "fg_pct": 0.413,
+      "makes": 8715,
+      "share": 0.0962
+     },
+     "x16_3p": {
+      "attempts": 20040,
+      "fg_pct": 0.4009,
+      "makes": 8034,
+      "share": 0.0913
+     },
+     "x3_10": {
+      "attempts": 35478,
+      "fg_pct": 0.4007,
+      "makes": 14215,
+      "share": 0.1617
+     },
+     "x3d": {
+      "attempts": 1548,
+      "fg_pct": 0.1738,
+      "makes": 269,
+      "share": 0.0071
+     },
+     "x3p": {
+      "attempts": 77194,
+      "fg_pct": 0.3587,
+      "makes": 27686,
+      "share": 0.3517
+     }
+    }
+   }
+  },
+  "2020": {
+   "players": 527,
+   "league_player_seasons": 529,
+   "excluded_missing": 2,
+   "excluded_incomplete": 0,
+   "excluded_overallocated": 0,
+   "fga_covered": 188116,
+   "league_fga": 188116,
+   "fga_coverage": 1.0,
+   "bands": {
+    "x0_3": {
+     "share": 0.2817,
+     "fg_pct": 0.6668
+    },
+    "x3_10": {
+     "share": 0.1646,
+     "fg_pct": 0.3958
+    },
+    "x10_16": {
+     "share": 0.0929,
+     "fg_pct": 0.4158
+    },
+    "x16_3p": {
+     "share": 0.0766,
+     "fg_pct": 0.4041
+    },
+    "x3p": {
+     "share": 0.3841,
+     "fg_pct": 0.358
+    }
+   },
+   "shots": {
+    "attempts": 188116,
+    "coverage": 1.0,
+    "exact_counts": true,
+    "makes": 86550,
+    "players": 527,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 188116,
+    "zones": {
+     "x0_3": {
+      "attempts": 52924,
+      "fg_pct": 0.6668,
+      "makes": 35292,
+      "share": 0.2813
+     },
+     "x10_16": {
+      "attempts": 17538,
+      "fg_pct": 0.4154,
+      "makes": 7286,
+      "share": 0.0932
+     },
+     "x16_3p": {
+      "attempts": 14380,
+      "fg_pct": 0.4042,
+      "makes": 5813,
+      "share": 0.0764
+     },
+     "x3_10": {
+      "attempts": 31022,
+      "fg_pct": 0.3964,
+      "makes": 12297,
+      "share": 0.1649
+     },
+     "x3d": {
+      "attempts": 1689,
+      "fg_pct": 0.2161,
+      "makes": 365,
+      "share": 0.009
+     },
+     "x3p": {
+      "attempts": 70563,
+      "fg_pct": 0.3613,
+      "makes": 25497,
+      "share": 0.3751
+     }
+    }
+   }
+  },
+  "2021": {
+   "players": 538,
+   "league_player_seasons": 540,
+   "excluded_missing": 1,
+   "excluded_incomplete": 1,
+   "excluded_overallocated": 0,
+   "fga_covered": 190558,
+   "league_fga": 190983,
+   "fga_coverage": 0.9978,
+   "bands": {
+    "x0_3": {
+     "share": 0.2541,
+     "fg_pct": 0.675
+    },
+    "x3_10": {
+     "share": 0.1849,
+     "fg_pct": 0.4266
+    },
+    "x10_16": {
+     "share": 0.0963,
+     "fg_pct": 0.4355
+    },
+    "x16_3p": {
+     "share": 0.0721,
+     "fg_pct": 0.4087
+    },
+    "x3p": {
+     "share": 0.3926,
+     "fg_pct": 0.3666
+    }
+   },
+   "shots": {
+    "attempts": 190983,
+    "coverage": 1.0,
+    "exact_counts": true,
+    "makes": 89020,
+    "players": 539,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 190983,
+    "zones": {
+     "x0_3": {
+      "attempts": 48521,
+      "fg_pct": 0.6747,
+      "makes": 32739,
+      "share": 0.2541
+     },
+     "x10_16": {
+      "attempts": 18448,
+      "fg_pct": 0.4352,
+      "makes": 8028,
+      "share": 0.0966
+     },
+     "x16_3p": {
+      "attempts": 13688,
+      "fg_pct": 0.4088,
+      "makes": 5596,
+      "share": 0.0717
+     },
+     "x3_10": {
+      "attempts": 35504,
+      "fg_pct": 0.429,
+      "makes": 15230,
+      "share": 0.1859
+     },
+     "x3d": {
+      "attempts": 1743,
+      "fg_pct": 0.2358,
+      "makes": 411,
+      "share": 0.0091
+     },
+     "x3p": {
+      "attempts": 73079,
+      "fg_pct": 0.3697,
+      "makes": 27016,
+      "share": 0.3826
+     }
+    }
+   }
+  },
+  "2022": {
+   "players": 595,
+   "league_player_seasons": 605,
+   "excluded_missing": 9,
+   "excluded_incomplete": 1,
+   "excluded_overallocated": 0,
+   "fga_covered": 216311,
+   "league_fga": 216722,
+   "fga_coverage": 0.9981,
+   "bands": {
+    "x0_3": {
+     "share": 0.2404,
+     "fg_pct": 0.6862
+    },
+    "x3_10": {
+     "share": 0.1942,
+     "fg_pct": 0.4386
+    },
+    "x10_16": {
+     "share": 0.0944,
+     "fg_pct": 0.4311
+    },
+    "x16_3p": {
+     "share": 0.071,
+     "fg_pct": 0.3999
+    },
+    "x3p": {
+     "share": 0.4001,
+     "fg_pct": 0.3536
+    }
+   },
+   "shots": {
+    "attempts": 216722,
+    "coverage": 1.0,
+    "exact_counts": true,
+    "makes": 99930,
+    "players": 596,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 216722,
+    "zones": {
+     "x0_3": {
+      "attempts": 52241,
+      "fg_pct": 0.6871,
+      "makes": 35897,
+      "share": 0.2411
+     },
+     "x10_16": {
+      "attempts": 20496,
+      "fg_pct": 0.4313,
+      "makes": 8839,
+      "share": 0.0946
+     },
+     "x16_3p": {
+      "attempts": 15292,
+      "fg_pct": 0.3999,
+      "makes": 6116,
+      "share": 0.0706
+     },
+     "x3_10": {
+      "attempts": 42158,
+      "fg_pct": 0.4384,
+      "makes": 18480,
+      "share": 0.1945
+     },
+     "x3d": {
+      "attempts": 2188,
+      "fg_pct": 0.2144,
+      "makes": 469,
+      "share": 0.0101
+     },
+     "x3p": {
+      "attempts": 84347,
+      "fg_pct": 0.3572,
+      "makes": 30129,
+      "share": 0.3892
+     }
+    }
+   }
+  },
+  "2023": {
+   "players": 433,
+   "league_player_seasons": 539,
+   "excluded_missing": 2,
+   "excluded_incomplete": 104,
+   "excluded_overallocated": 0,
+   "fga_covered": 152971,
+   "league_fga": 217219,
+   "fga_coverage": 0.7042,
+   "bands": {
+    "x0_3": {
+     "share": 0.2425,
+     "fg_pct": 0.6978
+    },
+    "x3_10": {
+     "share": 0.2047,
+     "fg_pct": 0.4541
+    },
+    "x10_16": {
+     "share": 0.0945,
+     "fg_pct": 0.4444
+    },
+    "x16_3p": {
+     "share": 0.062,
+     "fg_pct": 0.4164
+    },
+    "x3p": {
+     "share": 0.3962,
+     "fg_pct": 0.3582
+    }
+   },
+   "shots": {
+    "attempts": 217218,
+    "coverage": 1.0,
+    "exact_counts": true,
+    "makes": 103260,
+    "players": 537,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 217219,
+    "zones": {
+     "x0_3": {
+      "attempts": 53476,
+      "fg_pct": 0.7009,
+      "makes": 37479,
+      "share": 0.2462
+     },
+     "x10_16": {
+      "attempts": 21028,
+      "fg_pct": 0.4468,
+      "makes": 9396,
+      "share": 0.0968
+     },
+     "x16_3p": {
+      "attempts": 13798,
+      "fg_pct": 0.414,
+      "makes": 5712,
+      "share": 0.0635
+     },
+     "x3_10": {
+      "attempts": 44752,
+      "fg_pct": 0.4539,
+      "makes": 20314,
+      "share": 0.206
+     },
+     "x3d": {
+      "attempts": 2010,
+      "fg_pct": 0.2199,
+      "makes": 442,
+      "share": 0.0093
+     },
+     "x3p": {
+      "attempts": 82154,
+      "fg_pct": 0.3642,
+      "makes": 29917,
+      "share": 0.3782
+     }
+    }
+   }
+  },
+  "2024": {
+   "players": 568,
+   "league_player_seasons": 572,
+   "excluded_missing": 4,
+   "excluded_incomplete": 0,
+   "excluded_overallocated": 0,
+   "fga_covered": 218702,
+   "league_fga": 218702,
+   "fga_coverage": 1.0,
+   "bands": {
+    "x0_3": {
+     "share": 0.2409,
+     "fg_pct": 0.699
+    },
+    "x3_10": {
+     "share": 0.2109,
+     "fg_pct": 0.4523
+    },
+    "x10_16": {
+     "share": 0.0956,
+     "fg_pct": 0.4462
+    },
+    "x16_3p": {
+     "share": 0.0577,
+     "fg_pct": 0.407
+    },
+    "x3p": {
+     "share": 0.3948,
+     "fg_pct": 0.3657
+    }
+   },
+   "shots": {
+    "attempts": 218701,
+    "coverage": 1.0,
+    "exact_counts": true,
+    "makes": 103739,
+    "players": 568,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 218702,
+    "zones": {
+     "x0_3": {
+      "attempts": 52732,
+      "fg_pct": 0.6988,
+      "makes": 36847,
+      "share": 0.2411
+     },
+     "x10_16": {
+      "attempts": 20962,
+      "fg_pct": 0.4464,
+      "makes": 9357,
+      "share": 0.0958
+     },
+     "x16_3p": {
+      "attempts": 12565,
+      "fg_pct": 0.4068,
+      "makes": 5112,
+      "share": 0.0575
+     },
+     "x3_10": {
+      "attempts": 46087,
+      "fg_pct": 0.4523,
+      "makes": 20844,
+      "share": 0.2107
+     },
+     "x3d": {
+      "attempts": 2028,
+      "fg_pct": 0.2071,
+      "makes": 420,
+      "share": 0.0093
+     },
+     "x3p": {
+      "attempts": 84327,
+      "fg_pct": 0.3695,
+      "makes": 31159,
+      "share": 0.3856
+     }
+    }
+   }
+  },
+  "2025": {
+   "players": 564,
+   "league_player_seasons": 569,
+   "excluded_missing": 3,
+   "excluded_incomplete": 1,
+   "excluded_overallocated": 1,
+   "fga_covered": 219318,
+   "league_fga": 219527,
+   "fga_coverage": 0.999,
+   "bands": {
+    "x0_3": {
+     "share": 0.2263,
+     "fg_pct": 0.6965
+    },
+    "x3_10": {
+     "share": 0.2141,
+     "fg_pct": 0.4608
+    },
+    "x10_16": {
+     "share": 0.0906,
+     "fg_pct": 0.4432
+    },
+    "x16_3p": {
+     "share": 0.048,
+     "fg_pct": 0.3997
+    },
+    "x3p": {
+     "share": 0.4211,
+     "fg_pct": 0.3603
+    }
+   },
+   "shots": {
+    "attempts": 219527,
+    "coverage": 1.0,
+    "exact_counts": true,
+    "makes": 102566,
+    "players": 566,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 219527,
+    "zones": {
+     "x0_3": {
+      "attempts": 49634,
+      "fg_pct": 0.6967,
+      "makes": 34580,
+      "share": 0.2261
+     },
+     "x10_16": {
+      "attempts": 19923,
+      "fg_pct": 0.4438,
+      "makes": 8842,
+      "share": 0.0908
+     },
+     "x16_3p": {
+      "attempts": 10490,
+      "fg_pct": 0.3989,
+      "makes": 4184,
+      "share": 0.0478
+     },
+     "x3_10": {
+      "attempts": 47025,
+      "fg_pct": 0.4605,
+      "makes": 21656,
+      "share": 0.2142
+     },
+     "x3d": {
+      "attempts": 2735,
+      "fg_pct": 0.2208,
+      "makes": 604,
+      "share": 0.0125
+     },
+     "x3p": {
+      "attempts": 89720,
+      "fg_pct": 0.3645,
+      "makes": 32700,
+      "share": 0.4087
+     }
+    }
+   }
+  },
+  "2026": {
+   "players": 581,
+   "league_player_seasons": 582,
+   "excluded_missing": 0,
+   "excluded_incomplete": 0,
+   "excluded_overallocated": 1,
+   "fga_covered": 218980,
+   "league_fga": 219159,
+   "fga_coverage": 0.9992,
+   "bands": {
+    "x0_3": {
+     "share": 0.2313,
+     "fg_pct": 0.7031
+    },
+    "x3_10": {
+     "share": 0.2089,
+     "fg_pct": 0.4627
+    },
+    "x10_16": {
+     "share": 0.0951,
+     "fg_pct": 0.4462
+    },
+    "x16_3p": {
+     "share": 0.0493,
+     "fg_pct": 0.4016
+    },
+    "x3p": {
+     "share": 0.4154,
+     "fg_pct": 0.3597
+    }
+   },
+   "shots": {
+    "attempts": 219160,
+    "coverage": 1.0,
+    "exact_counts": true,
+    "makes": 103227,
+    "players": 582,
+    "population": "every recorded regular-season shot in the source file (all players)",
+    "season_type": "regular",
+    "trusted_league_fga": 219159,
+    "zones": {
+     "x0_3": {
+      "attempts": 50781,
+      "fg_pct": 0.7031,
+      "makes": 35703,
+      "share": 0.2317
+     },
+     "x10_16": {
+      "attempts": 20866,
+      "fg_pct": 0.4466,
+      "makes": 9319,
+      "share": 0.0952
+     },
+     "x16_3p": {
+      "attempts": 10760,
+      "fg_pct": 0.4004,
+      "makes": 4308,
+      "share": 0.0491
+     },
+     "x3_10": {
+      "attempts": 45783,
+      "fg_pct": 0.4626,
+      "makes": 21180,
+      "share": 0.2089
+     },
+     "x3d": {
+      "attempts": 1833,
+      "fg_pct": 0.2902,
+      "makes": 532,
+      "share": 0.0084
+     },
+     "x3p": {
+      "attempts": 89137,
+      "fg_pct": 0.3611,
+      "makes": 32185,
+      "share": 0.4067
+     }
+    }
+   }
+  }
+ }
+}

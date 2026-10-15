@@ -65,10 +65,11 @@ def main():
     shoot_c = canonical_rows(shooting)
     pg_c = canonical_rows(per_game)
     info_c = canonical_rows(season_info)
+    totals_c = canonical_rows(utils.filter_nba_seasons(utils.load_raw("Player Totals.csv")))
 
     # --- Validation: exactly one canonical row per (player_id, season) ---
     for name, d in [("Advanced", adv_c), ("Per100", per100_c), ("Shooting", shoot_c),
-                     ("PerGame", pg_c), ("SeasonInfo", info_c)]:
+                     ("PerGame", pg_c), ("SeasonInfo", info_c), ("Totals", totals_c)]:
         dup = d.duplicated(subset=["player_id", "season"]).sum()
         if dup:
             print(f"FAIL: {name} has {dup} duplicate (player_id, season) rows after canonicalization", file=sys.stderr)
@@ -88,7 +89,7 @@ def main():
     shoot_cols = shoot_c[["player_id", "season", "avg_dist_fga",
                            "percent_fga_from_x0_3_range", "percent_fga_from_x3_10_range",
                            "percent_fga_from_x10_16_range", "percent_fga_from_x16_3p_range",
-                           "percent_fga_from_x3p_range", "percent_assisted_x2p_fg",
+                           "percent_fga_from_x3p_range", "percent_fga_from_x2p_range", "percent_assisted_x2p_fg",
                            "percent_assisted_x3p_fg", "percent_dunks_of_fga", "num_of_dunks",
                            "percent_corner_3s_of_3pa", "corner_3_point_percent",
                            "fg_percent_from_x0_3_range", "fg_percent_from_x3_10_range",
@@ -101,10 +102,15 @@ def main():
 
     info_cols = info_c[["player_id", "season", "experience"]]
 
+    # Season totals (canonical aggregate row for traded players) -- used only
+    # to show approximate zone attempt counts next to the distance-band shares.
+    totals_cols = totals_c[["player_id", "season", "fga", "fg"]]
+
     merged = base.merge(per100_cols, on=["player_id", "season"], how="left") \
                  .merge(shoot_cols, on=["player_id", "season"], how="left") \
                  .merge(pg_cols, on=["player_id", "season"], how="left") \
-                 .merge(info_cols, on=["player_id", "season"], how="left")
+                 .merge(info_cols, on=["player_id", "season"], how="left") \
+                 .merge(totals_cols, on=["player_id", "season"], how="left")
 
     dup = merged.duplicated(subset=["player_id", "season"]).sum()
     if dup:

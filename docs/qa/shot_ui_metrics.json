@@ -1,0 +1,26 @@
+{
+ "payload": {
+  "season_json_before_dots": {
+   "seasons/2026.json": [
+    300,
+    865059
+   ]
+  },
+  "shot_file_requested_only_after_toggle": [
+   "shots/2026/doncilu01.json"
+  ],
+  "shot_file_transfer_decoded_bytes": [
+   [
+    300,
+    7506
+   ]
+  ],
+  "files_requested_in_total": 6
+ },
+ "performance": {
+  "toggle_to_dots_ms": 232,
+  "mouse_move_ms_median": 16.6,
+  "mouse_move_ms_p95": 17.3,
+  "dots_markers": 1455
+ }
+}

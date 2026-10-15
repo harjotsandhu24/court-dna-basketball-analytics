@@ -1,0 +1,408 @@
+{
+ "note": "Generated from analysis/shot_import.py (zone_of, to_svg, is_drawn, pack_shots); checked by pytest and vitest. Coordinates are tenths of a foot, hoop at the origin.",
+ "cases": [
+  {
+   "x": 0,
+   "y": 0,
+   "three": false,
+   "zone": "x0_3",
+   "svg_x": 250.0,
+   "svg_y": 52.5,
+   "drawn": true
+  },
+  {
+   "x": 29,
+   "y": 0,
+   "three": false,
+   "zone": "x0_3",
+   "svg_x": 279.0,
+   "svg_y": 52.5,
+   "drawn": true
+  },
+  {
+   "x": 30,
+   "y": 0,
+   "three": false,
+   "zone": "x3_10",
+   "svg_x": 280.0,
+   "svg_y": 52.5,
+   "drawn": true
+  },
+  {
+   "x": 0,
+   "y": 29,
+   "three": false,
+   "zone": "x0_3",
+   "svg_x": 250.0,
+   "svg_y": 81.5,
+   "drawn": true
+  },
+  {
+   "x": 0,
+   "y": -30,
+   "three": false,
+   "zone": "x3_10",
+   "svg_x": 250.0,
+   "svg_y": 22.5,
+   "drawn": true
+  },
+  {
+   "x": 99,
+   "y": 10,
+   "three": false,
+   "zone": "x3_10",
+   "svg_x": 349.0,
+   "svg_y": 62.5,
+   "drawn": true
+  },
+  {
+   "x": 100,
+   "y": 0,
+   "three": false,
+   "zone": "x10_16",
+   "svg_x": 350.0,
+   "svg_y": 52.5,
+   "drawn": true
+  },
+  {
+   "x": 70,
+   "y": 70,
+   "three": false,
+   "zone": "x3_10",
+   "svg_x": 320.0,
+   "svg_y": 122.5,
+   "drawn": true
+  },
+  {
+   "x": 71,
+   "y": 71,
+   "three": false,
+   "zone": "x10_16",
+   "svg_x": 321.0,
+   "svg_y": 123.5,
+   "drawn": true
+  },
+  {
+   "x": -71,
+   "y": 71,
+   "three": false,
+   "zone": "x10_16",
+   "svg_x": 179.0,
+   "svg_y": 123.5,
+   "drawn": true
+  },
+  {
+   "x": 159,
+   "y": 15,
+   "three": false,
+   "zone": "x10_16",
+   "svg_x": 409.0,
+   "svg_y": 67.5,
+   "drawn": true
+  },
+  {
+   "x": 160,
+   "y": 0,
+   "three": false,
+   "zone": "x16_3p",
+   "svg_x": 410.0,
+   "svg_y": 52.5,
+   "drawn": true
+  },
+  {
+   "x": 0,
+   "y": 160,
+   "three": false,
+   "zone": "x16_3p",
+   "svg_x": 250.0,
+   "svg_y": 212.5,
+   "drawn": true
+  },
+  {
+   "x": 0,
+   "y": -52,
+   "three": false,
+   "zone": "x3_10",
+   "svg_x": 250.0,
+   "svg_y": 0.5,
+   "drawn": true
+  },
+  {
+   "x": -231,
+   "y": 0,
+   "three": true,
+   "zone": "x3p",
+   "svg_x": 19.0,
+   "svg_y": 52.5,
+   "drawn": true
+  },
+  {
+   "x": 231,
+   "y": 0,
+   "three": true,
+   "zone": "x3p",
+   "svg_x": 481.0,
+   "svg_y": 52.5,
+   "drawn": true
+  },
+  {
+   "x": -250,
+   "y": -52,
+   "three": true,
+   "zone": "x3p",
+   "svg_x": 0.0,
+   "svg_y": 0.5,
+   "drawn": true
+  },
+  {
+   "x": 250,
+   "y": 347,
+   "three": true,
+   "zone": "x3d",
+   "svg_x": 500.0,
+   "svg_y": 399.5,
+   "drawn": true
+  },
+  {
+   "x": 251,
+   "y": 0,
+   "three": true,
+   "zone": "x3p",
+   "svg_x": 501.0,
+   "svg_y": 52.5,
+   "drawn": false
+  },
+  {
+   "x": 0,
+   "y": 348,
+   "three": true,
+   "zone": "x3d",
+   "svg_x": 250.0,
+   "svg_y": 400.5,
+   "drawn": false
+  },
+  {
+   "x": 0,
+   "y": -53,
+   "three": true,
+   "zone": "x3p",
+   "svg_x": 250.0,
+   "svg_y": -0.5,
+   "drawn": false
+  },
+  {
+   "x": 0,
+   "y": 884,
+   "three": true,
+   "zone": "x3d",
+   "svg_x": 250.0,
+   "svg_y": 936.5,
+   "drawn": false
+  },
+  {
+   "x": -100,
+   "y": 300,
+   "three": false,
+   "zone": "x16_3p",
+   "svg_x": 150.0,
+   "svg_y": 352.5,
+   "drawn": true
+  },
+  {
+   "x": 0,
+   "y": 0,
+   "three": true,
+   "zone": "x3p",
+   "svg_x": 250.0,
+   "svg_y": 52.5,
+   "drawn": true
+  },
+  {
+   "x": 237,
+   "y": 0,
+   "three": true,
+   "zone": "x3p",
+   "svg_x": 487.0,
+   "svg_y": 52.5,
+   "drawn": true
+  },
+  {
+   "x": 0,
+   "y": 237,
+   "three": true,
+   "zone": "x3p",
+   "svg_x": 250.0,
+   "svg_y": 289.5,
+   "drawn": true
+  },
+  {
+   "x": 0,
+   "y": 299,
+   "three": true,
+   "zone": "x3p",
+   "svg_x": 250.0,
+   "svg_y": 351.5,
+   "drawn": true
+  },
+  {
+   "x": 0,
+   "y": 300,
+   "three": true,
+   "zone": "x3d",
+   "svg_x": 250.0,
+   "svg_y": 352.5,
+   "drawn": true
+  },
+  {
+   "x": 0,
+   "y": 301,
+   "three": true,
+   "zone": "x3d",
+   "svg_x": 250.0,
+   "svg_y": 353.5,
+   "drawn": true
+  },
+  {
+   "x": 180,
+   "y": 240,
+   "three": true,
+   "zone": "x3d",
+   "svg_x": 430.0,
+   "svg_y": 292.5,
+   "drawn": true
+  },
+  {
+   "x": 179,
+   "y": 240,
+   "three": true,
+   "zone": "x3p",
+   "svg_x": 429.0,
+   "svg_y": 292.5,
+   "drawn": true
+  },
+  {
+   "x": 181,
+   "y": 240,
+   "three": true,
+   "zone": "x3d",
+   "svg_x": 431.0,
+   "svg_y": 292.5,
+   "drawn": true
+  },
+  {
+   "x": -180,
+   "y": 240,
+   "three": true,
+   "zone": "x3d",
+   "svg_x": 70.0,
+   "svg_y": 292.5,
+   "drawn": true
+  },
+  {
+   "x": 0,
+   "y": 299,
+   "three": false,
+   "zone": "x16_3p",
+   "svg_x": 250.0,
+   "svg_y": 351.5,
+   "drawn": true
+  },
+  {
+   "x": 0,
+   "y": 310,
+   "three": false,
+   "zone": "x16_3p",
+   "svg_x": 250.0,
+   "svg_y": 362.5,
+   "drawn": true
+  },
+  {
+   "x": 0,
+   "y": 884,
+   "three": true,
+   "zone": "x3d",
+   "svg_x": 250.0,
+   "svg_y": 936.5,
+   "drawn": false
+  },
+  {
+   "x": -250,
+   "y": 347,
+   "three": true,
+   "zone": "x3d",
+   "svg_x": 0.0,
+   "svg_y": 399.5,
+   "drawn": true
+  },
+  {
+   "x": 120,
+   "y": 0,
+   "three": true,
+   "zone": "x3p",
+   "svg_x": 370.0,
+   "svg_y": 52.5,
+   "drawn": true
+  },
+  {
+   "x": 221,
+   "y": 0,
+   "three": true,
+   "zone": "x3p",
+   "svg_x": 471.0,
+   "svg_y": 52.5,
+   "drawn": true
+  },
+  {
+   "x": 220,
+   "y": 10,
+   "three": true,
+   "zone": "x3p",
+   "svg_x": 470.0,
+   "svg_y": 62.5,
+   "drawn": true
+  }
+ ],
+ "packed": "6y2s17r2s07s2s16y3l06y1y19p3209q2s18w4q08x4r14z4r0bd371be2s06y7816y1c00j2s3dd2s2001c3dwcf2dx2s36ycg26y1b36yrc246b416y2s2dj2s36y9d26yb326yb436yb52by9g3bx9g2bz9g31y9g26yb316ybe06yrc300cf2aa2s3d32s2d2323",
+ "packed_made": [
+  true,
+  false,
+  true,
+  false,
+  true,
+  false,
+  true,
+  false,
+  true,
+  false,
+  true,
+  false,
+  true,
+  false,
+  true,
+  false,
+  true,
+  false,
+  true,
+  false,
+  true,
+  false,
+  true,
+  false,
+  true,
+  false,
+  false,
+  true,
+  false,
+  true,
+  false,
+  true,
+  false,
+  true,
+  false,
+  true,
+  false,
+  true,
+  false,
+  true
+ ]
+}

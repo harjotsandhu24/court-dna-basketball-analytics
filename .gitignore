@@ -56,3 +56,11 @@ Thumbs.db
 
 # Misc
 *.tsbuildinfo
+
+# Supplementary downloads (never committed; see docs/data.md)
+raw_supplementary/
+data/supplementary/
+
+# Raw shot-location downloads (never committed; see docs/data.md)
+raw/shots/
+data/proposed_distribution_exceptions.json

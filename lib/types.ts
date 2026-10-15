@@ -9,12 +9,22 @@ export interface BasicStats {
   ft_percent: number | null;
 }
 
+import type { LocationsSummary } from "./shotLocations";
+
 export interface ShotDna {
+  /** Present only when validated shot-location records exist for this player-season. */
+  locations?: LocationsSummary;
   percent_fga_from_x0_3_range: number | null;
   percent_fga_from_x3_10_range: number | null;
   percent_fga_from_x10_16_range: number | null;
   percent_fga_from_x16_3p_range: number | null;
   percent_fga_from_x3p_range: number | null;
+  /** Season total FGA / FGM (Basketball-Reference totals; canonical aggregate row for traded players). */
+  fga?: number | null;
+  fg?: number | null;
+  /** Sum of the five source band shares (not normalized) and whether it is consistent with 3-decimal rounding. */
+  shares_total?: number | null;
+  distribution_status?: "ok" | "incomplete" | "overallocated" | "missing";
   fg_percent_from_x0_3_range: number | null;
   fg_percent_from_x3_10_range: number | null;
   fg_percent_from_x10_16_range: number | null;

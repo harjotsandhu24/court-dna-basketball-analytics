@@ -210,3 +210,6 @@ rules — never a win/loss prediction.
   cross-season shot distance is not interpreted directly.
 
 See `docs/limitations.md` for the complete list.
+
+## Scoring version (Oct 2026)
+No change. The Similarity Index still uses the same 12 features, weights, normalization, thresholds and candidate pool (`public/data/similarity_pool.json`, SHA-256 `b1d16cfaf9feb60974adb4f28dabd8d3b927c29d4c52a066f15ca92ca26c3b2e`, identical before and after the Oct 2026 shooting-profile work). The Shooting Profile and its zone selection are display-only. No supplementary or tracking data feeds any score, and there is no detailed comparison mode.

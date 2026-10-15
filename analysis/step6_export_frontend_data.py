@@ -28,6 +28,7 @@ SHOT_DNA_FIELDS = [
     "percent_fga_from_x0_3_range", "percent_fga_from_x3_10_range",
     "percent_fga_from_x10_16_range", "percent_fga_from_x16_3p_range",
     "percent_fga_from_x3p_range",
+    "fga", "fg",
     "fg_percent_from_x0_3_range", "fg_percent_from_x3_10_range",
     "fg_percent_from_x10_16_range", "fg_percent_from_x16_3p_range",
     "fg_percent_from_x3p_range",
@@ -52,6 +53,30 @@ def clean_num(v):
 
 def math_isnan_or_inf(v):
     return v != v or v in (float("inf"), float("-inf"))
+
+
+def load_shot_location_summary():
+    """Output of analysis/shot_import.py (optional): {"seasons": {season: {players, baseline}}}. Absent -> no shot-location data is exported."""
+    path = utils.data_path("shot_location_summary.json")
+    if not os.path.exists(path):
+        return None
+    with open(path) as f:
+        return json.load(f)
+
+
+SHOT_LOC = load_shot_location_summary()
+
+
+def shot_dna_record(row):
+    import shot_bands as sb
+    d = {f: clean_num(row.get(f)) for f in SHOT_DNA_FIELDS}
+    loc = (SHOT_LOC or {}).get("seasons", {}).get(str(int(row["season"])), {}).get("players", {}).get(row["player_id"])
+    if loc:
+        d["locations"] = loc  # exact zone counts from recorded shots (+ coverage); the same records feed the dots
+    total = sb.shares_total(row)
+    d["shares_total"] = total
+    d["distribution_status"] = sb.distribution_status(total)
+    return d
 
 
 def row_to_record(row, galaxy_lookup):
@@ -88,7 +113,7 @@ def row_to_record(row, galaxy_lookup):
         },
         "archetype": row["archetype"],
         "trait_tags": row["trait_tags"].split("|"),
-        "shot_dna": {f: clean_num(row.get(f)) for f in SHOT_DNA_FIELDS},
+        "shot_dna": shot_dna_record(row),
         "galaxy": gc,
         "career": {
             "ht_in_in": clean_num(row.get("ht_in_in")),
@@ -99,6 +124,47 @@ def row_to_record(row, galaxy_lookup):
             "to_year": clean_num(row.get("to")),
         },
     }
+
+
+def write_shot_baselines(canon):
+    """League baselines for the five distance bands, regular season, from ALL canonical NBA
+    player-seasons in the source (any minutes; traded players use the aggregate row only --
+    step 2), excluding rows whose shot distribution is missing or fails the share-total check.
+    Attempts per band are ESTIMATED (share * FGA); FG% is pooled makes / pooled attempts.
+    Coverage metadata records exactly what was and was not included, per season."""
+    import shot_bands as sb
+    out = {
+        "source": "Basketball-Reference via Kaggle (Player Shooting + Player Totals)",
+        "season_type": "regular",
+        "population": "all canonical NBA player-seasons (any minutes) with a complete, internally consistent shot distribution",
+        "min_minutes": 0,
+        "attempts_are_estimates": True,
+        "share_tolerance": sb.SHARE_ROUNDING_TOLERANCE,
+        "seasons": {},
+    }
+    for season, g in canon.groupby("season"):
+        league_fga = float(g["fga"].fillna(0).sum())
+        status = g.apply(lambda r: sb.distribution_status(sb.shares_total(r)), axis=1)
+        have = g[(status == "ok") & (g["fga"] > 0)]
+        counts = status.value_counts().to_dict()
+        pooled = sb.pooled_baseline(have.to_dict("records"))
+        covered = pooled["fga_covered"]
+        out["seasons"][str(int(season))] = {
+            "players": pooled["players"],
+            "league_player_seasons": int(len(g)),
+            "excluded_missing": int(counts.get("missing", 0)),
+            "excluded_incomplete": int(counts.get("incomplete", 0)),
+            "excluded_overallocated": int(counts.get("overallocated", 0)),
+            "fga_covered": covered,
+            "league_fga": int(league_fga),
+            "fga_coverage": round(covered / league_fga, 4) if league_fga else None,
+            "bands": {k: {"share": v["share"], "fg_pct": v["fg_pct"]} for k, v in pooled["bands"].items()},
+        }
+    for season, entry in (SHOT_LOC or {}).get("seasons", {}).items():
+        if season in out["seasons"]:
+            out["seasons"][season]["shots"] = entry["baseline"]  # exact counts from recorded shots, same zone definitions and season type
+    with open(utils.public_data_path("shot_baselines.json"), "w") as f:
+        json.dump(out, f, indent=1)
 
 
 def main():
@@ -217,6 +283,8 @@ def main():
     }
     with open(utils.public_data_path("meta.json"), "w") as f:
         json.dump(meta, f, indent=2)
+
+    write_shot_baselines(pd.read_csv(utils.data_path("canonical_player_seasons.csv")))
 
     print(f"Unique players: {meta['unique_players']}")
     print(f"Canonical player-seasons: {meta['canonical_player_seasons']}")

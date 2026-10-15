@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import PlayerPhoto from "@/components/PlayerPhoto";
 import CourtPrint from "@/components/CourtPrint";
 import ShotDna from "@/components/ShotDna";
+import LimitationsNote from "@/components/LimitationsNote";
 import TraitBars from "@/components/TraitBars";
 import ClosestMatches from "@/components/ClosestMatches";
 import { loadCareer, findPlayerSeason } from "@/lib/dataLoader";
@@ -125,8 +126,12 @@ export default function PlayerDnaPage({
           <TraitBars traits={record.traits} />
         </div>
         <div>
-          <ShotDna data={record.shot_dna} />
+          <ShotDna data={record.shot_dna} season={record.season} playerId={record.player_id} />
         </div>
+      </div>
+
+      <div className="border-b border-line py-6">
+        <LimitationsNote />
       </div>
 
       {/* CLOSEST MATCHES */}

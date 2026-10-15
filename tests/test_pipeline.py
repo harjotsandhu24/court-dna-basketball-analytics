@@ -300,3 +300,20 @@ def test_no_name_is_used_as_identity(canonical):
     ewing = canonical[canonical.player == "Patrick Ewing"]
     assert ewing.player_id.nunique() >= 2
     assert not ewing.duplicated(subset=["player_id", "season"]).any()
+
+
+def test_shot_band_totals_reconcile():
+    """Estimated zone makes (share x FGA x band FG%) must reconcile with season FGM; no impossible values."""
+    import pandas as pd
+    df = pd.read_csv(os.path.join(os.path.dirname(__file__), "..", "data", "with_archetypes.csv"))
+    b = ["x0_3", "x3_10", "x10_16", "x16_3p", "x3p"]
+    sh = df[[f"percent_fga_from_{k}_range" for k in b]]
+    fg = df[[f"fg_percent_from_{k}_range" for k in b]]
+    assert not df.duplicated(["player_id", "season"]).any()
+    assert ((sh >= 0) & (sh <= 1)).all().all() and ((fg.dropna(how="all") >= 0) | fg.isna()).all().all()
+    assert (sh.sum(axis=1).between(0.95, 1.05)).all()
+    est = (sh.values * df["fga"].values[:, None] * fg.fillna(0).values).sum(axis=1)
+    rel = abs(est - df["fg"].values) / df["fg"].clip(lower=1).values
+    assert (pd.Series(rel).quantile(0.95)) < 0.01
+    # a band with zero attempts must have no FG% (null), never 0
+    assert not ((sh.values == 0) & fg.notna().values).any()

@@ -79,3 +79,10 @@ assumed equivalent to being verified.
 ## Console errors
 
 Zero JavaScript console or page errors across all routes and widths tested.
+
+## Shooting Profile browser QA (Phase 5)
+
+`python3 docs/qa/shot_ui_qa.py` drives real Chromium input (mouse, keyboard, touch) against a production build: tooltip show/update/hide and viewport clamping, click selection surviving hover previews, single-zone emphasis, dots on/off and All/Made/Missed (tooltip numbers unchanged), keyboard focus + Escape, touch (no sticky tooltip), independent Compare courts, season change clearing stale state, Kobe 2008-09, Luka 2018-19 and 2025-26, 1996-97 (22-ft line), simulated unavailable-data fallback, load error + retry, payload and timing (`docs/qa/shot_ui_metrics.json`). Screenshots: `docs/screenshots/phase5/`. Phase 6 (court visual refinement) added checks for the uniform #111820 court, boundary-only highlights (hover/selected/focus-dashed), band-wide hover targets (grid sweep), the 22-ft 1996-97 line and the new instructions. Phase 7 (deep threes) added: the 30-ft hover/select/keyboard/touch behaviour, zero-attempt and small-sample deep zones, partial-coverage labelling, the 1996-97 line, Compare independence and the five-zone fallback. Last run: 111/111 passed (Chromium only; Firefox and WebKit not tested). The "unavailable season" case is simulated by stripping `locations` in transit, because every in-range season has data. The sandbox blocks external hosts (web fonts), so those console errors are filtered.
+
+Phase 7 automated checks (this build): `python3 -m pytest tests -q` 119 passed; `npx vitest run` 190 passed (30-ft boundary at 299/300/301 tenths and off-axis 3-4-5 points, two-pointers never deep, every shipped player-season and baseline reconciles, geometry vs classifier agreement); `npx tsc --noEmit`, `npx eslint .` and `npm run build` clean; `python3 analysis/shot_band_validation.py` exits 0.
+Not run: Firefox/WebKit, real touch hardware or screen readers, a Vercel preview build, and any check of NBA.com's redistribution terms.

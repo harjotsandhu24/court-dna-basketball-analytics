@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { loadMeta } from "@/lib/dataLoader";
+import LimitationsNote from "@/components/LimitationsNote";
 import type { DatasetMeta } from "@/lib/types";
 import { FEATURE_GROUPS, GALAXY_MIN_MINUTES, GALAXY_MIN_GAMES, CAREER_DISPLAY_MIN_MINUTES, SIMILARITY_SCALE, SEASON_MAX, SEASON_MIN, seasonLabel } from "@/lib/config";
 
@@ -121,10 +122,13 @@ export default function MethodologyPage() {
 
       <Section title="Shooting Profile">
         <p>
-          Built from Basketball-Reference&rsquo;s shot-range breakdown (0-3 ft, 3-10 ft, 10-16 ft, 16 ft-3PT,
-          3-point). This is <strong>not</strong> a location-based shot chart — the source data has no x/y shot
-          coordinates, only attempt-share and field-goal percentage per distance range. Segment width shows share of
-          attempts; color intensity shows efficiency in that range.
+          A half-court of distance zones: 0&ndash;3 ft, 3&ndash;10 ft, 10&ndash;16 ft, 16 ft to the three-point line,
+          three-pointers, and (where shot locations exist) deep threes, meaning three-point attempts 30 feet or more from the
+          basket. Hover or focus a zone for its makes, attempts and shooting %; click to keep it selected. For every regular
+          season from 1996&ndash;97 on, counts come from each recorded shot&rsquo;s location (a stats.nba.com shot-chart
+          dataset matched to Basketball-Reference players); &ldquo;Show shots&rdquo; plots them. A season without shot
+          locations falls back to Basketball-Reference&rsquo;s distance-range shares with estimated counts and no deep-three
+          split. Shot locations do not affect any similarity score. Details: the &ldquo;About this data&rdquo; note under the court.
         </p>
       </Section>
 
@@ -138,6 +142,7 @@ export default function MethodologyPage() {
       </Section>
 
       <Section title="Limitations">
+        <LimitationsNote className="mb-4" />
         <ul className="list-disc pl-5 space-y-1.5">
           <li>Box-score and rate statistics cannot capture every part of basketball performance — screening, spacing gravity, communication, and other off-ball value are not measured here.</li>
           <li>Steals and blocks are the only defensive box-score signals available; they are an incomplete measure of defensive activity, not a complete one.</li>

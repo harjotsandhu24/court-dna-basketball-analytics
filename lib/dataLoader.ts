@@ -20,6 +20,17 @@ import type {
   DatasetMeta,
 } from "./types";
 import type { SimilarityPoolEntry } from "./similarity";
+import type { SeasonBaseline } from "./shotZones";
+import type { ShotBaseline } from "./shotLocations";
+
+export interface ShotBaselines {
+  source: string;
+  season_type: string;
+  population: string;
+  min_minutes: number;
+  attempts_are_estimates: boolean;
+  seasons: Record<string, SeasonBaseline & { shots?: ShotBaseline }>;
+}
 
 const seasonCache = new Map<number, Promise<PlayerSeasonRecord[]>>();
 const careerCache = new Map<string, Promise<PlayerSeasonRecord[]>>();
@@ -170,4 +181,9 @@ export function nearestQualifiedSeason(entry: { qualified_seasons: number[] }, t
     }
   }
   return best;
+}
+
+let shotBaselinesPromise: Promise<ShotBaselines> | null = null;
+export function loadShotBaselines(): Promise<ShotBaselines> {
+  return cachedSingleton(() => shotBaselinesPromise, (p) => { shotBaselinesPromise = p; }, "/data/shot_baselines.json");
 }

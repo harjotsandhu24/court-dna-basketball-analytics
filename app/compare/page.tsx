@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import PlayerPhoto from "@/components/PlayerPhoto";
 import CourtPrint from "@/components/CourtPrint";
 import ShotDna from "@/components/ShotDna";
+import LimitationsNote from "@/components/LimitationsNote";
 import PlayerAutocomplete, { type PlayerAutocompleteSelection } from "@/components/PlayerAutocomplete";
 import { findPlayerSeason, loadPlayersIndex } from "@/lib/dataLoader";
 import { isSamePlayerSeason, parsePlayerSeasonKey, playerSeasonKey, similarityIndex } from "@/lib/similarity";
@@ -301,9 +302,11 @@ function ComparePageInner() {
 
       {/* Shot DNA comparison */}
       <div className="mt-10 grid grid-cols-1 gap-8 border-t border-line pt-10 lg:grid-cols-2">
-        <ShotDna data={a.shot_dna} />
-        <ShotDna data={b.shot_dna} />
+        <ShotDna data={a.shot_dna} season={a.season} playerId={a.player_id} />
+        <ShotDna data={b.shot_dna} season={b.season} playerId={b.player_id} />
       </div>
+
+      <LimitationsNote className="mt-6" />
 
       {/* Similarities / differences */}
       <div className="mt-10 grid grid-cols-1 gap-8 border-t border-line pt-10 sm:grid-cols-2">
