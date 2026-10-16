@@ -169,11 +169,17 @@ export function searchPlayers(index: PlayersIndex, query: string, limit = 20): P
  * selected while viewing a season they didn't qualify in (e.g. Player Map
  * search) so the UI can switch to a real season rather than show nothing. */
 export function nearestQualifiedSeason(entry: { qualified_seasons: number[] }, targetSeason: number): number | null {
-  if (entry.qualified_seasons.length === 0) return null;
-  if (entry.qualified_seasons.includes(targetSeason)) return targetSeason;
-  let best = entry.qualified_seasons[0];
+  return nearestSeasonIn(entry.qualified_seasons, targetSeason);
+}
+
+/** Same rule as `nearestQualifiedSeason`, over any season list (the lineup
+ * passes every display-eligible season). */
+export function nearestSeasonIn(seasons: number[], targetSeason: number): number | null {
+  if (seasons.length === 0) return null;
+  if (seasons.includes(targetSeason)) return targetSeason;
+  let best = seasons[0];
   let bestDist = Math.abs(best - targetSeason);
-  for (const s of entry.qualified_seasons) {
+  for (const s of seasons) {
     const dist = Math.abs(s - targetSeason);
     if (dist < bestDist || (dist === bestDist && s > best)) {
       best = s;

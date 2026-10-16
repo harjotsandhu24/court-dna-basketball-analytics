@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { loadPlayersIndex, searchPlayers, nearestQualifiedSeason, type PlayerSearchResult } from "@/lib/dataLoader";
+import { loadPlayersIndex, searchPlayers, nearestQualifiedSeason, nearestSeasonIn, type PlayerSearchResult } from "@/lib/dataLoader";
+import { SMALL_SAMPLE_LABEL, SMALL_SAMPLE_NOTE, isSmallSampleSeason } from "@/lib/lineup";
 import { seasonLabel } from "@/lib/config";
 import type { PlayersIndex } from "@/lib/types";
 
@@ -32,6 +33,15 @@ interface PlayerAutocompleteProps {
    * made. Most call sites want this (search-to-navigate); Build a Lineup
    * wants it too since each slot gets its own fresh search. */
   clearOnSelect?: boolean;
+  /** Which seasons a pick may resolve to. "qualified" (default, used by every
+   * existing call site) keeps the comparison-pool seasons only. "all" offers
+   * every display-eligible season, as Explore does; Build a Lineup uses it. */
+  seasonPool?: "qualified" | "all";
+  /** Ignore picks and lock the input (e.g. while a lineup add is loading). */
+  disabled?: boolean;
+  /** Called when a picked player has no season to resolve to, so the caller
+   * can say so instead of the pick silently doing nothing. */
+  onUnavailable?: (name: string) => void;
 }
 
 type Status = "idle" | "loading" | "ready" | "error";
@@ -44,6 +54,9 @@ export default function PlayerAutocomplete({
   autoFocus = false,
   className = "",
   clearOnSelect = true,
+  seasonPool = "qualified",
+  disabled = false,
+  onUnavailable,
 }: PlayerAutocompleteProps) {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<Status>("idle");
@@ -124,11 +137,22 @@ export default function PlayerAutocomplete({
     return () => document.removeEventListener("pointerdown", handlePointerDown);
   }, []);
 
+  // Default pool: the player's nearest qualified season (unchanged).
+  // "all" pool: nearest display-eligible season, latest when none is given.
+  function resolveSeason(entry: PlayersIndex[string] | undefined): number | null {
+    if (!entry) return null;
+    if (seasonPool === "all") {
+      const latest = entry.seasons[entry.seasons.length - 1];
+      return nearestSeasonIn(entry.seasons, preferredSeason ?? latest);
+    }
+    return nearestQualifiedSeason(entry, preferredSeason ?? entry.qualified_seasons[entry.qualified_seasons.length - 1]);
+  }
+
   function commitSelection(r: PlayerSearchResult) {
+    if (disabled) return;
     const entry = index?.[r.id];
-    const resolvedSeason = entry
-      ? nearestQualifiedSeason(entry, preferredSeason ?? entry.qualified_seasons[entry.qualified_seasons.length - 1])
-      : null;
+    const resolvedSeason = resolveSeason(entry);
+    if (resolvedSeason == null) onUnavailable?.(r.name);
     if (resolvedSeason != null) {
       onSelect({
         id: r.id,
@@ -222,7 +246,7 @@ export default function PlayerAutocomplete({
   const nameCounts = new Map<string, number>();
   for (const r of results) nameCounts.set(r.name, (nameCounts.get(r.name) ?? 0) + 1);
 
-  const showDropdown = open && (status === "loading" || status === "error" || results.length > 0 || (status === "ready" && results.length === 0));
+  const showDropdown = !disabled && open && (status === "loading" || status === "error" || results.length > 0 || (status === "ready" && results.length === 0));
 
   return (
     <div ref={rootRef} className={`relative ${className}`}>
@@ -237,6 +261,7 @@ export default function PlayerAutocomplete({
           aria-activedescendant={activeIndex >= 0 ? optionId(activeIndex) : undefined}
           enterKeyHint="search"
           autoFocus={autoFocus}
+          disabled={disabled}
           placeholder={placeholder}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -244,7 +269,7 @@ export default function PlayerAutocomplete({
             if (results.length > 0 || status === "error") setOpen(true);
           }}
           onKeyDown={handleKeyDown}
-          className={`w-full rounded-md border border-line-strong bg-arena-panel text-ink placeholder:text-stone-light outline-none focus:border-court-orange ${sizeClasses}`}
+          className={`w-full rounded-md border border-line-strong bg-arena-panel text-ink placeholder:text-stone-light outline-none focus:border-court-orange disabled:opacity-60 ${sizeClasses}`}
         />
       </div>
 
@@ -277,9 +302,8 @@ export default function PlayerAutocomplete({
           {status === "ready" && results.map((r, i) => {
             const isActive = i === activeIndex;
             const entry = index?.[r.id];
-            const resolvedSeason = entry
-              ? nearestQualifiedSeason(entry, preferredSeason ?? entry.qualified_seasons[entry.qualified_seasons.length - 1])
-              : null;
+            const resolvedSeason = resolveSeason(entry);
+            const smallSample = seasonPool === "all" && entry != null && resolvedSeason != null && isSmallSampleSeason(entry, resolvedSeason);
             const careerSpan =
               entry && (nameCounts.get(r.name) ?? 0) > 1
                 ? `${seasonLabel(entry.seasons[0])} to ${seasonLabel(entry.seasons[entry.seasons.length - 1])}`
@@ -311,6 +335,11 @@ export default function PlayerAutocomplete({
                   {resolvedSeason != null && (
                     <span className={willSwitchSeason ? "font-medium text-court-orange-bright" : "text-stone-light"}>
                       {seasonLabel(resolvedSeason)}
+                    </span>
+                  )}
+                  {smallSample && (
+                    <span title={SMALL_SAMPLE_NOTE} className="rounded-full border border-court-orange/50 bg-court-orange/10 px-1.5 py-0.5 text-[10px] font-medium text-court-orange-bright">
+                      {SMALL_SAMPLE_LABEL}
                     </span>
                   )}
                   <span className="text-stone-light">{r.latest_team}</span>
