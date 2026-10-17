@@ -19,20 +19,27 @@ export default function TraitBars({ traits, compact = false }: TraitBarsProps) {
   return (
     <div className="flex flex-col gap-2.5">
       {ORDER.map((dim, i) => {
-        const val = Math.max(0, Math.min(100, traits[dim] ?? 0));
+        const raw = traits[dim];
+        const missing = raw == null || !Number.isFinite(raw);
+        const val = missing ? 0 : Math.max(0, Math.min(100, raw));
         return (
           <div key={dim}>
             <div className="mb-1 flex items-center justify-between text-xs">
               <span className="text-stone">{DIMENSION_DISPLAY_LABEL[dim]}</span>
-              <span className="tabular font-semibold text-ink-light">{Math.round(val)}</span>
+              <span className={`tabular ${missing ? "text-stone-light" : "font-semibold text-ink-light"}`}>{missing ? "Unavailable" : Math.round(val)}</span>
             </div>
-            <div className={`w-full overflow-hidden rounded-full bg-arena-panel-strong ${compact ? "h-1.5" : "h-2"}`}>
-              <motion.div
+            <div
+              role={missing ? "img" : undefined}
+              data-testid={missing ? "trait-bar-missing" : undefined}
+              aria-label={missing ? `${DIMENSION_DISPLAY_LABEL[dim]} unavailable` : undefined}
+              className={`w-full overflow-hidden rounded-full bg-arena-panel-strong ${compact ? "h-1.5" : "h-2"} ${missing ? "border border-dashed border-line-strong" : ""}`}
+            >
+              {!missing && <motion.div
                 className="h-full rounded-full bg-gradient-to-r from-court-orange-deep to-court-orange-bright"
                 initial={reduceMotion ? false : { width: 0 }}
                 animate={{ width: `${val}%` }}
                 transition={reduceMotion ? { duration: 0 } : { duration: 0.7, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-              />
+              />}
             </div>
           </div>
         );

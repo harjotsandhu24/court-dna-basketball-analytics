@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { loadSimilarityPool } from "@/lib/dataLoader";
 import { findClosestMatches, type SimilarityPoolEntry, type CandidateFilters } from "@/lib/similarity";
 import { explainMatch } from "@/lib/explain";
 import PlayerPhoto from "./PlayerPhoto";
+import StatusPanel from "./StatusPanel";
+import { useLoad } from "@/lib/useLoad";
 import { ERA_WINDOW_SEASONS } from "@/lib/config";
 
 interface Props {
@@ -14,18 +16,11 @@ interface Props {
 }
 
 export default function ClosestMatches({ query, queryName }: Props) {
-  const [pool, setPool] = useState<SimilarityPoolEntry[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [poolState, retry] = useLoad<SimilarityPoolEntry[]>("similarity-pool", loadSimilarityPool);
+  const pool = useMemo(() => (poolState.status === "ready" ? poolState.data : []), [poolState]);
   const [includeOtherSeasons, setIncludeOtherSeasons] = useState(false);
   const [seasonMode, setSeasonMode] = useState<CandidateFilters["seasonMode"]>("all");
   const [positionFilter, setPositionFilter] = useState<string | null>(null);
-
-  useEffect(() => {
-    loadSimilarityPool().then((p) => {
-      setPool(p);
-      setLoading(false);
-    });
-  }, []);
 
   const matches = useMemo(() => {
     if (pool.length === 0) return [];
@@ -77,9 +72,11 @@ export default function ClosestMatches({ query, queryName }: Props) {
         </label>
       </div>
 
-      {loading ? (
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          {Array.from({ length: 4 }).map((_, i) => <div key={i} className="h-24 animate-pulse rounded-xl bg-arena-panel" />)}
+      {poolState.status === "error" || poolState.status === "notfound" ? (
+        <StatusPanel inline tone="error" testId="similar-error" title="Couldn't load similar players." message="The rest of this page still works." onRetry={retry} />
+      ) : poolState.status !== "ready" ? (
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2" role="status" aria-label="Loading similar players" data-testid="similar-loading">
+          {Array.from({ length: 8 }).map((_, i) => <div key={i} className="h-24 animate-pulse rounded-xl bg-arena-panel" />)}
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -89,10 +86,11 @@ export default function ClosestMatches({ query, queryName }: Props) {
             return (
               <Link
                 key={`${m.player_id}-${m.season}`}
+                data-testid="similar-card"
                 href={`/compare?a=${query.player_id}_${query.season}&b=${m.player_id}_${m.season}`}
                 className="card-interactive flex gap-3 rounded-xl bg-arena-panel p-3.5"
               >
-                <PlayerPhoto playerId={m.player_id} name={m.player} posGroup={m.pos_group} size={48} />
+                <PlayerPhoto playerId={m.player_id} name={m.player} posGroup={m.pos_group} size={48} decorative />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center justify-between gap-2">
                     <p className="truncate text-sm font-semibold text-ink-light">{m.player}</p>
@@ -132,7 +130,7 @@ function FilterSelect({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="rounded-md border border-line-strong bg-arena-panel px-2.5 py-1.5 text-ink-light outline-none focus:border-court-orange"
+        className="min-h-11 rounded-md border border-line-strong bg-arena-panel px-2.5 py-1.5 text-ink-light outline-none focus:border-court-orange"
       >
         {options.map((o) => (
           <option key={o.value} value={o.value}>{o.label}</option>

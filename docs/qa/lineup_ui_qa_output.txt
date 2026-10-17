@@ -1,0 +1,157 @@
+PASS five empty spots with accessible names
+PASS hover highlights a position
+PASS add to PG: photo/name/season shown
+PASS add to SG: photo/name/season shown
+PASS add to SF: photo/name/season shown
+PASS add to PF: photo/name/season shown
+PASS add to C: photo/name/season shown
+PASS Thybulle defaults to latest season 2025-26 with Small sample label
+PASS scores match the data for the five player-seasons
+PASS full lineup heading
+PASS occupied spot opens controls (change player, season, move, remove)
+PASS season list has all 7 seasons, small-sample labels on the two newest
+PASS season change updates the spot and the scores
+PASS switching back restores the scores
+PASS replace with a player already in the lineup is blocked with a message
+PASS Escape closes the controls
+PASS remove empties the spot and updates the scores
+PASS focus returns to the spot after removing
+PASS duplicate add into an empty spot is blocked
+PASS then a different player can be added there
+PASS never more than five unique players
+PASS move mode names the player being moved
+PASS Escape cancels a move; nothing changes
+PASS Cancel button cancels a move
+PASS clicking the moving spot cancels the move
+PASS swap exchanges players and keeps their seasons
+PASS scores unchanged after a swap
+PASS move into an empty spot preserves the season and leaves the old spot empty
+PASS scores unchanged after moving
+PASS scores identical after seven rearrangements of the same five
+PASS note is shown: positions don't affect scores
+PASS while a replacement loads, the original stays and the spot shows loading
+PASS while loading, the search input is locked and other spots ignore clicks
+PASS clicking another spot while loading does nothing
+PASS replacement lands at the same spot
+PASS replacement uses the player's latest season
+PASS scores now reflect the replacement
+PASS failed replacement: clear message, original kept, scores unchanged
+PASS failed replacement: not left locked
+PASS failed add: message, spot stays empty
+PASS failed season change: message, shown season unchanged
+PASS missing record: message, spot stays empty
+PASS missing stat shows Unavailable, not zero
+PASS repeated clicks while loading are ignored and the input is locked
+PASS Escape during loading cancels the request (panel stays open, input usable)
+PASS a cancelled response never fills the old spot
+PASS the newer pick filled the right spot
+PASS exactly one player in the lineup
+PASS Cancel loading button stops the add; late response ignored
+PASS rapid season changes: the newest choice wins
+PASS a removed player is not restored by a late season response
+PASS a player moved during a season change gets the new season in their new spot
+PASS keyboard focus shows a clear 2px outline and keeps the rounded shape
+PASS Enter opens the add controls with the search focused
+PASS keyboard add works and focus returns to the spot
+PASS Space opens the controls for an occupied spot
+PASS Escape closes the controls and focus returns to the spot
+PASS keyboard Move: focus is on the moving spot
+PASS keyboard swap works (SG now has LeBron, PG has Durant)
+PASS 3 players: wording reads 'All selected players share one position group (Guard)'
+PASS 3 players: swapping leaves scores and observation text unchanged
+PASS 4 players: wording reads 'All selected players share one position group (Guard)'
+PASS 4 players: swapping leaves scores and observation text unchanged
+PASS 5 players: wording reads 'All selected players share one position group (Guard)'
+PASS 5 players: swapping leaves scores and observation text unchanged
+PASS link sits below the lineup scores, inside the card
+PASS link points at /methodology#lineup-scores
+PASS link is keyboard-focusable with a visible focus ring
+PASS Enter follows the link to the explanation
+PASS the explanation heading is scrolled into view below the sticky header
+PASS explanation covers averages, positions, missing stats, small samples and no predictions
+PASS Back returns to the lineup, which is still there
+PASS refresh keeps the lineup: same positions, players and seasons
+PASS refresh keeps the scores
+PASS Clear lineup button is shown once there are players
+PASS clear asks for confirmation and focuses the safe choice
+PASS Escape cancels the confirmation, keeps the lineup and returns focus to the button
+PASS Keep lineup leaves everything as it was
+PASS confirming clears every position and the scores
+PASS clearing also forgets the saved lineup
+PASS a cleared lineup stays cleared after refresh
+PASS clearing during a season change: nobody comes back, nothing is re-saved
+PASS valid saved players restored at their positions
+PASS unavailable saved entries are skipped with a clear message
+PASS a saved season the player never had is skipped, naming the player
+PASS only the restored players are left in storage
+PASS garbage saved data is ignored without errors and then forgotten
+PASS failed restore: clear message with Try again / Start fresh
+PASS failed restore: positions are locked, saved lineup untouched
+PASS Try again restores the lineup
+PASS Start fresh forgets the saved lineup and unlocks the court
+PASS blocked storage: the lineup still works and nothing crashes
+PASS while a season loads, the scores say they still show the previous season
+PASS scores are dimmed and marked busy, and have not changed yet
+PASS the position shows 'Updating…' and keeps its size
+PASS after loading: note gone and scores updated
+PASS failed season change restores a consistent display (select, spot, scores, no 'updating')
+PASS while a replacement loads, scores say they still include the original
+PASS photo loading then failing for LeBron James: initials appear, card size unchanged
+PASS controls still open and work with initials showing
+PASS opening an occupied spot moves focus into the controls
+PASS Tab then reaches the first control (season)
+PASS Change player focuses the search
+PASS Back returns focus to the controls
+PASS Close returns focus to the position
+PASS after replacing a player, focus returns to the position
+PASS scrolling to the controls uses 'auto' when reduced motion is on
+PASS reduced motion: score-bar animation is effectively off
+PASS scrolling to the controls uses 'smooth' when reduced motion is off
+PASS touch: all five positions filled by tapping
+PASS touch: move/swap works and scores unchanged
+PASS touch: remove works
+PASS 360px: spots don't overlap, stay inside the court, no horizontal scroll, footer below the court
+PASS 360px: in move mode the Moving/Swap tags don't change card sizes or cause overlap
+PASS 390px: spots don't overlap, stay inside the court, no horizontal scroll, footer below the court
+PASS 390px: in move mode the Moving/Swap tags don't change card sizes or cause overlap
+PASS 768px: spots don't overlap, stay inside the court, no horizontal scroll, footer below the court
+PASS 768px: in move mode the Moving/Swap tags don't change card sizes or cause overlap
+PASS 1300px: spots don't overlap, stay inside the court, no horizontal scroll, footer below the court
+PASS 1300px: in move mode the Moving/Swap tags don't change card sizes or cause overlap
+PASS phone: controls sit below the court, not over it
+PASS search on / resolves to the latest season (2025-26) and labels the small sample
+PASS home search opens the latest (small-sample) profile
+PASS Player Map search keeps the qualified pool: resolves to 2023-24, no small-sample tag
+PASS search on /compare resolves to the latest season (2025-26) and labels the small sample
+PASS desktop top menu has exactly the four links in order
+PASS top menu hrefs
+PASS home: loads (HTTP 200), footer has How It Works + Credits, footer sits below the content
+PASS galaxy: loads (HTTP 200), footer has How It Works + Credits, footer sits below the content
+PASS compare: loads (HTTP 200), footer has How It Works + Credits, footer sits below the content
+PASS build-a-five: loads (HTTP 200), footer has How It Works + Credits, footer sits below the content
+PASS methodology: loads (HTTP 200), footer has How It Works + Credits, footer sits below the content
+PASS credits: loads (HTTP 200), footer has How It Works + Credits, footer sits below the content
+PASS player: loads (HTTP 200), footer has How It Works + Credits, footer sits below the content
+PASS career: loads (HTTP 200), footer has How It Works + Credits, footer sits below the content
+PASS active nav link on /
+PASS active nav link on /galaxy
+PASS active nav link on /compare
+PASS active nav link on /build-a-five
+PASS top link 'Player Map' navigates to /galaxy
+PASS top link 'Compare Players' navigates to /compare
+PASS top link 'Build a Lineup' navigates to /build-a-five
+PASS top link 'Discover' navigates to /
+PASS footer link 'How It Works' navigates to /methodology
+PASS footer marks 'How It Works' as the current page
+PASS footer link 'Credits' navigates to /credits
+PASS footer marks 'Credits' as the current page
+PASS nav links have a clear hover state
+PASS keyboard Tab reaches the four nav links in order
+PASS phone: inline desktop menu is hidden
+PASS phone menu has exactly the four links in order
+PASS phone menu marks the active page
+PASS phone menu closes with Escape
+PASS phone menu link navigates
+PASS no page errors during the run
+
+155 / 155 passed

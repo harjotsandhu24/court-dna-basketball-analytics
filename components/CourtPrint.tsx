@@ -9,6 +9,8 @@ import {
   DIMENSION_DISPLAY_LABEL,
   DIMENSION_LABEL_LINES,
   computeSpokeLabelPositions,
+  spokeText,
+  traitSummary,
 } from "@/lib/courtPrint";
 
 // Compact geometry for the below-sm labeled layout -- deliberately
@@ -99,9 +101,7 @@ export default function CourtPrint({
     [],
   );
 
-  const ariaLabel =
-    label ??
-    `Playing Style chart: ${archetype}. ${DIMENSION_ORDER.map((d) => `${DIMENSION_DISPLAY_LABEL[d]} ${Math.round(traits[d] ?? 0)} out of 100`).join(", ")}.`;
+  const ariaLabel = label ?? traitSummary(archetype, traits);
 
   // A function rather than a precomputed element: when both the sm+ and
   // below-sm layouts are mounted at once (CSS hidden, not unmounted), each
@@ -176,7 +176,9 @@ export default function CourtPrint({
           cx={s.x}
           cy={s.y}
           r={2.5 + (s.value / 100) * 2}
-          fill={`hsl(${hue} 95% 78%)`}
+          fill={s.missing ? "none" : `hsl(${hue} 95% 78%)`}
+          stroke={s.missing ? `hsl(${hue} 95% 78%)` : undefined}
+          strokeDasharray={s.missing ? "2 2" : undefined}
         />
       ))}
 
@@ -226,7 +228,7 @@ export default function CourtPrint({
                 >
                   <span className="font-medium text-ink-light">{DIMENSION_DISPLAY_LABEL[lp.dimension]}</span>{" "}
                   <span className="tabular font-semibold" style={{ color: `hsl(${hue} 85% 68%)` }}>
-                    {Math.round(spoke.value)}
+                    {spokeText(spoke)}
                   </span>
                 </div>
               );
@@ -269,7 +271,7 @@ export default function CourtPrint({
               </g>
               <path d={mobilePath} fill={`url(#cp-fill-${uid}-mb)`} stroke={`hsl(${hue} 95% 65%)`} strokeWidth={2} />
               {mobileSpokes.map((s) => (
-                <circle key={s.dimension} cx={s.x} cy={s.y} r={2.5 + (s.value / 100) * 2} fill={`hsl(${hue} 95% 78%)`} />
+                <circle key={s.dimension} cx={s.x} cy={s.y} r={2.5 + (s.value / 100) * 2} fill={s.missing ? "none" : `hsl(${hue} 95% 78%)`} stroke={s.missing ? `hsl(${hue} 95% 78%)` : undefined} strokeDasharray={s.missing ? "2 2" : undefined} />
               ))}
               <circle cx={MOBILE_OFFSET + MOBILE_CENTER} cy={MOBILE_OFFSET + MOBILE_CENTER} r={2.5} fill="var(--cp-center, #e8e6df)" />
             </svg>
@@ -295,7 +297,7 @@ export default function CourtPrint({
                   {lines.map((line, i) =>
                     i === lastIdx ? (
                       <div key={i} className="whitespace-nowrap font-semibold" style={{ color: `hsl(${hue} 85% 68%)` }}>
-                        {line} {Math.round(spoke.value)}
+                        {line} {spokeText(spoke)}
                       </div>
                     ) : (
                       <div key={i} className="whitespace-nowrap text-stone-light">

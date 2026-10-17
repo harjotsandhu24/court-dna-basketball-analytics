@@ -180,7 +180,8 @@ seasons: **58.3%** (range 55.0%-61.1%).
 
 Lineup dimensions map onto the trait system (Passing & Creation =
 Playmaking, Three-Point Shooting = Perimeter Profile, Attacking the Basket
-= Rim Pressure, Rebounding, Defense = Defensive Activity), averaged across
+= Rim Pressure, Rebounding, Defensive box-score signals = Defensive Activity, which
+uses steal % and block % only), averaged across
 the selected players (one to five) for the season chosen for each. "How Much
 They Handle the Ball" is derived from a usage-rate z-score via a normal CDF
 approximation (`lib/stats.ts`), not the same computation used elsewhere.
@@ -222,3 +223,8 @@ See `docs/limitations.md` for the complete list.
 
 ## Scoring version (Oct 2026)
 No change. The Similarity Index still uses the same 12 features, weights, normalization, thresholds and candidate pool (`public/data/similarity_pool.json`, SHA-256 `b1d16cfaf9feb60974adb4f28dabd8d3b927c29d4c52a066f15ca92ca26c3b2e`, identical before and after the Oct 2026 shooting-profile work). The Shooting Profile and its zone selection are display-only. No supplementary or tracking data feeds any score, and there is no detailed comparison mode.
+
+
+## Simulate and season honors (Oct 2026, Phase 10 revision)
+
+Build a Lineup has a **Simulate** panel (82-game season, seven-game series, playoff bracket 1996–97 to 2025–26) driven by a model separate from the six lineup scores. It uses completed-season performance and is not a preseason forecast. A support check compares the lineup with the real teams the model was fitted on; unsupported lineups keep their assessment but win, series and title numbers are withheld (a session-only button can show them, marked not reliable). Bracket replays keep the real host for series that happened; for new matchups the better regular-season record hosts, then an uneven season series between two real teams, then a labelled assumption you can change (default: better point differential; not an official rule). Seeds are published seeds, shown for display only. Season honors appear on player-season pages and never feed similarity, scores or simulation. Method, sources, validation (RMSE and MAE separately, baselines, calibration, support-check results) and limits: `docs/model/validation_report.md`, `docs/model/source_log.json`, `docs/limitations.md`. Software tests: `docs/sim_software_tests.md`.

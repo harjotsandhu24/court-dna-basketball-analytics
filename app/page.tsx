@@ -7,7 +7,7 @@ import SearchBar from "@/components/SearchBar";
 import CourtPrint from "@/components/CourtPrint";
 import PlayerCard from "@/components/PlayerCard";
 import { loadSeason, loadMeta } from "@/lib/dataLoader";
-import { SEASON_MIN, seasonLabel } from "@/lib/config";
+import { SEASON_MAX, SEASON_MIN, seasonLabel } from "@/lib/config";
 import type { PlayerSeasonRecord, DatasetMeta } from "@/lib/types";
 
 const FEATURED: Array<{ id: string; season: number }> = [
@@ -18,9 +18,9 @@ const FEATURED: Array<{ id: string; season: number }> = [
 ];
 
 const ENTRY_POINTS = [
-  { href: "/galaxy", title: "Player Map", desc: "Explore players by playing style and see who appears close together." },
-  { href: "/build-a-five", title: "Build a Lineup", desc: "Pick five players and see what their lineup looks like." },
-  { href: "/methodology", title: "How It Works", desc: "A plain-language look at how players are compared." },
+  { href: "/galaxy", title: "Player Map", desc: "Find players with similar statistical profiles." },
+  { href: "/build-a-five", title: "Build a Lineup", desc: "Pick five players and simulate their team." },
+  { href: "/compare", title: "Compare Players", desc: "Compare two player-seasons side by side." },
 ];
 
 export default function HomePage() {
@@ -36,6 +36,9 @@ export default function HomePage() {
       }),
     ).then((results) => setFeatured(results.filter((r): r is PlayerSeasonRecord => !!r)));
   }, []);
+
+  const [first, last] = meta?.season_range_label ?? [seasonLabel(SEASON_MIN), seasonLabel(SEASON_MAX)];
+  const coverage = `${first.replace("-", "–")} through ${last.replace("-", "–")}`;
 
   return (
     <div>
@@ -115,10 +118,10 @@ export default function HomePage() {
       </section>
 
       {/* FEATURED PLAYERS */}
-      <section className="mx-auto max-w-[1400px] px-5 py-16 md:px-8">
+      <section className="mx-auto max-w-[1400px] px-5 py-10 md:px-8">
         <div className="mb-6 flex items-end justify-between">
           <h2 className="font-display text-3xl text-ink">Featured Players</h2>
-          <Link href="/galaxy" className="text-sm font-medium text-court-orange-bright hover:underline">
+          <Link href="/galaxy" className="inline-flex min-h-11 items-center text-sm font-medium text-court-orange-bright hover:underline">
             Explore the Player Map →
           </Link>
         </div>
@@ -132,7 +135,7 @@ export default function HomePage() {
       </section>
 
       {/* ENTRY POINTS */}
-      <section className="mx-auto max-w-[1400px] px-5 py-16 md:px-8">
+      <section className="mx-auto max-w-[1400px] px-5 py-10 md:px-8">
         <h2 className="font-display text-3xl text-ink mb-6">Explore COURT DNA</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {ENTRY_POINTS.map((e) => (
@@ -145,20 +148,19 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* WHAT THIS IS */}
-      <section className="mx-auto max-w-[1400px] px-5 py-16 md:px-8">
+      {/* HOW IT WORKS + WHAT THIS IS */}
+      <section className="mx-auto max-w-[1400px] px-5 pb-12 pt-4 md:px-8">
         <div className="max-w-2xl">
-          <h2 className="font-display text-3xl text-ink mb-4">What makes a player&rsquo;s game unique?</h2>
-          <p className="text-stone leading-relaxed">
-            COURT DNA compares NBA player-seasons from {seasonLabel(SEASON_MIN)} to present, beginning
-            with the earliest season supported by the advanced-stat coverage used in the model. Its 12
-            features capture how players score, shoot, pass, rebound, and defend. It turns those numbers
-            into simple player profiles, finds similar playing styles, and shows where the similarities
-            come from.
+          <h2 className="font-display text-xl text-ink">How it works</h2>
+          <p className="mt-1 text-sm text-stone">
+            Pick a player and season. COURT DNA compares their stats with other seasons to show similarities and differences.{" "}
+            <Link href="/methodology" className="tap-target-44 text-xs font-medium text-court-orange-bright hover:underline">Learn more</Link>
           </p>
-          <Link href="/methodology" className="mt-4 inline-block text-sm font-medium text-court-orange-bright hover:underline">
-            See how it works →
-          </Link>
+          <h2 className="font-display mt-8 text-3xl text-ink mb-3">What makes a player&rsquo;s game unique?</h2>
+          <p className="text-stone leading-relaxed">
+            COURT DNA turns 12 features into simple player profiles, finds similar playing styles and shows
+            where the similarities come from. It covers {coverage}.
+          </p>
         </div>
       </section>
     </div>

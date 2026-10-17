@@ -1,0 +1,64 @@
+{
+  "model_version": "sim-1.1.0",
+  "feature_set": "no_height_no_creator_max",
+  "features": [
+    "s_uts",
+    "s_ast",
+    "s_tov",
+    "s_orb",
+    "s_drb",
+    "s_stl",
+    "s_blk",
+    "s_x3",
+    "s_ftr",
+    "b_ts",
+    "b_ast",
+    "b_tov",
+    "b_orb",
+    "b_drb",
+    "b_stl",
+    "b_blk",
+    "b_x3",
+    "b_ftr"
+  ],
+  "ridge_alpha": 10.0,
+  "use_playoff_game_params": false,
+  "support_check": {
+    "limited_quantile": 0.95,
+    "unsupported_quantile": 0.995,
+    "min_minutes": 500,
+    "min_games": 20,
+    "era_span": 6
+  },
+  "decision_rules": {
+    "wins_rmse_ratio_max": 0.7,
+    "wins_rmse_ratio_max_five": 0.85,
+    "five_must_beat_prior_season": true,
+    "range_coverage_band": [
+      0.7,
+      0.9
+    ],
+    "component_r2_min": 0.3,
+    "series_min_test_n": 100,
+    "calibration_slope_band": [
+      0.75,
+      1.25
+    ]
+  },
+  "splits": {
+    "train": [
+      1997,
+      2012
+    ],
+    "validation": [
+      2013,
+      2019
+    ],
+    "test": [
+      2020,
+      2026
+    ]
+  },
+  "already_seen_before_this_freeze": "team-season wins and net rating, 2013-2026; game and series outcomes, 2013-2015",
+  "sha256": "b94cb5b4d2c7c9302d531cf486b68e3ffcb880bd1c3674bc80138d70a32895be"
+}

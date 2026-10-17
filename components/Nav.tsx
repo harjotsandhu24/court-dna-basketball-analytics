@@ -15,6 +15,7 @@ export default function Nav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   // Close on outside tap/click and on Escape -- a simple inline panel
   // (not a full-screen overlay) so it never blocks the rest of the page,
@@ -25,7 +26,11 @@ export default function Nav() {
       if (headerRef.current && !headerRef.current.contains(e.target as Node)) setOpen(false);
     }
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") {
+        setOpen(false);
+        // focus goes back to the control that opened the menu, so keyboard users don't lose their place
+        menuButtonRef.current?.focus();
+      }
     }
     document.addEventListener("pointerdown", handlePointerDown);
     document.addEventListener("keydown", handleKeyDown);
@@ -47,7 +52,7 @@ export default function Nav() {
   return (
     <header ref={headerRef} className="sticky top-0 z-50 border-b border-line bg-arena-bg/85 backdrop-blur">
       <div className="mx-auto flex max-w-[1400px] items-center justify-between px-5 py-3 md:px-8">
-        <Link href="/" className="flex items-center gap-2 group" aria-label="COURT DNA home">
+        <Link href="/" className="flex min-h-11 items-center gap-2 group" aria-label="COURTDNA home">
           <span className="font-display text-2xl tracking-wide text-ink group-hover:text-court-orange-bright transition-colors">
             COURT<span className="text-court-orange">DNA</span>
           </span>
@@ -72,7 +77,9 @@ export default function Nav() {
         </nav>
 
         <button
-          className="btn btn-secondary lg:hidden! px-3 py-2"
+          ref={menuButtonRef}
+          type="button"
+          className="btn btn-secondary lg:hidden! min-h-11 min-w-11 px-3 py-2"
           onClick={() => setOpen((o) => !o)}
           aria-expanded={open}
           aria-controls="mobile-nav"

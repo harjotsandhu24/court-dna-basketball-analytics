@@ -544,8 +544,14 @@ function GalaxyPageInner() {
 
   // One search pick does the whole flow: switch to the player's real season,
   // select the real point, and drop only the filters that would hide them.
+  const [searchNote, setSearchNote] = useState("");
   const handleAutocompleteSelect = useCallback(
     (picked: PlayerAutocompleteSelection) => {
+      setSearchNote(
+        picked.season !== view.season
+          ? `${picked.name} isn't on the map for ${seasonLabel(view.season)}, so it moved to ${seasonLabel(picked.season)}, their nearest qualified season.`
+          : "",
+      );
       const entry = poolByKey.get(playerSeasonKey(picked.id, picked.season));
       update((cur) => ({
         season: picked.season,
@@ -557,7 +563,7 @@ function GalaxyPageInner() {
       const canvas = canvasRef.current;
       if (canvas && zoomRef.current) d3.select(canvas).call(zoomRef.current.transform, d3.zoomIdentity);
     },
-    [poolByKey, update],
+    [poolByKey, update, view.season],
   );
 
   const seasons = Array.from({ length: SEASON_MAX - SEASON_MIN + 1 }, (_, i) => SEASON_MIN + i).reverse();
@@ -573,7 +579,7 @@ function GalaxyPageInner() {
   const playerSeasons = view.player && index?.[view.player]?.qualified_seasons;
 
   const selectClass =
-    "rounded-md border border-line-strong bg-arena-panel px-3 py-2 text-base text-ink-light outline-none focus:border-court-orange sm:text-sm";
+    "min-h-11 rounded-md border border-line-strong bg-arena-panel px-3 py-2 text-base text-ink-light outline-none focus:border-court-orange sm:text-sm";
 
   return (
     <div className="mx-auto max-w-[1400px] px-5 py-10 md:px-8">
@@ -589,10 +595,13 @@ function GalaxyPageInner() {
       <div className="mb-4 flex flex-col gap-3">
         <PlayerAutocomplete
           placeholder="Search any player, any season…"
+          label="Search the Player Map"
+          seasonPool="qualified"
           preferredSeason={view.season}
           onSelect={handleAutocompleteSelect}
           className="w-full sm:max-w-sm"
         />
+        {searchNote && <p role="status" data-testid="map-search-note" className="text-sm text-court-orange-bright">{searchNote}</p>}
 
         <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center">
           <select

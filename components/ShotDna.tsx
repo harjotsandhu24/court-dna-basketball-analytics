@@ -270,7 +270,7 @@ export default function ShotDna({
           aria-describedby={toggleNote ? descId : undefined}
           onClick={() => setWantDots((v) => !v)}
           data-testid="show-shots"
-          className="inline-flex items-center gap-2 rounded-full border border-line px-3 py-1 text-xs text-ink-light disabled:cursor-not-allowed disabled:opacity-50 aria-checked:border-[#ffb27a] aria-checked:text-ink"
+          className="inline-flex min-h-11 items-center gap-2 rounded-full border border-line px-3 py-1 text-xs text-ink-light disabled:cursor-not-allowed disabled:opacity-50 aria-checked:border-[#ffb27a] aria-checked:text-ink"
         >
           <span className={`inline-block h-3.5 w-6 rounded-full border border-line p-px transition-colors motion-reduce:transition-none ${wantDots && available ? "bg-[#ffb27a]/70" : "bg-transparent"}`} aria-hidden="true">
             <span className={`block h-2.5 w-2.5 rounded-full bg-ink transition-transform motion-reduce:transition-none ${wantDots && available ? "translate-x-2.5" : ""}`} />

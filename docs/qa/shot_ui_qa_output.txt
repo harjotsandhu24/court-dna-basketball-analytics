@@ -1,0 +1,115 @@
+PASS [desktop] heading + new instruction (and no old one)
+PASS [desktop] court: #111820 background, transparent hit areas, no labels/percentages/legend/rim callout
+PASS [desktop] markings: solid #64748B official lines, dashed subdued guides at 3/10/16 ft plus the quieter 30-ft deep-three arc
+PASS [desktop] toggle off by default; no dots / filters / tooltip
+PASS [desktop] enter zone shows the tooltip with name, makes/attempts, shooting %
+PASS [desktop] tooltip is pointer-events:none, fixed, and described by the zone
+PASS [desktop] aria-describedby points at the tooltip
+PASS [desktop] moving to another zone updates it immediately
+PASS [desktop] tooltip is offset from the cursor (never under it)
+PASS [desktop] leaving the court dismisses the tooltip with no layout shift
+PASS [desktop] tooltip stays inside the viewport near (954,897)
+PASS [desktop] tooltip stays inside the viewport near (954,340)
+PASS [desktop] hover anywhere in a band (198 sampled points incl. corners and edges) shows that band's tooltip
+PASS [desktop] click selects only that zone; zone/background fills never change
+PASS [desktop] clicked zone details below the court
+PASS [desktop] hovering another zone previews it only
+PASS [desktop] only boundaries highlight: selected = solid #60A5FA, preview = #93C5FD; both are the zone's outer boundary, unfilled
+PASS [desktop] 3-10 ft preview is a single 10 ft circle (2 arcs), three-point selection is the arc + corners only (no court rectangle)
+PASS [desktop] hovering the clicked zone shows its tooltip and keeps its emphasis
+PASS [desktop] end hover restores the clicked zone's emphasis
+PASS [desktop] click the selected zone again clears
+PASS [desktop] dots on: one marker per drawn attempt (1711 of 1712; 1 beyond the court)
+PASS [desktop] tooltip works with dots on (dots do not intercept zone events)
+PASS [desktop] hover preview emphasises only that zone's dots, then restores
+PASS [desktop] end hover restores every dot
+PASS [desktop] Made filter: markers filtered, tooltip numbers still over ALL attempts
+PASS [desktop] Missed filter: same tooltip (never 0% / 100%)
+PASS [desktop] keyboard focus shows the same tooltip
+PASS [desktop] focused zone is described by the tooltip
+PASS [desktop] keyboard focus uses a distinct dashed #93C5FD boundary (hover is solid)
+PASS [desktop] Escape dismisses the tooltip and preview
+PASS [desktop] focusing the next zone shows its tooltip again
+PASS [desktop] Enter selects the focused zone; Space clears it
+PASS [desktop] Space clears
+PASS [desktop] blur removes the tooltip
+PASS [desktop] six zones with the deep-three area; guides include the 30-ft arc
+PASS [desktop] deep-three hover: 'Deep threes · 30+ ft', 1 made / 4 attempts, 25.0% shooting
+PASS [desktop] deep hover highlights only the 30-ft boundary (one circle arc), no fill, background unchanged
+PASS [desktop] ordinary threes: 'Three-pointers' 117 / 332 and the official three-point line (not the deep arc) highlights
+PASS [desktop] click selects the deep zone: details, small-sample warning, exact counts, average
+PASS [desktop] selected deep boundary is the 30-ft circle (solid #60A5FA)
+PASS [desktop] hovering ordinary threes previews them without changing the deep selection
+PASS [desktop] clicking the selected deep zone clears it
+PASS [desktop] dots on: deep-zone hover emphasises only deep-three markers and the tooltip is unchanged
+PASS [desktop] Made filter: deep tooltip counts stay on all attempts
+PASS [desktop] keyboard focus reaches the deep zone: same tooltip, dashed focus boundary, accessible name
+PASS [desktop] Escape dismisses the deep tooltip
+PASS [desktop] Enter selects the deep zone
+PASS [desktop] Enter again clears it
+PASS [desktop] About this data explains deep threes, heaves, and that they are not all intentional
+PASS [desktop] zero deep attempts: '0 made / 0 attempts' and '— shooting' (never 0%)
+PASS [desktop] zero attempts: details show — for shooting %, no average, no fake percentage
+PASS [desktop] 1996-97: 22-ft line drawn and the 30-ft arc still used for the deep zone
+PASS [desktop] 1996-97 small-sample warning visible
+PASS [desktop] partial coverage: coverage note visible, deep tooltip says Recorded
+PASS [desktop] Luka 2025-26 deep threes: 15 / 48
+PASS [desktop] season change clears the deep selection and tooltip
+PASS [desktop] unavailable: toggle disabled + exact message
+PASS [desktop] unavailable: distance caption + no dots + no loading state
+PASS [desktop] unavailable: five zones only, no deep-three area or 30-ft guide, and a clear note
+PASS [desktop] unavailable: estimated counts + estimated average labelled
+PASS [desktop] unavailable: tooltip labels estimated counts
+PASS [desktop] load error: message + retry, toggle stays usable, no fake dots
+PASS [desktop] retry loads the dots (failed request was not cached)
+PASS [desktop] doncilu01 2019: shots available
+PASS [desktop] doncilu01 2019: dots drawn (1171) = recorded attempts minus undrawn
+PASS [desktop] doncilu01 2019: exact 3PT counts shown
+PASS [desktop] doncilu01 2019: tooltip shows exact counts
+PASS [desktop] doncilu01 2026: shots available
+PASS [desktop] doncilu01 2026: dots drawn (1455) = recorded attempts minus undrawn
+PASS [desktop] doncilu01 2026: exact 3PT counts shown
+PASS [desktop] doncilu01 2026: tooltip shows exact counts
+PASS [desktop] bryanko01 1997: shots available
+PASS [desktop] bryanko01 1997: dots drawn (422) = recorded attempts minus undrawn
+PASS [desktop] bryanko01 1997: exact 3PT counts shown
+PASS [desktop] bryanko01 1997: tooltip shows exact counts
+PASS [desktop] 1996-97: three-point line drawn 22 ft all round (arc radius 220, straight sides at x=30/470), highlight follows it
+PASS [desktop] 1996-97: selected boundary is the 22-ft line
+PASS [desktop] jamesle01 2018: shots available
+PASS [desktop] jamesle01 2018: dots drawn (1578) = recorded attempts minus undrawn
+PASS [desktop] jamesle01 2018: exact 3PT counts shown
+PASS [desktop] jamesle01 2018: tooltip shows exact counts
+PASS [desktop] season change clears selection, preview and tooltip
+PASS [desktop] compare: unique SVG ids
+PASS [desktop] compare: courts select independently
+PASS [desktop] compare: deep zone on one court never affects the other (selection, preview, tooltip)
+PASS [desktop] compare: hover affects only its own court
+PASS [desktop] compare: moving to the other court moves the tooltip there
+PASS [desktop] compare: dots on both courts, selections intact
+PASS [desktop] only the one player-season shot file is requested, and only after Show shots
+PASS [desktop] rendering performance: dots appear < 1.5 s, hover moves stay responsive
+  [desktop] errors: app=0 injected=0 external(Wikimedia etc.)=28 browser-cancelled=5
+PASS [desktop] no unexpected app errors
+PASS [mobile] heading + new instruction (and no old one)
+PASS [mobile] court: #111820 background, transparent hit areas, no labels/percentages/legend/rim callout
+PASS [mobile] markings: solid #64748B official lines, dashed subdued guides at 3/10/16 ft plus the quieter 30-ft deep-three arc
+PASS [mobile] toggle off by default; no dots / filters / tooltip
+PASS [mobile] tap selects the zone and shows exact details
+PASS [mobile] touch leaves no tooltip behind
+PASS [mobile] tapping another zone switches, still no tooltip
+PASS [mobile] tapping the selected zone clears it
+PASS [mobile] dots on: 1711 markers; tap through dots selects the zone below
+PASS [mobile] tap selects the deep-three zone, no tooltip, details shown
+PASS [mobile] tap on the dense rim cluster selects the rim zone (dots never intercept)
+PASS [mobile] Made filter, metrics unchanged
+PASS [mobile] unavailable: toggle disabled + exact message
+PASS [mobile] unavailable: distance caption + no dots + no loading state
+PASS [mobile] unavailable: five zones only, no deep-three area or 30-ft guide, and a clear note
+PASS [mobile] unavailable: estimated counts + estimated average labelled
+PASS [mobile] load error: message + retry, toggle stays usable, no fake dots
+PASS [mobile] retry loads the dots (failed request was not cached)
+  [mobile] errors: app=0 injected=0 external(Wikimedia etc.)=2 browser-cancelled=1
+PASS [mobile] no unexpected app errors
+
+111/111 passed

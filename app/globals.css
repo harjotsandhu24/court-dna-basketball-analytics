@@ -69,6 +69,25 @@
 
 html {
   scroll-behavior: smooth;
+  /* the sticky header is about 4rem tall: keep focused controls and in-page jumps from sliding under it */
+  scroll-padding-top: 5.5rem;
+}
+
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.5rem;
+  z-index: 100;
+  transform: translateY(-200%);
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--arena-bg);
+  color: var(--ink);
+  border: 2px solid var(--court-orange, #ff6a1a);
+  font-weight: 600;
+}
+.skip-link:focus {
+  transform: translateY(0);
 }
 
 body {

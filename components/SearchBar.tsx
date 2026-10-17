@@ -21,6 +21,8 @@ export default function SearchBar({ size = "md", autoFocus = false }: { size?: "
   return (
     <PlayerAutocomplete
       onSelect={handleSelect}
+      seasonPool="all"
+      label="Search players"
       placeholder={`Search any player, ${seasonLabel(SEASON_MIN)} to ${seasonLabel(SEASON_MAX)}…`}
       size={size === "lg" ? "lg" : "sm"}
       autoFocus={autoFocus}

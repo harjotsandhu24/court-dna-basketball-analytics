@@ -1,0 +1,117 @@
+PASS top-level navigation still has four links
+PASS under five players the panel says only 'Add five players to simulate your lineup.'
+PASS no mode choices, settings or Simulate button until five players are chosen
+PASS an empty lineup shows the same single instruction
+PASS controls appear once five players are chosen: three simple modes with the new wording
+PASS a compact summary names the five players and seasons near the simulator
+PASS advanced settings stay collapsed
+PASS Simulate enabled with five unique players
+PASS the panel says this is not a preseason forecast and stays short
+PASS the headline is an estimated record (whole numbers 0-82 that total 82) with a likely range labelled in wins
+PASS screen readers hear 'N wins, M losses' for the record (the visual dash text is hidden from them)
+PASS the old 'of 82' and 'Estimated wins' wording is gone
+PASS a small Experimental label is shown
+PASS uncertain headline carries an asterisk
+PASS the asterisk explanation is visible without hovering and reads exactly '*Rough simulation—not a reliable prediction.'
+PASS the explanation is attached to its number for screen readers (aria-describedby) and sits directly below it
+PASS a supported lineup does not claim to be unlike the tested teams
+PASS no 'Show the numbers anyway' button exists
+PASS at most three strengths and two concerns, nothing forced
+PASS concern heading is 'Things to watch' or 'Relative weaknesses' (never 'Below-average' wording)
+PASS contribution numbers like +8.5 are hidden by default
+PASS compact assumption labels stay visible
+PASS exactly one collapsed 'How it works' section with a Methodology link
+PASS model stats, exact contributions, usage, assumptions, testing and versions are inside it
+PASS dimension names are the short ones; defense is described by its inputs, never as a complete 'Defense' rating
+PASS no repeated warnings: the rough-simulation note appears once in the visible result
+PASS accuracy wording: RMSE and MAE separate, and the baseline that was not beaten is stated
+PASS schedule is described as hypothetical (inside the details)
+PASS focus moves to the results
+PASS same lineup and settings reproduce the same result
+PASS removing a player clears the results at once and the controls give way to the one-line instruction
+PASS Simulate waits for the team to replace
+PASS replacing a team is stated, and the replaced team is not an opponent
+PASS unsupported lineup: the computed record is shown by default (and totals 82)
+PASS unsupported lineup: asterisk, the rough-simulation note and 'This lineup is unlike the teams used to test the model.'
+PASS unsupported lineup: the old 'too different' wording and the reveal button are gone
+PASS unsupported lineup: no prediction range anywhere
+PASS unsupported lineup: the support check still ran and is in the details
+PASS unsupported lineup: strengths/concerns still limited
+PASS after a reload the same numbers appear again (nothing is hidden behind a per-visit reveal)
+PASS series (unsupported): chance to win is shown with the asterisk, note and unlike-tested line
+PASS series (unsupported): no range
+PASS bracket (unsupported): title chance shown with the asterisk, note and unlike-tested line
+PASS button is disabled while running and progress is shown
+PASS Cancel stops the job and no result appears afterwards
+PASS Simulate works again after cancelling
+PASS a fresh run after cancel completes
+PASS a response arriving after the lineup changed is never shown
+PASS series: the chance to win is the headline number
+PASS series: Experimental label, asterisk and the visible note
+PASS series: compact assumption labels
+PASS series: length table, examples and exact differences are in the single details section
+PASS series: hidden by default: no +x.x contributions, no length table
+PASS series: model uncertainty is separate from game luck (inside details)
+PASS Simulate waits for a full opponent
+PASS the opponent search has an explicit accessible name
+PASS the same players may be on both teams
+PASS original lineup untouched
+PASS identical five vs identical five is near 50% (home court to you)
+PASS every postseason from 1996-97 to 2025-26 is offered and none is greyed out
+PASS Simulate stays disabled until a postseason and team are chosen
+PASS replay choices are 'Replay full bracket' and 'Follow actual opponents' with their one-line descriptions
+PASS full replay: the title chance is the headline number with the asterisk and note
+PASS a sample simulated bracket is shown round by round and labelled as one random run, not the probabilities
+PASS the sample has 15 series across four rounds and states how the replaced slot fared
+PASS the advancement probability table is inside details, not in the default view
+PASS champion probabilities add to about 100%
+PASS the round selector narrows the sample to one round (the Finals: one series)
+PASS switching replay mode clears the old result
+PASS following actual opponents is distinct: no sample bracket, no title odds, a hypothetical of actual opponents
+PASS 2025-26 postseason runs with a 16-team table in the details
+PASS 2019-20 is described as played at one neutral site (details)
+PASS home court and seeds are explained as different things
+PASS published seeds are labelled Seed, not 'Reconstructed bracket position'
+PASS the equal-record rule is stated as an assumption, not an official rule
+PASS the tie setting is 'Home court when tied' with three options, each labelled as an assumption
+PASS changing the tie choice clears the old result so it can't be mistaken for the new one
+PASS the result states which tie choice was used
+PASS a failed playoff-data download shows a clear error with Retry (not a permanent 'Loading…')
+PASS Retry recovers without reloading the page
+PASS a failed team-list download shows an error with Retry, and Simulate says why it can't run
+PASS Retry recovers the team list
+PASS injected failures were seen and classified as injected, not as app errors
+PASS corrupted saved settings fall back to defaults with a notice
+PASS version 1 saved settings are migrated, not dropped
+PASS an invalid new-version field resets only that field
+PASS unparseable saved settings do not break the page
+PASS progress bar does not animate under reduced motion
+PASS arrow keys change the mode
+PASS Simulate can be run from the keyboard
+PASS How it works opens with the keyboard
+PASS settings open with the keyboard and mention browser-only saving
+PASS no horizontal scroll at phone width (season)
+PASS the asterisk note stays directly under its number on a phone
+PASS no horizontal scroll at phone width (bracket)
+PASS on a phone the rounds stack and a round selector is offered
+PASS stacked rounds: the second round sits below the first, not beside it
+PASS tap targets are at least 44px
+PASS unsupported lineup at phone width: number first, note attached, no overflow
+PASS with enlarged text the results still fit without sideways scrolling
+PASS Nash 2004-05 shows MVP
+PASS Nash 2005-06 shows MVP
+PASS Nash 2006-07 does not inherit MVP
+PASS another player-season renders honors (LeBron 2012-13: MVP, All-NBA First Team)
+PASS honors are compact badges; the roster explanation and sources are under 'About these honors'
+PASS a Finals MVP is on the championship roster and the roster fact is explained (in details)
+PASS a champion player who is not a verified roster member reads as a playoff appearance, never as a ring
+PASS a non-champion season never shows a champion or roster badge
+PASS 2025-26 shows MVP, All-NBA First Team and All-Star
+PASS 2025-26 Finals MVP, All-NBA Second Team and roster membership are shown for the champion
+PASS a covered season with nothing says 'No recorded honors'
+PASS a failed honors download leaves the profile working and offers Retry
+PASS Retry brings the honors back without reloading
+PASS no unexpected page errors (injected and external failures are counted separately)
+
+114/114 checks passed
+errors: app=0 injected=0 external(Wikimedia etc.)=2 browser-cancelled=19; honors-test errors: app=0 injected=2 external(Wikimedia etc.)=0 browser-cancelled=1; retry-test errors: app=0 injected=4 external(Wikimedia etc.)=0 browser-cancelled=0

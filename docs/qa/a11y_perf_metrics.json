@@ -1,0 +1,132 @@
+{
+ "axe": {
+  "desktop/home": [],
+  "desktop/profile": [],
+  "desktop/career": [],
+  "desktop/compare-empty": [],
+  "desktop/compare": [],
+  "desktop/galaxy": [],
+  "desktop/methodology": [],
+  "desktop/build": [],
+  "phone/home": [],
+  "phone/profile": [],
+  "phone/career": [],
+  "phone/compare-empty": [],
+  "phone/compare": [],
+  "phone/galaxy": [],
+  "phone/methodology": [],
+  "phone/build": []
+ },
+ "touch": {
+  "desktop/home": [],
+  "desktop/profile": [],
+  "desktop/career": [],
+  "desktop/compare-empty": [],
+  "desktop/compare": [],
+  "desktop/galaxy": [],
+  "desktop/methodology": [],
+  "desktop/build": [],
+  "phone/home": [],
+  "phone/profile": [
+   "At the rim \u00b7 0\u20133 ft: 20% of shots, 66% s 42x42",
+   "INPUT 16x16"
+  ],
+  "phone/career": [],
+  "phone/compare-empty": [],
+  "phone/compare": [
+   "At the rim \u00b7 0\u20133 ft: 20% of shots, 66% s 42x42",
+   "At the rim \u00b7 0\u20133 ft: 37% of shots, 78% s 42x42"
+  ],
+  "phone/galaxy": [],
+  "phone/methodology": [],
+  "phone/build": [
+   "_R_2dbsnnb_-mode 13x13",
+   "_R_2dbsnnb_-mode 13x13",
+   "_R_2dbsnnb_-mode 13x13",
+   "_R_2dbsnnb_-league 13x13",
+   "_R_2dbsnnb_-league 13x13"
+  ]
+ },
+ "cls": {
+  "desktop/home": {
+   "median": 0.01,
+   "runs": [
+    0.01,
+    0.01,
+    0.01,
+    0.01,
+    0.01
+   ]
+  },
+  "desktop/profile": {
+   "median": 0.01,
+   "runs": [
+    0.01,
+    0.01,
+    0.01,
+    0.01,
+    0.01
+   ]
+  },
+  "desktop/compare": {
+   "median": 0.041,
+   "runs": [
+    0.041,
+    0.041,
+    0.041,
+    0.041,
+    0.041
+   ]
+  },
+  "desktop/galaxy": {
+   "median": 0.05,
+   "runs": [
+    0.05,
+    0.05,
+    0.05,
+    0.05,
+    0.05
+   ]
+  },
+  "phone/home": {
+   "median": 0,
+   "runs": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "phone/profile": {
+   "median": 0,
+   "runs": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "phone/compare": {
+   "median": 0,
+   "runs": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "phone/galaxy": {
+   "median": 0,
+   "runs": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  }
+ }
+}

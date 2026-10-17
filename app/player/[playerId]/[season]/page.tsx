@@ -1,7 +1,8 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { use } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import PlayerPhoto from "@/components/PlayerPhoto";
 import CourtPrint from "@/components/CourtPrint";
@@ -9,44 +10,83 @@ import ShotDna from "@/components/ShotDna";
 import LimitationsNote from "@/components/LimitationsNote";
 import TraitBars from "@/components/TraitBars";
 import ClosestMatches from "@/components/ClosestMatches";
-import { loadCareer, findPlayerSeason } from "@/lib/dataLoader";
-import { seasonLabel } from "@/lib/config";
+import SeasonHonors from "@/components/SeasonHonors";
+import StatusPanel from "@/components/StatusPanel";
+import { loadCareer, findPlayerSeason, loadPlayersIndex } from "@/lib/dataLoader";
+import { SEASON_MAX, SEASON_MIN, seasonLabel } from "@/lib/config";
+import { traitTagLabel } from "@/lib/courtPrint";
+import { parsePlayerRoute } from "@/lib/routes";
 import { playerSeasonKey } from "@/lib/similarity";
-import type { PlayerSeasonRecord } from "@/lib/types";
+import { useLoad } from "@/lib/useLoad";
+import type { PlayerSeasonRecord, PlayersIndex } from "@/lib/types";
 import { fmt1, fmtInt, heightLabel } from "@/lib/format";
+
+const DISCOVER = <Link href="/" className="btn btn-secondary min-h-11 px-4 py-2 text-sm">Back to Discover</Link>;
 
 export default function PlayerDnaPage({
   params,
 }: {
   params: Promise<{ playerId: string; season: string }>;
 }) {
-  const { playerId, season: seasonStr } = use(params);
-  const season = parseInt(seasonStr, 10);
+  const { playerId: rawId, season: rawSeason } = use(params);
+  // Both parts of the address are checked completely before anything is requested ("2005abc" is not 2005).
+  const route = parsePlayerRoute(rawId, rawSeason);
+  const playerId = route.kind === "ok" ? route.playerId : null;
+  const season = route.kind === "ok" ? route.season : null;
+  const router = useRouter();
 
-  const [record, setRecord] = useState<PlayerSeasonRecord | null | undefined>(undefined);
-  const [allSeasons, setAllSeasons] = useState<number[]>([]);
+  const [recState, retryRecord] = useLoad<PlayerSeasonRecord | null>(
+    playerId && season ? `player/${playerId}/${season}` : null,
+    () => findPlayerSeason(playerId!, season!),
+  );
+  const record = recState.status === "ready" ? recState.data : null;
+  // The list of seasons is optional: if it fails, only the season menu is affected.
+  const [careerState, retryCareer] = useLoad<PlayerSeasonRecord[]>(
+    record ? `career/${record.player_id}` : null,
+    () => loadCareer(record!.player_id),
+  );
+  // An unusable season on a real player offers that player's latest season.
+  const [indexState] = useLoad<PlayersIndex>(
+    route.kind === "invalid-season" || (recState.status === "ready" && recState.data === null) ? "index" : null,
+    loadPlayersIndex,
+  );
 
-  useEffect(() => {
-    // intentional synchronous reset to a loading state when navigating to a
-    // different player/season, so the previous player is never shown
-    // mid-fetch
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setRecord(undefined);
-    findPlayerSeason(playerId, season).then(setRecord);
-    loadCareer(playerId).then((c) => setAllSeasons(c.map((r) => r.season)));
-  }, [playerId, season]);
-
-  if (record === undefined) {
-    return <div className="mx-auto max-w-[1400px] px-5 py-20 md:px-8"><LoadingSkeleton /></div>;
+  if (route.kind === "invalid-player") {
+    return <StatusPanel tone="invalid" testId="profile-invalid" title="That link isn't valid" message="The player in this address isn't recognised. Search for a player instead." actions={DISCOVER} />;
   }
-  if (record === null) {
+  if (route.kind === "invalid-season" || (recState.status === "ready" && recState.data === null) || recState.status === "notfound") {
+    const entry = indexState.status === "ready" ? indexState.data[route.kind === "ok" ? route.playerId : (route as { playerId: string }).playerId] : undefined;
+    const latest = entry ? entry.seasons[entry.seasons.length - 1] : null;
+    const pid = (route as { playerId: string }).playerId;
+    const invalidSeason = route.kind === "invalid-season";
     return (
-      <div className="mx-auto max-w-[1400px] px-5 py-20 text-center md:px-8">
-        <p className="font-display text-3xl text-ink">Player profile not found</p>
-        <p className="mt-2 text-stone">This player may not have reached the 250-minute display threshold that season.</p>
-        <Link href="/" className="mt-6 inline-block btn btn-primary px-5 py-2.5">Back to Discover</Link>
-      </div>
+      <StatusPanel
+        tone={invalidSeason ? "invalid" : "notfound"}
+        testId={invalidSeason ? "profile-invalid-season" : "profile-unavailable"}
+        title={invalidSeason ? "That season isn't valid" : "Player profile not found"}
+        message={
+          invalidSeason
+            ? `Use a season from ${seasonLabel(SEASON_MIN)} to ${seasonLabel(SEASON_MAX)}.`
+            : "This player doesn't have a profile for that season. Players need at least 250 minutes to be shown."
+        }
+        actions={
+          <>
+            {latest != null && entry && (
+              <Link href={`/player/${pid}/${latest}`} className="btn btn-primary min-h-11 px-4 py-2 text-sm">
+                Open {entry.name} · {seasonLabel(latest)}
+              </Link>
+            )}
+            {DISCOVER}
+          </>
+        }
+      />
     );
+  }
+  if (recState.status === "error") {
+    return <StatusPanel tone="error" testId="profile-error" title="Couldn't load this profile" message="Check your connection and try again." onRetry={retryRecord} actions={DISCOVER} />;
+  }
+  if (!record) {
+    return <div className="mx-auto max-w-[1400px] px-5 py-10 md:px-8"><LoadingSkeleton /></div>;
   }
 
   return (
@@ -79,35 +119,42 @@ export default function PlayerDnaPage({
             <Stat label="3P%" value={record.basic.x3p_percent != null ? `${(record.basic.x3p_percent * 100).toFixed(1)}%` : "—"} />
           </div>
 
+          <SeasonHonors key={`${record.player_id}-${record.season}`} playerId={record.player_id} season={record.season} />
+
           <p className="mt-4 inline-block rounded-full border border-line-strong px-3 py-1 text-sm font-medium text-ink-light">
             {record.archetype}
           </p>
-          <span className="ml-2 text-sm text-stone-light">{record.trait_tags.join(" · ")}</span>
+          <span className="ml-2 text-sm text-stone-light">{record.trait_tags.map(traitTagLabel).join(" · ")}</span>
 
-          {allSeasons.length > 1 && (
-            <div className="mt-5 flex items-center gap-2 text-sm">
-              <span className="text-stone-light">Season:</span>
-              <div className="flex flex-wrap gap-1">
-                {allSeasons.map((s) => (
-                  <Link
-                    key={s}
-                    href={`/player/${playerId}/${s}`}
-                    className={`tap-target-44 rounded-md px-2 py-1 tabular ${s === season ? "bg-court-orange text-[#14100a] font-semibold" : "text-stone hover:bg-arena-panel"}`}
-                  >
-                    {seasonLabel(s)}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
+          <div className="mt-5 min-h-11" data-testid="season-picker">
+            {careerState.status === "ready" && careerState.data.length > 1 && (
+              <label className="flex flex-wrap items-center gap-2 text-sm text-stone-light">
+                Season
+                <select
+                  value={record.season}
+                  onChange={(e) => router.push(`/player/${record.player_id}/${e.target.value}`)}
+                  className="min-h-11 rounded-md border border-line-strong bg-arena-panel px-3 py-2 text-base text-ink-light outline-none focus:border-court-orange sm:text-sm"
+                >
+                  {[...careerState.data].reverse().map((r) => (
+                    <option key={r.season} value={r.season}>
+                      {seasonLabel(r.season)}{r.small_sample ? " · small sample" : ""}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
+            {(careerState.status === "error" || careerState.status === "notfound") && (
+              <StatusPanel inline tone="error" testId="seasons-error" title="Couldn't load the other seasons." onRetry={retryCareer} />
+            )}
+          </div>
           <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
             <Link
               href={`/compare?a=${playerSeasonKey(record.player_id, record.season)}`}
-              className="btn btn-secondary px-4 py-2 text-sm"
+              className="btn btn-secondary min-h-11 px-4 py-2 text-sm"
             >
               Compare this season
             </Link>
-            <Link href={`/career/${playerId}`} className="inline-block text-sm font-medium text-court-orange-bright hover:underline">
+            <Link href={`/career/${record.player_id}`} className="inline-flex min-h-11 items-center text-sm font-medium text-court-orange-bright hover:underline">
               View career over time →
             </Link>
           </div>
@@ -172,10 +219,6 @@ export default function PlayerDnaPage({
             team&apos;s stats.
           </p>
         )}
-        <p className="mt-6 text-xs text-stone-light max-w-2xl">
-          Awards, All-Star selections, and accolades are background information only — they never affect the
-          playing-style score, the player&rsquo;s style label, or any of the numbers above.
-        </p>
       </div>
     </div>
   );
@@ -190,12 +233,26 @@ function Stat({ label, value }: { label: string; value: string }) {
   );
 }
 
+/** Same footprint as the loaded profile (hero, traits, similar players), so the page doesn't jump when data arrives. */
 function LoadingSkeleton() {
   return (
-    <div className="animate-pulse space-y-6">
-      <div className="h-40 w-40 rounded-full bg-arena-panel" />
-      <div className="h-10 w-80 rounded bg-arena-panel" />
-      <div className="h-64 w-full rounded bg-arena-panel" />
+    <div role="status" aria-label="Loading profile" data-testid="profile-loading">
+      <div className="grid grid-cols-1 gap-8 border-b border-line pb-10 lg:grid-cols-[auto_1fr_auto] lg:items-center">
+        <div className="h-[140px] w-[140px] animate-pulse rounded-full bg-arena-panel" />
+        <div className="space-y-3">
+          <div className="h-3 w-24 animate-pulse rounded bg-arena-panel" />
+          <div className="h-14 w-full max-w-md animate-pulse rounded bg-arena-panel" />
+          <div className="h-5 w-48 animate-pulse rounded bg-arena-panel" />
+          <div className="h-12 w-full max-w-sm animate-pulse rounded bg-arena-panel" />
+          <div className="h-24 w-full max-w-xl animate-pulse rounded bg-arena-panel" />
+        </div>
+        <div className="h-[260px] w-[260px] max-w-full animate-pulse rounded-full bg-arena-panel" />
+      </div>
+      <div className="grid grid-cols-1 gap-10 py-10 lg:grid-cols-2">
+        <div className="h-[360px] animate-pulse rounded-xl bg-arena-panel" />
+        <div className="h-[360px] animate-pulse rounded-xl bg-arena-panel" />
+      </div>
+      <span className="sr-only">Loading profile…</span>
     </div>
   );
 }

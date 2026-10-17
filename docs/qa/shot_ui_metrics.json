@@ -15,12 +15,12 @@
     7506
    ]
   ],
-  "files_requested_in_total": 6
+  "files_requested_in_total": 7
  },
  "performance": {
-  "toggle_to_dots_ms": 232,
+  "toggle_to_dots_ms": 211,
   "mouse_move_ms_median": 16.6,
-  "mouse_move_ms_p95": 17.3,
+  "mouse_move_ms_p95": 18.2,
   "dots_markers": 1455
  }
 }

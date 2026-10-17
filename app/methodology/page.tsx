@@ -76,9 +76,10 @@ export default function MethodologyPage() {
 
       <Section title="Similarity formula">
         <p>Six feature groups, each divided evenly across its listed features:</p>
-        <div className="mt-3 overflow-x-auto">
+        <div className="relative mt-3 overflow-x-auto" role="region" aria-label="Similarity feature groups table, scrolls sideways on narrow screens" tabIndex={0}>
           <table className="w-full min-w-[480px] text-sm">
-            <thead><tr className="border-b border-line text-left text-stone-light"><th className="py-1.5">Group</th><th className="py-1.5">Weight</th><th className="py-1.5">Features</th></tr></thead>
+            <caption className="sr-only">Feature groups, their weights and the features in each</caption>
+            <thead><tr className="border-b border-line text-left text-stone-light"><th scope="col" className="py-1.5">Group</th><th scope="col" className="py-1.5">Weight</th><th scope="col" className="py-1.5">Features</th></tr></thead>
             <tbody>
               {FEATURE_GROUPS.map((g) => (
                 <tr key={g.name} className="border-b border-line/50">
@@ -152,7 +153,7 @@ export default function MethodologyPage() {
           In Build a Lineup, each of the six scores is the plain average, across the selected players, of that stat for
           the season you chose. Five are trait percentiles from 0 to 100, each measured against the other qualified
           players in the same season: Passing &amp; Creation, Three-Point Shooting, Attacking the Basket, Rebounding
-          and Defense. &ldquo;How Much They Handle the Ball&rdquo; comes from the usage rate, standardized within its
+          and Defensive box-score signals (built from steals and blocks only, not defensive rebounds or complete defensive impact). &ldquo;How Much They Handle the Ball&rdquo; comes from the usage rate, standardized within its
           season and turned into a 0 to 100 value.
         </p>
         <ul className="mt-3 list-disc space-y-1 pl-5">
@@ -172,7 +173,49 @@ export default function MethodologyPage() {
           </li>
           <li>
             <strong>Not a prediction.</strong> The scores describe combined playing style from past statistics. They
-            don&rsquo;t predict wins, and the observations are simple notes triggered by fixed thresholds on these stats.
+            aren&rsquo;t used to predict wins, and the observations are simple notes triggered by fixed thresholds on these stats.
+            The Simulate panel uses a separate model (see below).
+          </li>
+        </ul>
+      </Section>
+
+      <Section title="Simulate and season honors">
+        <ul className="list-disc pl-5 space-y-1.5">
+          <li>
+            <strong>What it does.</strong> Simulate uses what players did over a <em>completed season</em> to estimate how a
+            hypothetical team would have done: an 82-game season, a seven-game series, or a historical playoff bracket (1996&ndash;97
+            to 2025&ndash;26). It is not a preseason forecast. It uses a separate model fitted to real team results, not the six scores above.
+            In a bracket replay, series that really happened keep their real host; a new matchup is hosted by the team with the better
+            regular-season record, then by the team that won an uneven season series, and otherwise by a labelled assumption you can
+            change (default: better point differential, which is not an official NBA rule). Seeds are published seeds, shown for display only.
+          </li>
+          <li>
+            <strong>Assumptions.</strong> Each starter plays standard minutes, the rest go to an average bench, coaching is
+            average and everyone is healthy. Five players share one ball, so shot volume is scaled down. The schedule is a balanced
+            hypothetical one. Positions never change a result.
+          </li>
+          <li>
+            <strong>Support check.</strong> Before showing numbers, Simulate asks whether the lineup resembles real teams the model
+            was fitted on. If it is too different, you see the assessment but no wins, series odds or title odds, with the message
+            &ldquo;This lineup is too different from the teams used to test the model.&rdquo; Being inside the range of real teams
+            doesn&rsquo;t prove a custom lineup is accurately estimated. Small samples and lineups that mix distant eras are flagged as limited.
+          </li>
+          <li>
+            <strong>How reliable.</strong> On real teams the 82-game estimate beat last season&rsquo;s record. For a custom five plus an
+            average bench it did not (RMSE 10.50 against 10.12 on the newest test seasons), so treat it as rough. Series and bracket
+            results are always Experimental. Expected defensive rating isn&rsquo;t shown because testing found it too weak; the
+            &ldquo;Defensive box-score signals&rdquo; are rebounds, steals and blocks, not measured defense.
+          </li>
+          <li>
+            <strong>Two kinds of uncertainty.</strong> Game luck is what a season or series can swing by chance; more simulated runs
+            settle it. Model uncertainty is how far the model can be off; more runs never remove it. No 80% claim is made for custom lineups.
+          </li>
+          <li>
+            <strong>Season honors.</strong> Awards for the selected season only, from published winner lists, plus championship
+            membership (&ldquo;appeared in a playoff game for the champion&rdquo;). Voting placements aren&rsquo;t wins. Finals MVP and the 2025&ndash;26
+            awards are confirmed by more than one source; awards for earlier seasons come from one source. Full championship rosters
+            aren&rsquo;t available, so only Finals MVP winners show &ldquo;On the championship roster&rdquo;. Honors are never used in
+            similarity, scores or simulations.
           </li>
         </ul>
       </Section>

@@ -37,8 +37,9 @@ export const DIMENSION_ORDER: TraitDimension[] = [
 export const DIMENSION_DISPLAY_LABEL: Record<TraitDimension, string> = {
   Scoring: "Scoring",
   "Perimeter Profile": "Three-Point Style",
-  Playmaking: "Passing & Creation",
-  "Defensive Activity": "Defense",
+  Playmaking: "Passing & Playmaking",
+  // The Defensive Activity trait is built only from steal and block rates, so it is named for exactly that.
+  "Defensive Activity": "Steals & Blocks",
   Rebounding: "Rebounding",
   "Rim Pressure": "Attacking the Basket",
   Efficiency: "Scoring Efficiency",
@@ -50,16 +51,23 @@ export const DIMENSION_DISPLAY_LABEL: Record<TraitDimension, string> = {
 export const DIMENSION_LABEL_LINES: Record<TraitDimension, string[]> = {
   Scoring: ["Scoring"],
   "Perimeter Profile": ["Three-Point", "Style"],
-  Playmaking: ["Passing &", "Creation"],
-  "Defensive Activity": ["Defense"],
+  Playmaking: ["Passing &", "Playmaking"],
+  "Defensive Activity": ["Steals &", "Blocks"],
   Rebounding: ["Rebounding"],
   "Rim Pressure": ["Attacking the", "Basket"],
   Efficiency: ["Scoring", "Efficiency"],
 };
 
+/** Trait tags are generated as "<Level> <Dimension>"; show the Defensive Activity dimension by what it measures. */
+export function traitTagLabel(tag: string): string {
+  return tag.replace("Defensive Activity", "Steals & Blocks");
+}
+
 export interface SpokePoint {
   dimension: TraitDimension;
-  value: number; // 0-100 percentile
+  value: number; // 0-100 percentile (0 when missing: only used for geometry, never shown as a number)
+  /** The statistic is unavailable for this player-season. Drawn at the centre as an open dot, labelled "Unavailable", never as a real 0. */
+  missing: boolean;
   angleDeg: number;
   x: number;
   y: number;
@@ -84,17 +92,33 @@ export function computeSpokes(
   return DIMENSION_ORDER.map((dim, i) => {
     const angleDeg = -90 + (360 / n) * i; // start pointing up, go clockwise
     const angleRad = (angleDeg * Math.PI) / 180;
-    const raw = traits[dim] ?? 0;
-    const pct = Math.max(0, Math.min(100, raw));
+    const raw = traits[dim];
+    const missing = raw == null || !Number.isFinite(raw);
+    const pct = missing ? 0 : Math.max(0, Math.min(100, raw));
     const r = minRadius + (maxRadius - minRadius) * (pct / 100);
     return {
       dimension: dim,
       value: pct,
+      missing,
       angleDeg,
       x: center + r * Math.cos(angleRad),
       y: center + r * Math.sin(angleRad),
     };
   });
+}
+
+/** What to print for a spoke: the rounded percentile, or "Unavailable" for a missing statistic. A real 0 stays "0". */
+export function spokeText(s: Pick<SpokePoint, "value" | "missing">): string {
+  return s.missing ? "Unavailable" : String(Math.round(s.value));
+}
+
+/** Screen-reader summary of the whole print; missing values are named, never read out as 0. */
+export function traitSummary(archetype: string, traits: Record<string, number | null | undefined>): string {
+  const parts = DIMENSION_ORDER.map((d) => {
+    const v = traits[d];
+    return v == null || !Number.isFinite(v) ? `${DIMENSION_DISPLAY_LABEL[d]} unavailable` : `${DIMENSION_DISPLAY_LABEL[d]} ${Math.round(Math.max(0, Math.min(100, v)))} out of 100`;
+  });
+  return `Playing Style chart: ${archetype}. ${parts.join(", ")}.`;
 }
 
 /** Catmull-Rom through the closed loop of spoke tips, rendered as a smooth

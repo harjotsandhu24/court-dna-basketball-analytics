@@ -1,0 +1,44 @@
+PASS [desktop] axe home: no serious/critical violations
+PASS [desktop] axe profile: no serious/critical violations
+PASS [desktop] axe career: no serious/critical violations
+PASS [desktop] axe compare-empty: no serious/critical violations
+PASS [desktop] axe compare: no serious/critical violations
+PASS [desktop] axe galaxy: no serious/critical violations
+PASS [desktop] axe methodology: no serious/critical violations
+PASS [desktop] axe build: no serious/critical violations
+PASS [phone] axe home: no serious/critical violations
+PASS [phone] axe profile: no serious/critical violations
+PASS [phone] axe career: no serious/critical violations
+PASS [phone] axe compare-empty: no serious/critical violations
+PASS [phone] axe compare: no serious/critical violations
+PASS [phone] axe galaxy: no serious/critical violations
+PASS [phone] axe methodology: no serious/critical violations
+PASS [phone] axe build: no serious/critical violations
+PASS [desktop] CLS home median 0.010 <= 0.10
+PASS [desktop] CLS profile median 0.010 <= 0.10
+PASS [desktop] CLS compare median 0.041 <= 0.10
+PASS [desktop] CLS galaxy median 0.050 <= 0.10
+PASS [phone] CLS home median 0.000 <= 0.10
+PASS [phone] CLS profile median 0.000 <= 0.10
+PASS [phone] CLS compare median 0.000 <= 0.10
+PASS [phone] CLS galaxy median 0.000 <= 0.10
+touch targets under 44px (phone): {
+ "phone/profile": [
+  "At the rim \u00b7 0\u20133 ft: 20% of shots, 66% s 42x42",
+  "INPUT 16x16"
+ ],
+ "phone/compare": [
+  "At the rim \u00b7 0\u20133 ft: 20% of shots, 66% s 42x42",
+  "At the rim \u00b7 0\u20133 ft: 37% of shots, 78% s 42x42"
+ ],
+ "phone/build": [
+  "_R_2dbsnnb_-mode 13x13",
+  "_R_2dbsnnb_-mode 13x13",
+  "_R_2dbsnnb_-mode 13x13",
+  "_R_2dbsnnb_-league 13x13",
+  "_R_2dbsnnb_-league 13x13"
+ ]
+}
+axe non-serious: {"desktop/home": [], "desktop/profile": [], "desktop/career": [], "desktop/compare-empty": [], "desktop/compare": [], "desktop/galaxy": [], "desktop/methodology": [], "desktop/build": [], "phone/home": [], "phone/profile": [], "phone/career": [], "phone/compare-empty": [], "phone/compare": [], "phone/galaxy": [], "phone/methodology": [], "phone/build": []}
+
+24/24 checks passed

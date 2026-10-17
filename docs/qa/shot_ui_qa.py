@@ -2,10 +2,12 @@
 Needs `npm run build && npx next start -p 3100` and `pip install playwright`.  Usage: python3 docs/qa/shot_ui_qa.py
 Writes screenshots to docs/screenshots/phase5/ and measurements to docs/qa/shot_ui_metrics.json."""
 import json, os, re, sys, time
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from playwright.sync_api import sync_playwright
+from qa_common import TRACK_INIT, Errors, settle_sync
 B = os.environ.get("QA_BASE", "http://localhost:3100")
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "..", "screenshots", "phase5")
+OUT = os.path.join(HERE, "..", "screenshots", "phase11")
 res, metrics = [], {}
 def ok(n, c, d=""):
     res.append((n, bool(c))); print(("PASS " if c else "FAIL ") + n + (" -- " + str(d)[:300] if (d and not c) else ""), flush=True)
@@ -15,11 +17,11 @@ NAMES = {"x0_3": "0–3 ft", "x3_10": "3–10 ft", "x10_16": "10–16 ft", "x16_
 BG, GUIDE, HOVER, SEL_C = "#111820", "#64748B", "#93C5FD", "#60A5FA"
 def pt(pg, i, x, y):
     return pg.evaluate("""([s,i,x,y])=>{const v=document.querySelectorAll(s)[i];const p=v.createSVGPoint();p.x=x;p.y=y;const m=p.matrixTransform(v.getScreenCTM());return [m.x,m.y]}""", [SEL, i, x, y])
-def show(pg, i=0): pg.locator(SEL).nth(i).evaluate("e=>e.scrollIntoView({block:'center',behavior:'instant'})"); pg.wait_for_timeout(150)
+def show(pg, i=0): pg.locator(SEL).nth(i).evaluate("e=>e.scrollIntoView({block:'center',behavior:'instant'})"); settle_sync(pg)
 def move(pg, zone, i=0, dx=0, dy=0):
-    show(pg, i); x, y = pt(pg, i, *PT[zone]); pg.mouse.move(x + dx, y + dy); pg.wait_for_timeout(80); return x, y
+    show(pg, i); x, y = pt(pg, i, *PT[zone]); pg.mouse.move(x + dx, y + dy); settle_sync(pg); return x, y
 def click(pg, zone, i=0, touch=False):
-    show(pg, i); x, y = pt(pg, i, *PT[zone]); (pg.touchscreen.tap(x, y) if touch else pg.mouse.click(x, y)); pg.wait_for_timeout(250)
+    show(pg, i); x, y = pt(pg, i, *PT[zone]); (pg.touchscreen.tap(x, y) if touch else pg.mouse.click(x, y)); settle_sync(pg)
 def pressed(pg, i=0):
     return pg.evaluate("""([s,i])=>[...document.querySelectorAll(s)[i].querySelectorAll('[data-zone]')].filter(e=>e.getAttribute('aria-pressed')==='true').map(e=>e.dataset.zone)""", [SEL, i])
 def attr(pg, a, i=0):
@@ -38,16 +40,17 @@ def shot(pg, name, clip_to=None):
     (clip_to or pg).screenshot(path=path) if clip_to else pg.screenshot(path=path)
 def toggle(pg, i=0): pg.get_by_role("switch", name="Show shots").nth(i)
 def dots_off(pg, i=0):
-    pg.get_by_role("switch", name="Show shots").nth(i).click(); pg.wait_for_timeout(250)
+    pg.get_by_role("switch", name="Show shots").nth(i).click(); settle_sync(pg)
 def dots_on(pg, i=0):
-    pg.get_by_role("switch", name="Show shots").nth(i).click(); pg.wait_for_function("([s,i])=>document.querySelectorAll(s)[i].parentElement.querySelector('[data-testid=shot-dots]')", arg=[SEL, i]); pg.wait_for_timeout(150)
+    pg.get_by_role("switch", name="Show shots").nth(i).click(); pg.wait_for_function("([s,i])=>document.querySelectorAll(s)[i].parentElement.querySelector('[data-testid=shot-dots]')", arg=[SEL, i]); settle_sync(pg)
 
 def run(mobile):
     tag = "mobile" if mobile else "desktop"
     with sync_playwright() as p:
         br = p.chromium.launch()
         ctx = br.new_context(viewport={"width": 390, "height": 844} if mobile else {"width": 1280, "height": 900}, has_touch=mobile, is_mobile=mobile)
-        pg = ctx.new_page(); errs = []; pg.on("pageerror", lambda e: errs.append(str(e))); pg.on("console", lambda m: errs.append(m.text) if m.type == "error" else None)
+        ctx.add_init_script(TRACK_INIT)
+        pg = ctx.new_page(); E = Errors().attach(pg)
         t0 = time.time(); pg.goto(f"{B}/player/bryanko01/2009"); pg.wait_for_selector(SEL)
         txt = pg.inner_text("body")
         want = "Tap a zone to see shooting stats." if mobile else "Hover for stats. Click to keep a zone selected."
@@ -67,7 +70,7 @@ def run(mobile):
             x, y = move(pg, "x0_3"); b = tip_box(pg)
             ok("[desktop] tooltip is offset from the cursor (never under it)", not (b["x"] <= x <= b["x"] + b["width"] and b["y"] <= y <= b["y"] + b["height"]), (b, x, y))
             lay = pg.evaluate("()=>document.documentElement.scrollHeight")
-            pg.mouse.move(5, 5); pg.wait_for_timeout(80)
+            pg.mouse.move(5, 5); settle_sync(pg)
             ok("[desktop] leaving the court dismisses the tooltip with no layout shift", tips(pg).count() == 0 and pg.evaluate("()=>document.documentElement.scrollHeight") == lay)
             # viewport containment at the edges
             vw, vh = 1280, 900
@@ -75,7 +78,7 @@ def run(mobile):
             for z in ("x3p", "x0_3"):
                 show(pg); x, y = pt(pg, 0, *PT[z])
                 for (cx, cy) in ((x, min(y, vh - 3)), (min(x + 260, vw - 3), y)):
-                    pg.mouse.move(cx, cy); pg.wait_for_timeout(60)
+                    pg.mouse.move(cx, cy); settle_sync(pg)
                     if tips(pg).count():
                         r = tip_box(pg); ok(f"[desktop] tooltip stays inside the viewport near ({int(cx)},{int(cy)})", r["x"] >= 0 and r["y"] >= 0 and r["x"] + r["width"] <= vw and r["y"] + r["height"] <= vh, r)
             # ---- hovering is easy anywhere in a band (hit areas are the whole region, not the thin line)
@@ -108,7 +111,7 @@ def run(mobile):
             ok("[desktop] 3-10 ft preview is a single 10 ft circle (2 arcs), three-point selection is the arc + corners only (no court rectangle)", pg.evaluate("""([s])=>{const v=document.querySelector(s);const a=v.querySelector('[data-preview-zone]').getAttribute('d'),b=v.querySelector('[data-selected-zone]').getAttribute('d');return (a.match(/a/g)||[]).length===2&&a.startsWith('M150 52.5')&&/^M30 0 V|^M30 0V/.test(b)&&b.includes('A237.5 237.5')&&!/H500|V400|Z/.test(b)}""", [SEL]))
             move(pg, "x3p")
             ok("[desktop] hovering the clicked zone shows its tooltip and keeps its emphasis", attr(pg, "data-preview-zone") == [] and attr(pg, "data-selected-zone") == ["x3p"] and tip_text(pg).startswith("Three-pointers"))
-            pg.mouse.move(5, 5); pg.wait_for_timeout(80)
+            pg.mouse.move(5, 5); settle_sync(pg)
             ok("[desktop] end hover restores the clicked zone's emphasis", attr(pg, "data-preview-zone") == [] and attr(pg, "data-selected-zone") == ["x3p"] and tips(pg).count() == 0)
             click(pg, "x3p"); pg.mouse.move(5, 5)
             ok("[desktop] click the selected zone again clears", pressed(pg) == [] and attr(pg, "data-selected-zone") == [])
@@ -119,30 +122,30 @@ def run(mobile):
             ok("[desktop] tooltip works with dots on (dots do not intercept zone events)", tip_text(pg).startswith("Three-pointers\n117 made / 332 attempts\n35.2% shooting"), tip_text(pg))
             d = dots(pg); em = count(d, state="emphasis")
             ok("[desktop] hover preview emphasises only that zone's dots, then restores", em > 0 and count(d, state="dim") > 0 and count(d, state="normal") == 0)
-            pg.mouse.move(5, 5); pg.wait_for_timeout(100); d2 = dots(pg)
+            pg.mouse.move(5, 5); settle_sync(pg); d2 = dots(pg)
             ok("[desktop] end hover restores every dot", count(d2, state="emphasis") == 0 and count(d2, state="dim") == 0 and count(d2, state="normal") == 1711)
-            pg.get_by_role("button", name="Made", exact=True).click(); pg.wait_for_timeout(150)
+            pg.get_by_role("button", name="Made", exact=True).click(); settle_sync(pg)
             move(pg, "x3p"); tt = tip_text(pg)
             ok("[desktop] Made filter: markers filtered, tooltip numbers still over ALL attempts", count(dots(pg), "missed") == 0 and "117 made / 332 attempts" in tt and "35.2% shooting" in tt, tt)
-            pg.get_by_role("button", name="Missed", exact=True).click(); pg.wait_for_timeout(150)
+            pg.get_by_role("button", name="Missed", exact=True).click(); settle_sync(pg)
             move(pg, "x3p")
             ok("[desktop] Missed filter: same tooltip (never 0% / 100%)", count(dots(pg), "made") == 0 and "117 made / 332 attempts" in tip_text(pg))
             pg.get_by_role("button", name="All", exact=True).click(); pg.mouse.move(5, 5)
             # ---- keyboard focus + Escape
-            pg.locator(f"{SEL} [data-zone=x3_10]").focus(); pg.keyboard.press("Shift+Tab"); pg.keyboard.press("Tab"); pg.wait_for_timeout(120)
+            pg.locator(f"{SEL} [data-zone=x3_10]").focus(); pg.keyboard.press("Shift+Tab"); pg.keyboard.press("Tab"); settle_sync(pg)
             ok("[desktop] keyboard focus shows the same tooltip", tip_text(pg).startswith("3–10 ft") and tips(pg).count() == 1, tip_text(pg))
             dbg = pg.evaluate("()=>{const z=document.activeElement;return [z.tagName,z.dataset.zone,z.getAttribute('aria-describedby'),[...document.querySelectorAll('[data-testid=zone-tooltip]')].map(t=>t.id)]}")
             ok("[desktop] focused zone is described by the tooltip", dbg[2] in dbg[3] and dbg[2] is not None, dbg)
             ok("[desktop] keyboard focus uses a distinct dashed #93C5FD boundary (hover is solid)", pg.evaluate("""([s])=>{const e=document.querySelector(s+' [data-preview-zone]');return !!e&&e.getAttribute('data-preview-kind')==='focus'&&e.getAttribute('stroke')==='#93C5FD'&&!!e.getAttribute('stroke-dasharray')&&e.getAttribute('fill')===null}""", [SEL]))
-            pg.keyboard.press("Escape"); pg.wait_for_timeout(100)
+            pg.keyboard.press("Escape"); settle_sync(pg)
             ok("[desktop] Escape dismisses the tooltip and preview", tips(pg).count() == 0 and attr(pg, "data-preview-zone") == [])
-            pg.keyboard.press("Tab"); pg.wait_for_timeout(120)
+            pg.keyboard.press("Tab"); settle_sync(pg)
             ok("[desktop] focusing the next zone shows its tooltip again", tips(pg).count() == 1 and tip_text(pg).split("\n")[0] in NAMES.values())
-            pg.keyboard.press("Enter"); pg.wait_for_timeout(120)
+            pg.keyboard.press("Enter"); settle_sync(pg)
             ok("[desktop] Enter selects the focused zone; Space clears it", len(pressed(pg)) == 1)
-            pg.keyboard.press("Space"); pg.wait_for_timeout(120)
+            pg.keyboard.press("Space"); settle_sync(pg)
             ok("[desktop] Space clears", pressed(pg) == [])
-            pg.mouse.move(5, 5); pg.evaluate("()=>document.activeElement.blur()"); pg.wait_for_timeout(100)
+            pg.mouse.move(5, 5); pg.evaluate("()=>document.activeElement.blur()"); settle_sync(pg)
             ok("[desktop] blur removes the tooltip", tips(pg).count() == 0, (tips(pg).count(), pg.evaluate("()=>document.activeElement.tagName")))
             # ---- deep threes (30+ ft)
             bg0 = pg.evaluate("([s])=>[...document.querySelector(s).querySelectorAll('rect,path[data-zone]')].map(e=>e.getAttribute('fill')).join()", [SEL])
@@ -161,15 +164,15 @@ def run(mobile):
             ok("[desktop] clicking the selected deep zone clears it", pressed(pg) == [] and attr(pg, "data-selected-zone") == [])
             move(pg, "x3d"); d = dots(pg)
             ok("[desktop] dots on: deep-zone hover emphasises only deep-three markers and the tooltip is unchanged", tip_text(pg).startswith("Deep threes · 30+ ft\n1 made / 4 attempts") and 0 < count(d, state="emphasis") <= 4 and count(d, state="dim") > 1000, (count(d, state="emphasis"), count(d, state="dim")))
-            pg.get_by_role("button", name="Made", exact=True).click(); pg.wait_for_timeout(120); move(pg, "x3d")
+            pg.get_by_role("button", name="Made", exact=True).click(); settle_sync(pg); move(pg, "x3d")
             ok("[desktop] Made filter: deep tooltip counts stay on all attempts", tip_text(pg).startswith("Deep threes · 30+ ft\n1 made / 4 attempts\n25.0% shooting"), tip_text(pg))
             pg.get_by_role("button", name="All", exact=True).click(); pg.mouse.move(5, 5)
             # keyboard: the deep zone is the last stop; Escape dismisses
-            pg.locator(f"{SEL} [data-zone=x3p]").focus(); pg.keyboard.press("Shift+Tab"); pg.keyboard.press("Tab"); pg.keyboard.press("Tab"); pg.wait_for_timeout(120)
+            pg.locator(f"{SEL} [data-zone=x3p]").focus(); pg.keyboard.press("Shift+Tab"); pg.keyboard.press("Tab"); pg.keyboard.press("Tab"); settle_sync(pg)
             ok("[desktop] keyboard focus reaches the deep zone: same tooltip, dashed focus boundary, accessible name", pg.evaluate("()=>document.activeElement.dataset.zone")=="x3d" and tip_text(pg).startswith("Deep threes · 30+ ft") and pg.evaluate("""([s])=>{const e=document.querySelector(s+' [data-preview-zone]');return e.getAttribute('data-preview-kind')==='focus'&&!!e.getAttribute('stroke-dasharray')&&document.activeElement.getAttribute('aria-label').startsWith('Deep threes · 30+ ft')}""", [SEL]))
-            pg.keyboard.press("Escape"); pg.wait_for_timeout(100)
+            pg.keyboard.press("Escape"); settle_sync(pg)
             ok("[desktop] Escape dismisses the deep tooltip", tips(pg).count() == 0)
-            pg.keyboard.press("Enter"); pg.wait_for_timeout(100); ok("[desktop] Enter selects the deep zone", pressed(pg) == ["x3d"]); pg.keyboard.press("Enter"); pg.wait_for_timeout(100); ok("[desktop] Enter again clears it", pressed(pg) == [])
+            pg.keyboard.press("Enter"); settle_sync(pg); ok("[desktop] Enter selects the deep zone", pressed(pg) == ["x3d"]); pg.keyboard.press("Enter"); settle_sync(pg); ok("[desktop] Enter again clears it", pressed(pg) == [])
             pg.evaluate("()=>document.activeElement.blur()")
             pg.locator("[data-testid=about-data]").evaluate("e=>e.open=true")
             ok("[desktop] About this data explains deep threes, heaves, and that they are not all intentional", all(t in pg.locator("[data-testid=about-deep-threes]").inner_text() for t in ("30 feet or more", "end-of-period heaves", "not all intentional")))
@@ -191,7 +194,7 @@ def run(mobile):
             ok("[desktop] Luka 2025-26 deep threes: 15 / 48", tip_text(pg).split("\n")[:2] == ["Deep threes · 30+ ft", "15 made / 48 attempts"], tip_text(pg))
             shot(pg, "desktop_deep_three_tooltip.png"); pg.mouse.move(5, 5); click(pg, "x3d"); pg.mouse.move(5, 5); shot(pg, "desktop_deep_three_selected.png"); click(pg, "x3d")
             pg.goto(f"{B}/player/bryanko01/2009"); pg.wait_for_selector(SEL)
-            click(pg, "x3d"); pg.get_by_text("2009-10", exact=True).first.click(); pg.wait_for_timeout(800)
+            click(pg, "x3d"); pg.get_by_test_id("season-picker").locator("select").select_option("2010"); pg.wait_for_url("**/player/*/2010"); settle_sync(pg)
             ok("[desktop] season change clears the deep selection and tooltip", pressed(pg) == [] and tips(pg).count() == 0 and attr(pg, "data-selected-zone") == [])
             pg.goto(f"{B}/player/bryanko01/2009"); pg.wait_for_selector(SEL); dots_on(pg)
             # ---- screenshots
@@ -201,8 +204,8 @@ def run(mobile):
             move(pg, "x3_10"); shot(pg, "desktop_tooltip_zones_only.png"); pg.mouse.move(5, 5)
             click(pg, "x3_10"); shot(pg, "desktop_one_zone_selected.png"); click(pg, "x3_10")
             dots_on(pg); shot(pg, "desktop_real_shot_dots.png")
-            pg.get_by_role("button", name="Made", exact=True).click(); pg.wait_for_timeout(150); shot(pg, "desktop_made_filter.png")
-            pg.get_by_role("button", name="Missed", exact=True).click(); pg.wait_for_timeout(150); shot(pg, "desktop_missed_filter.png")
+            pg.get_by_role("button", name="Made", exact=True).click(); settle_sync(pg); shot(pg, "desktop_made_filter.png")
+            pg.get_by_role("button", name="Missed", exact=True).click(); settle_sync(pg); shot(pg, "desktop_missed_filter.png")
         else:
             # ---- touch: tap selects; hover tooltip never sticks
             click(pg, "x3p", touch=True)
@@ -220,12 +223,12 @@ def run(mobile):
             click(pg, "x3d", touch=True)
             click(pg, "x0_3", touch=True)
             ok("[mobile] tap on the dense rim cluster selects the rim zone (dots never intercept)", pressed(pg) == ["x0_3"] and tips(pg).count() == 0)
-            pg.get_by_role("button", name="Made", exact=True).click(); pg.wait_for_timeout(150)
+            pg.get_by_role("button", name="Made", exact=True).click(); settle_sync(pg)
             ok("[mobile] Made filter, metrics unchanged", count(dots(pg), "missed") == 0 and "231 made / 348 attempts" in det(pg), det(pg))
             show(pg); shot(pg, "mobile_regression.png")
         # ---- unavailable data fallback (data stripped in transit: every season is now covered, so this is simulated)
         ctx2 = br.new_context(viewport={"width": 390, "height": 844} if mobile else {"width": 1280, "height": 900}, has_touch=mobile, is_mobile=mobile)
-        pg2 = ctx2.new_page()
+        ctx2.add_init_script(TRACK_INIT); pg2 = ctx2.new_page()
         def strip(route):
             r = route.fetch(); body = r.json(); rows = body if isinstance(body, list) else body["players"]
             for x in rows: x["shot_dna"].pop("locations", None)
@@ -246,13 +249,13 @@ def run(mobile):
         show(pg2); shot(pg2, f"{tag}_season_without_location_data_simulated.png")
         ctx2.close()
         # ---- loading error + retry
-        ctx3 = br.new_context(viewport={"width": 390, "height": 844} if mobile else {"width": 1280, "height": 900}, has_touch=mobile, is_mobile=mobile); pg3 = ctx3.new_page()
+        ctx3 = br.new_context(viewport={"width": 390, "height": 844} if mobile else {"width": 1280, "height": 900}, has_touch=mobile, is_mobile=mobile); ctx3.add_init_script(TRACK_INIT); pg3 = ctx3.new_page()
         state = {"n": 0}
         def flaky(route):
             state["n"] += 1
             route.abort() if state["n"] == 1 else route.continue_()
         pg3.route(re.compile(r".*/data/shots/2009/bryanko01\.json"), flaky)
-        pg3.goto(f"{B}/player/bryanko01/2009"); pg3.wait_for_selector(SEL); pg3.get_by_role("switch", name="Show shots").click(); pg3.wait_for_timeout(500)
+        pg3.goto(f"{B}/player/bryanko01/2009"); pg3.wait_for_selector(SEL); pg3.get_by_role("switch", name="Show shots").click(); settle_sync(pg3)
         ok(f"[{tag}] load error: message + retry, toggle stays usable, no fake dots", "Couldn’t load shot locations." in pg3.inner_text("body") and pg3.locator("[data-testid=shot-dots]").count() == 0 and "Loading shots" not in pg3.inner_text("body"))
         pg3.get_by_role("button", name="Try again").click(); pg3.wait_for_function("document.querySelector('[data-testid=shot-dots]')")
         ok(f"[{tag}] retry loads the dots (failed request was not cached)", count(dots(pg3)) == 1711 and state["n"] == 2, state)
@@ -276,7 +279,7 @@ def run(mobile):
                     shot(pg, "desktop_1996_97_short_line.png")
             # ---- season/player change clears stale tooltip + selection
             pg.goto(f"{B}/player/bryanko01/2009"); pg.wait_for_selector(SEL); click(pg, "x3p"); move(pg, "x3_10")
-            pg.get_by_text("2009-10", exact=True).first.click(); pg.wait_for_timeout(800)
+            pg.get_by_test_id("season-picker").locator("select").select_option("2010"); pg.wait_for_url("**/player/*/2010"); settle_sync(pg)
             ok("[desktop] season change clears selection, preview and tooltip", pressed(pg) == [] and tips(pg).count() == 0 and attr(pg, "data-preview-zone") == [] and attr(pg, "data-selected-zone") == [], (pressed(pg), tips(pg).count()))
             # ---- compare
             pg.goto(f"{B}/compare?a=bryanko01_2009&b=doncilu01_2026"); pg.wait_for_function(f"document.querySelectorAll(\"{SEL}\").length===2")
@@ -294,10 +297,10 @@ def run(mobile):
             pg.mouse.move(5, 5)
             dots_on(pg, 0); dots_on(pg, 1); pg.mouse.move(5, 5)
             ok("[desktop] compare: dots on both courts, selections intact", pg.locator("[data-testid=shot-dots]").count() == 2 and pressed(pg, 0) == ["x3p"] and pressed(pg, 1) == ["x3_10"])
-            pg.locator(SEL).nth(0).scroll_into_view_if_needed(); pg.wait_for_timeout(200)
+            pg.locator(SEL).nth(0).scroll_into_view_if_needed(); settle_sync(pg)
             pg.locator("div.grid").filter(has=pg.locator(SEL)).last.screenshot(path=os.path.join(OUT, "desktop_compare_two_courts.png"))
             # ---- payload + performance on a heavy player-season
-            pg.goto(f"{B}/player/doncilu01/2026"); pg.wait_for_selector(SEL); pg.wait_for_timeout(500)
+            pg.goto(f"{B}/player/doncilu01/2026"); pg.wait_for_selector(SEL); settle_sync(pg)
             def res_sizes(): return pg.evaluate("()=>performance.getEntriesByType('resource').filter(r=>r.name.includes('/data/')).map(r=>[r.name.split('/data/')[1],r.transferSize,r.decodedBodySize])")
             before = {n: (t, d) for n, t, d in res_sizes()}
             t1 = time.time(); dots_on(pg); dt_on = (time.time() - t1) * 1000
@@ -311,8 +314,10 @@ def run(mobile):
                 t2 = time.perf_counter(); pg.mouse.move(x + k * 2, y + (k % 7)); mv.append((time.perf_counter() - t2) * 1000)
             metrics["performance"] = {"toggle_to_dots_ms": round(dt_on), "mouse_move_ms_median": round(sorted(mv)[30], 1), "mouse_move_ms_p95": round(sorted(mv)[56], 1), "dots_markers": count(dots(pg))}
             ok("[desktop] rendering performance: dots appear < 1.5 s, hover moves stay responsive", dt_on < 1500 and sorted(mv)[56] < 150, metrics["performance"])
-        errs = [e for e in errs if "ERR_TUNNEL_CONNECTION_FAILED" not in e]  # sandbox blocks external hosts (fonts); not app errors
-        ok(f"[{tag}] no page errors / console errors", not errs, errs)
+        # Errors are classified, not filtered away: injected (this test broke it on purpose), external (fonts and
+        # Wikimedia, which the app does not control), browser-cancelled (navigation moved on) and app (fails the run).
+        print(f"  [{tag}] {E.summary()}", flush=True)
+        ok(f"[{tag}] no unexpected app errors", not E.app, E.app[:3])
         br.close()
 
 if __name__ == "__main__":

@@ -29,14 +29,18 @@ export function isSmallSampleSeason(
   return entry.seasons.includes(season) && !entry.qualified_seasons.includes(season);
 }
 
-export const LINEUP_DIMENSIONS = [
+/** What the "Defensive Activity" trait is built from (analysis/config.py: stl_percent and blk_percent only).
+ *  Defensive rebounds are NOT part of it (they feed the separate Rebounding trait), so the note names exactly these two. */
+export const DEFENSE_INPUTS_NOTE = "Based on steals and blocks.";
+
+export const LINEUP_DIMENSIONS: ReadonlyArray<{ key: string; label: string; note?: string }> = [
   { key: "Playmaking", label: "Passing & Creation" },
   { key: "Perimeter Profile", label: "Three-Point Shooting" },
   { key: "Rim Pressure", label: "Attacking the Basket" },
   { key: "Rebounding", label: "Rebounding" },
-  { key: "Defensive Activity", label: "Defense" },
+  { key: "Defensive Activity", label: "Defensive box-score signals", note: DEFENSE_INPUTS_NOTE },
   { key: "__ball_dominance", label: "How Much They Handle the Ball" },
-] as const;
+];
 
 /** One player's value for a lineup dimension, or null when the stat is missing. */
 export function lineupValue(p: PlayerSeasonRecord, key: string): number | null {

@@ -22,6 +22,7 @@ import type {
 import type { SimilarityPoolEntry } from "./similarity";
 import type { SeasonBaseline } from "./shotZones";
 import type { ShotBaseline } from "./shotLocations";
+import { DataError } from "./loadState";
 
 export interface ShotBaselines {
   source: string;
@@ -46,12 +47,17 @@ async function fetchJson<T>(path: string): Promise<T> {
   } catch {
     // Network-level failure (offline, DNS, CORS, etc.) -- normalize to the
     // same Error shape as an HTTP error so callers have one thing to check.
-    throw new Error(`Failed to load ${path}: network error`);
+    throw new DataError(`Failed to load ${path}: network error`, "network");
   }
   if (!res.ok) {
-    throw new Error(`Failed to load ${path}: ${res.status}`);
+    // 404 means the file doesn't exist (a link to a player or season that isn't in the data): retrying can't help.
+    throw new DataError(`Failed to load ${path}: ${res.status}`, res.status === 404 ? "not-found" : "http", res.status);
   }
-  return res.json() as Promise<T>;
+  try {
+    return (await res.json()) as T;
+  } catch {
+    throw new DataError(`Failed to load ${path}: unreadable response`, "parse", res.status);
+  }
 }
 
 /** Wraps a cache-populating fetch so a rejection evicts its own cache

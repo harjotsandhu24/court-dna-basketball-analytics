@@ -1,0 +1,86 @@
+PASS 2005abc: an 'invalid link' panel (not a skeleton, not another season)
+PASS 2005abc: no season or career file was requested
+PASS 2005abc: the panel gives a path back
+PASS NaN: an 'invalid link' panel (not a skeleton, not another season)
+PASS NaN: no season or career file was requested
+PASS NaN: the panel gives a path back
+PASS out-of-range 1996: an 'invalid link' panel (not a skeleton, not another season)
+PASS out-of-range 1996: no season or career file was requested
+PASS out-of-range 1996: the panel gives a path back
+PASS out-of-range 2027: an 'invalid link' panel (not a skeleton, not another season)
+PASS out-of-range 2027: no season or career file was requested
+PASS out-of-range 2027: the panel gives a path back
+PASS 2005.5: an 'invalid link' panel (not a skeleton, not another season)
+PASS 2005.5: no season or career file was requested
+PASS 2005.5: the panel gives a path back
+PASS malformed player id: an 'invalid link' panel (not a skeleton, not another season)
+PASS malformed player id: no season or career file was requested
+PASS malformed player id: the panel gives a path back
+PASS /career/NaN: invalid-link panel with a way back, never 'Loading…' forever
+PASS a well-formed but nonexistent career says it's unavailable (no Retry: retrying can't help)
+PASS a nonexistent player's profile is 'unavailable', not an error and not a skeleton
+PASS failed player-season request: a connection-error panel with Retry, skeleton gone
+PASS Retry recovers the profile without a page reload (the failure was not cached)
+PASS failed career request: error with Retry (not 'Loading…' forever)
+PASS career Retry recovers in place
+PASS when the career and similarity downloads both fail, the profile itself still renders
+PASS the Similar Players section shows its own error with Retry (not placeholders forever)
+PASS Similar Players Retry loads the matches in place
+PASS while a season loads the layout-matching skeleton shows, not the previous season
+PASS a late response for the season the person already left is ignored
+PASS one labelled season dropdown replaces the chip rows, with every season
+PASS Back returns to the previous season and the dropdown follows
+PASS Forward returns to the later season
+PASS a refresh keeps the season from the URL
+PASS the home search has an explicit accessible name
+PASS a small-sample-only player (Hassan Adams) is offered, labelled, at their only season
+PASS Discover opens his profile (it used to do nothing)
+PASS a small-sample profile loads without an error state
+PASS Compare offers display-eligible players and labels small samples
+PASS the Compare search has an explicit accessible name
+PASS a player with a single season is used at once as Player 1
+PASS the season picker defaults to the latest and lists every season
+PASS the Player Map search has an explicit accessible name
+PASS a map search that switches season says so
+PASS a player who can't be on the map gets an explanation and a profile link (never a silent no-op)
+PASS Compare: an invalid second link is explained and the valid first player is kept
+PASS choosing Player 2 completes the comparison and keeps Player 1
+PASS Compare: a failed download on one side shows a connection error with Retry and keeps the other player
+PASS Retry completes the comparison in place
+PASS Compare: a season outside the data is 'invalid/unavailable' (not an error, not a skeleton) and Player 1 is kept
+PASS Compare: a missing trait is shown as 'Unavailable', never as a zero
+PASS Profile: a missing trait reads 'Unavailable' in the bars and the Court Print text
+PASS Profile: the missing bar has no filled width (not a zero-length 'real' value)
+PASS Career: callouts say 'percentile points' and explain they are not raw improvement
+PASS Career: no callout invents a fall to zero from a missing value
+PASS Career: the wide table is a keyboard-focusable, labelled scroll region
+PASS a failed photo falls back to initials at the same size
+PASS the replacement (Curry) shows his own photo, not the previous player's failed state
+PASS the photo is decorative to assistive technology on the lineup card (name is written beside it)
+PASS a controlled photo fixture loads and keeps its attribution control
+PASS with no photo at all the initials fallback keeps the same dimensions
+PASS a worker crash mid-run ends with a short error and Retry (progress is not stuck)
+PASS the Simulate button is usable again after the crash
+PASS Retry runs the job on a fresh worker and shows the result (no duplicate jobs)
+PASS a worker that fails to start falls back to the main thread once and still shows the result
+PASS cancelling a job whose worker then crashes shows 'Cancelled', not an error
+PASS with browser storage blocked, Build a Lineup still works
+PASS corrupted saved lineup and settings do not break the page
+PASS a double-click on a search result adds the opponent once
+PASS the first Tab stop is a 'Skip to content' link
+PASS the skip link moves focus to the main content
+PASS the logo's accessible name contains its visible text
+PASS Escape closes the mobile menu and returns focus to the menu button
+PASS the menu button is at least 44px
+PASS a focused control is scrolled clear of the sticky header
+PASS Methodology's wide table is a labelled, keyboard-focusable scroll region
+PASS reduced motion: smooth scrolling is off
+PASS phone + 200% text: / has no sideways page scroll
+PASS phone + 200% text: /player/nashst01/2005 has no sideways page scroll
+PASS phone + 200% text: /compare?a=nashst01_2005&b=jamesle01_2013 has no sideways page scroll
+PASS phone + 200% text: /methodology has no sideways page scroll
+PASS phone + 200% text: /career/nashst01 has no sideways page scroll
+PASS no unexpected app errors across the whole run (injected, external and browser-cancelled are counted separately)
+
+83/83 checks passed
+errors across run: app=0 injected=18 external=40 browser-cancelled=30

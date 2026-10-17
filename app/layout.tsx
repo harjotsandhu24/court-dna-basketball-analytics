@@ -20,8 +20,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="min-h-screen flex flex-col">
         <MotionProvider>
+          <a href="#main" className="skip-link">Skip to content</a>
           <Nav />
-          <main className="flex-1">{children}</main>
+          <main id="main" tabIndex={-1} className="flex-1 outline-none">{children}</main>
           <Footer />
         </MotionProvider>
       </body>

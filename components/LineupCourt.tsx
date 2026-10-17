@@ -73,13 +73,13 @@ export default function LineupCourt({ spots, activeSlot, movingSlot, loadingSlot
         const blocked = locked && !isLoading;
         const label = spot
           ? isMovingSource
-            ? `${pos.code}, ${pos.name}: ${spot.name}, ${spot.seasonLabel}, being moved. Press to cancel the move.`
+            ? `${pos.code}, ${pos.name}: ${spot.name}, ${spot.seasonLabel}, moving. Press to cancel the move.`
             : isTarget
               ? `${pos.code}, ${pos.name}: ${spot.name}, ${spot.seasonLabel}. Swap with ${moving?.name ?? "the moving player"}.`
-              : `${pos.code}, ${pos.name}: ${spot.name}, ${spot.seasonLabel}${spot.updating ? ", season updating" : ""}${spot.smallSample ? ", small sample" : ""}. Open options.`
+              : `${pos.code}, ${pos.name}: ${spot.name}, ${spot.seasonLabel}${spot.updating ? ", updating" : ""}${isLoading ? ", loading" : ""}${spot.smallSample ? ", small sample" : ""}. Open options.`
           : isTarget
-            ? `${pos.code}, ${pos.name}: empty. Move ${moving?.name ?? "the player"} here.`
-            : `${pos.code}, ${pos.name}: empty. Add a player.`;
+            ? `${pos.code}, ${pos.name}: empty. Move here: ${moving?.name ?? "the player"}.`
+            : `${pos.code}, ${pos.name}: ${isLoading ? "loading" : "empty. Add player"}.`;
         const tone = isMovingSource
           ? "border-court-orange bg-court-orange/25 text-ink"
           : isActive
@@ -112,7 +112,7 @@ export default function LineupCourt({ spots, activeSlot, movingSlot, loadingSlot
             </span>
             {spot ? (
               <>
-                <PlayerPhoto playerId={spot.playerId} name={spot.name} posGroup={spot.posGroup} size={36} />
+                <PlayerPhoto playerId={spot.playerId} name={spot.name} posGroup={spot.posGroup} size={36} decorative />
                 <span className="line-clamp-2 break-words text-[10px] font-semibold leading-tight sm:text-[11px]">{spot.name}</span>
                 {/* Same line, same height: the season text is swapped for a status while loading. */}
                 <span className={`tabular text-[10px] leading-none ${spot.updating || isLoading ? "font-semibold text-court-orange-bright" : "text-stone-light"}`}>
@@ -132,8 +132,8 @@ export default function LineupCourt({ spots, activeSlot, movingSlot, loadingSlot
               </>
             ) : (
               <>
-                <span className="font-display text-2xl leading-none">{pos.code}</span>
-                <span className="text-[10px] leading-none">{isTarget ? "Move here" : isLoading ? "Loading…" : "+ Add player"}</span>
+                <span className="font-display text-2xl leading-none" aria-hidden="true">{pos.code}</span>
+                <span className="text-[10px] leading-none">{isTarget ? "Move here" : isLoading ? "Loading…" : <><span aria-hidden="true">+ </span>Add player</>}</span>
               </>
             )}
           </button>

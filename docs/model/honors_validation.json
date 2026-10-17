@@ -1,0 +1,1353 @@
+{
+ "dataVersion": "sim-data-2026-10-16-v3",
+ "sources": {
+  "nba_com_finals_mvp_history": {
+   "publisher": "NBA.com",
+   "url": "https://www.nba.com/news/history-finals-mvp-winners",
+   "retrieved": "2026-10-16",
+   "tables": [
+    "finals_mvp.csv"
+   ],
+   "note": "Finals MVP by season, 1996-97 to 2025-26, with team names."
+  },
+  "bbref_finals_mvp": {
+   "publisher": "Basketball-Reference",
+   "url": "https://www.basketball-reference.com/awards/finals_mvp.html",
+   "retrieved": "2026-10-16",
+   "tables": [
+    "finals_mvp.csv"
+   ],
+   "note": "Finals MVP with player ids and team abbreviations."
+  },
+  "nba_com_pr_2025_26_awards": {
+   "publisher": "NBA Communications",
+   "url": "https://pr.nba.com/voting-results-2025-26-nba-regular-season-awards/",
+   "retrieved": "2026-10-16",
+   "tables": [
+    "awards_2026.csv"
+   ],
+   "note": "Official 2025-26 regular-season award winners and All-NBA, All-Defensive and All-Rookie teams. Winners only; voting results are not used."
+  },
+  "bbref_awards_2026": {
+   "publisher": "Basketball-Reference",
+   "url": "https://www.basketball-reference.com/awards/awards_2026.html",
+   "retrieved": "2026-10-16",
+   "tables": [
+    "awards_2026.csv"
+   ],
+   "note": "MVP and Rookie of the Year plus the three team awards, with ids. Its Defensive Player, Sixth Man and Most Improved sections were empty when fetched."
+  },
+  "wikipedia_2025_26_nba_season": {
+   "publisher": "Wikipedia",
+   "url": "https://en.wikipedia.org/wiki/2025%E2%80%9326_NBA_season",
+   "retrieved": "2026-10-16",
+   "tables": [
+    "awards_2026.csv",
+    "champions.csv"
+   ],
+   "note": "Secondary source for the five individual awards, the champion and Finals result."
+  },
+  "nba_com_season_recaps": {
+   "publisher": "NBA.com",
+   "url": "https://www.nba.com/news/history-season-recaps-index",
+   "retrieved": "2026-10-16",
+   "tables": [
+    "champions.csv"
+   ],
+   "note": "Champion and Finals result for every season."
+  },
+  "bbref_playoffs_2026": {
+   "publisher": "Basketball-Reference",
+   "url": "https://www.basketball-reference.com/playoffs/NBA_2026.html",
+   "retrieved": "2026-10-16",
+   "tables": [
+    "champions.csv"
+   ],
+   "note": "2026 playoff series results and champion."
+  },
+  "bbref_team_page_nyk_2026": {
+   "publisher": "Basketball-Reference",
+   "url": "https://www.basketball-reference.com/teams/NYK/2026.html",
+   "retrieved": "2026-10-16",
+   "tables": [
+    "champions.csv"
+   ],
+   "note": "Knicks 2025-26 season page: playoff record 16-3 and the title."
+  },
+  "wikipedia_2026_nba_finals": {
+   "publisher": "Wikipedia",
+   "url": "https://en.wikipedia.org/wiki/2026_NBA_Finals",
+   "retrieved": "2026-10-16",
+   "tables": [
+    "champions.csv"
+   ],
+   "note": "2026 Finals result. It lists players who appeared in the series, not a ring or roster list."
+  },
+  "wikipedia_playoffs_and_season_pages": {
+   "publisher": "Wikipedia",
+   "url": "https://en.wikipedia.org/wiki/2005_NBA_playoffs",
+   "retrieved": "2026-10-16",
+   "tables": [
+    "seeds.csv"
+   ],
+   "note": "Playoff seeds from each season's playoff page (2003, 2009-2014, 2016-2026) or the standings table on the season page (1997-2002, 2004-2008, 2015). Published seeds are not always record order (for example division winners in 2004-2015). A secondary source, not the NBA's own media guide."
+  },
+  "kaggle_nba_stats": {
+   "publisher": "Kaggle (Sumit Sodatta), compiled from Basketball-Reference",
+   "url": "https://www.kaggle.com/datasets/sumitrodatta/nba-aba-baa-stats",
+   "retrieved": "2026-10-10",
+   "tables": [],
+   "note": "All-Star selections and the awards for 1996-97 to 2024-25. Single source."
+  }
+ },
+ "not_available": [
+  "Ring recipients and full championship rosters: no reachable source lists them. Wikipedia's Finals pages list players who appeared in the series and name a few ring winners in prose only.",
+  "The NBA's own seed tables and its season-by-season home-court tiebreak rules were not reachable.",
+  "Raw page bytes: the shell has no route to these sites, so only extracted text could be staged."
+ ],
+ "source_hashes": [
+  {
+   "file": "raw/honors_sources/awards_2026.csv",
+   "sha256": "033fa12509795af71ec9f857b32514a7355f9e3cc1bfedfaec0943e2dcce561c",
+   "bytes": 4703
+  },
+  {
+   "file": "raw/honors_sources/champions.csv",
+   "sha256": "aadfe4da590fda87fdd1714e1bca626c16fa15ccf21cf5250c940b7c829600da",
+   "bytes": 2276
+  },
+  {
+   "file": "raw/honors_sources/finals_mvp.csv",
+   "sha256": "1aab132e13ae9d83913bc01f63a28ceb8544dce21487a45caa17dc632280e4d7",
+   "bytes": 3540
+  },
+  {
+   "file": "raw/honors_sources/seeds.csv",
+   "sha256": "16a4732bbd0fe16f7c5d514a43a669ad07017bbe0e6f3d6cae301b6836971dd0",
+   "bytes": 22308
+  },
+  {
+   "file": "raw/Player Award Shares.csv",
+   "sha256": "2d7b59bfce52548467d4071c7bb242e6bf098e73e5b2f5d74b904b8d4001e643",
+   "bytes": 210382
+  },
+  {
+   "file": "raw/End of Season Teams.csv",
+   "sha256": "865a9f6aace7566ff36316dfcf4b36ffdbc30700f5b69577817d1012e34d0e7c",
+   "bytes": 108765
+  },
+  {
+   "file": "raw/All-Star Selections.csv",
+   "sha256": "0638a940f8e40aacb2a51e7314e7fe6ba964892cd1323bc5f0ec93a003251069",
+   "bytes": 90558
+  },
+  {
+   "file": "raw/Player Per Game.csv",
+   "sha256": "2deb3c12f6cf2c0f4102e35251cdec6baec52406df82a7d2503ca505c650f393",
+   "bytes": 4687760
+  }
+ ],
+ "ok": true,
+ "errors": [],
+ "quarantine": [],
+ "notes": [],
+ "status": {
+  "mvp": {
+   "2026": "verified",
+   "1997": "single-source",
+   "1998": "single-source",
+   "1999": "single-source",
+   "2000": "single-source",
+   "2001": "single-source",
+   "2002": "single-source",
+   "2003": "single-source",
+   "2004": "single-source",
+   "2005": "single-source",
+   "2006": "single-source",
+   "2007": "single-source",
+   "2008": "single-source",
+   "2009": "single-source",
+   "2010": "single-source",
+   "2011": "single-source",
+   "2012": "single-source",
+   "2013": "single-source",
+   "2014": "single-source",
+   "2015": "single-source",
+   "2016": "single-source",
+   "2017": "single-source",
+   "2018": "single-source",
+   "2019": "single-source",
+   "2020": "single-source",
+   "2021": "single-source",
+   "2022": "single-source",
+   "2023": "single-source",
+   "2024": "single-source",
+   "2025": "single-source"
+  },
+  "dpoy": {
+   "2026": "verified",
+   "1997": "single-source",
+   "1998": "single-source",
+   "1999": "single-source",
+   "2000": "single-source",
+   "2001": "single-source",
+   "2002": "single-source",
+   "2003": "single-source",
+   "2004": "single-source",
+   "2005": "single-source",
+   "2006": "single-source",
+   "2007": "single-source",
+   "2008": "single-source",
+   "2009": "single-source",
+   "2010": "single-source",
+   "2011": "single-source",
+   "2012": "single-source",
+   "2013": "single-source",
+   "2014": "single-source",
+   "2015": "single-source",
+   "2016": "single-source",
+   "2017": "single-source",
+   "2018": "single-source",
+   "2019": "single-source",
+   "2020": "single-source",
+   "2021": "single-source",
+   "2022": "single-source",
+   "2023": "single-source",
+   "2024": "single-source",
+   "2025": "single-source"
+  },
+  "roy": {
+   "2026": "verified",
+   "1997": "single-source",
+   "1998": "single-source",
+   "1999": "single-source",
+   "2000": "single-source",
+   "2001": "single-source",
+   "2002": "single-source",
+   "2003": "single-source",
+   "2004": "single-source",
+   "2005": "single-source",
+   "2006": "single-source",
+   "2007": "single-source",
+   "2008": "single-source",
+   "2009": "single-source",
+   "2010": "single-source",
+   "2011": "single-source",
+   "2012": "single-source",
+   "2013": "single-source",
+   "2014": "single-source",
+   "2015": "single-source",
+   "2016": "single-source",
+   "2017": "single-source",
+   "2018": "single-source",
+   "2019": "single-source",
+   "2020": "single-source",
+   "2021": "single-source",
+   "2022": "single-source",
+   "2023": "single-source",
+   "2024": "single-source",
+   "2025": "single-source"
+  },
+  "smoy": {
+   "2026": "verified",
+   "1997": "single-source",
+   "1998": "single-source",
+   "1999": "single-source",
+   "2000": "single-source",
+   "2001": "single-source",
+   "2002": "single-source",
+   "2003": "single-source",
+   "2004": "single-source",
+   "2005": "single-source",
+   "2006": "single-source",
+   "2007": "single-source",
+   "2008": "single-source",
+   "2009": "single-source",
+   "2010": "single-source",
+   "2011": "single-source",
+   "2012": "single-source",
+   "2013": "single-source",
+   "2014": "single-source",
+   "2015": "single-source",
+   "2016": "single-source",
+   "2017": "single-source",
+   "2018": "single-source",
+   "2019": "single-source",
+   "2020": "single-source",
+   "2021": "single-source",
+   "2022": "single-source",
+   "2023": "single-source",
+   "2024": "single-source",
+   "2025": "single-source"
+  },
+  "mip": {
+   "2026": "verified",
+   "1997": "single-source",
+   "1998": "single-source",
+   "1999": "single-source",
+   "2000": "single-source",
+   "2001": "single-source",
+   "2002": "single-source",
+   "2003": "single-source",
+   "2004": "single-source",
+   "2005": "single-source",
+   "2006": "single-source",
+   "2007": "single-source",
+   "2008": "single-source",
+   "2009": "single-source",
+   "2010": "single-source",
+   "2011": "single-source",
+   "2012": "single-source",
+   "2013": "single-source",
+   "2014": "single-source",
+   "2015": "single-source",
+   "2016": "single-source",
+   "2017": "single-source",
+   "2018": "single-source",
+   "2019": "single-source",
+   "2020": "single-source",
+   "2021": "single-source",
+   "2022": "single-source",
+   "2023": "single-source",
+   "2024": "single-source",
+   "2025": "single-source"
+  },
+  "allnba": {
+   "2026": "verified",
+   "1997": "single-source",
+   "1998": "single-source",
+   "1999": "single-source",
+   "2000": "single-source",
+   "2001": "single-source",
+   "2002": "single-source",
+   "2003": "single-source",
+   "2004": "single-source",
+   "2005": "single-source",
+   "2006": "single-source",
+   "2007": "single-source",
+   "2008": "single-source",
+   "2009": "single-source",
+   "2010": "single-source",
+   "2011": "single-source",
+   "2012": "single-source",
+   "2013": "single-source",
+   "2014": "single-source",
+   "2015": "single-source",
+   "2016": "single-source",
+   "2017": "single-source",
+   "2018": "single-source",
+   "2019": "single-source",
+   "2020": "single-source",
+   "2021": "single-source",
+   "2022": "single-source",
+   "2023": "single-source",
+   "2024": "single-source",
+   "2025": "single-source"
+  },
+  "alldef": {
+   "2026": "verified",
+   "1997": "single-source",
+   "1998": "single-source",
+   "1999": "single-source",
+   "2000": "single-source",
+   "2001": "single-source",
+   "2002": "single-source",
+   "2003": "single-source",
+   "2004": "single-source",
+   "2005": "single-source",
+   "2006": "single-source",
+   "2007": "single-source",
+   "2008": "single-source",
+   "2009": "single-source",
+   "2010": "single-source",
+   "2011": "single-source",
+   "2012": "single-source",
+   "2013": "single-source",
+   "2014": "single-source",
+   "2015": "single-source",
+   "2016": "single-source",
+   "2017": "single-source",
+   "2018": "single-source",
+   "2019": "single-source",
+   "2020": "single-source",
+   "2021": "single-source",
+   "2022": "single-source",
+   "2023": "single-source",
+   "2024": "single-source",
+   "2025": "single-source"
+  },
+  "allrookie": {
+   "2026": "verified",
+   "1997": "single-source",
+   "1998": "single-source",
+   "1999": "single-source",
+   "2000": "single-source",
+   "2001": "single-source",
+   "2002": "single-source",
+   "2003": "single-source",
+   "2004": "single-source",
+   "2005": "single-source",
+   "2006": "single-source",
+   "2007": "single-source",
+   "2008": "single-source",
+   "2009": "single-source",
+   "2010": "single-source",
+   "2011": "single-source",
+   "2012": "single-source",
+   "2013": "single-source",
+   "2014": "single-source",
+   "2015": "single-source",
+   "2016": "single-source",
+   "2017": "single-source",
+   "2018": "single-source",
+   "2019": "single-source",
+   "2020": "single-source",
+   "2021": "single-source",
+   "2022": "single-source",
+   "2023": "single-source",
+   "2024": "single-source",
+   "2025": "single-source"
+  },
+  "allstar": {
+   "1997": "single-source",
+   "1998": "single-source",
+   "2000": "single-source",
+   "2001": "single-source",
+   "2002": "single-source",
+   "2003": "single-source",
+   "2004": "single-source",
+   "2005": "single-source",
+   "2006": "single-source",
+   "2007": "single-source",
+   "2008": "single-source",
+   "2009": "single-source",
+   "2010": "single-source",
+   "2011": "single-source",
+   "2012": "single-source",
+   "2013": "single-source",
+   "2014": "single-source",
+   "2015": "single-source",
+   "2016": "single-source",
+   "2017": "single-source",
+   "2018": "single-source",
+   "2019": "single-source",
+   "2020": "single-source",
+   "2021": "single-source",
+   "2022": "single-source",
+   "2023": "single-source",
+   "2024": "single-source",
+   "2025": "single-source",
+   "2026": "single-source",
+   "1999": "no game"
+  },
+  "finalsmvp": {
+   "1997": "verified",
+   "1998": "verified",
+   "1999": "verified",
+   "2000": "verified",
+   "2001": "verified",
+   "2002": "verified",
+   "2003": "verified",
+   "2004": "verified",
+   "2005": "verified",
+   "2006": "verified",
+   "2007": "verified",
+   "2008": "verified",
+   "2009": "verified",
+   "2010": "verified",
+   "2011": "verified",
+   "2012": "verified",
+   "2013": "verified",
+   "2014": "verified",
+   "2015": "verified",
+   "2016": "verified",
+   "2017": "verified",
+   "2018": "verified",
+   "2019": "verified",
+   "2020": "verified",
+   "2021": "verified",
+   "2022": "verified",
+   "2023": "verified",
+   "2024": "verified",
+   "2025": "verified",
+   "2026": "verified"
+  },
+  "champion_team": {
+   "1997": "verified",
+   "1998": "verified",
+   "1999": "verified",
+   "2000": "verified",
+   "2001": "verified",
+   "2002": "verified",
+   "2003": "verified",
+   "2004": "verified",
+   "2005": "verified",
+   "2006": "verified",
+   "2007": "verified",
+   "2008": "verified",
+   "2009": "verified",
+   "2010": "verified",
+   "2011": "verified",
+   "2012": "verified",
+   "2013": "verified",
+   "2014": "verified",
+   "2015": "verified",
+   "2016": "verified",
+   "2017": "verified",
+   "2018": "verified",
+   "2019": "verified",
+   "2020": "verified",
+   "2021": "verified",
+   "2022": "verified",
+   "2023": "verified",
+   "2024": "verified",
+   "2025": "verified",
+   "2026": "verified"
+  },
+  "champion_appeared": {
+   "1997": "derived",
+   "1998": "derived",
+   "1999": "derived",
+   "2000": "derived",
+   "2001": "derived",
+   "2002": "derived",
+   "2003": "derived",
+   "2004": "derived",
+   "2005": "derived",
+   "2006": "derived",
+   "2007": "derived",
+   "2008": "derived",
+   "2009": "derived",
+   "2010": "derived",
+   "2011": "derived",
+   "2012": "derived",
+   "2013": "derived",
+   "2014": "derived",
+   "2015": "derived",
+   "2016": "derived",
+   "2017": "derived",
+   "2018": "derived",
+   "2019": "derived",
+   "2020": "derived",
+   "2021": "derived",
+   "2022": "derived",
+   "2023": "derived",
+   "2024": "derived",
+   "2025": "derived",
+   "2026": "derived"
+  },
+  "champion_roster": {
+   "1997": "partial",
+   "1998": "partial",
+   "1999": "partial",
+   "2000": "partial",
+   "2001": "partial",
+   "2002": "partial",
+   "2003": "partial",
+   "2004": "partial",
+   "2005": "partial",
+   "2006": "partial",
+   "2007": "partial",
+   "2008": "partial",
+   "2009": "partial",
+   "2010": "partial",
+   "2011": "partial",
+   "2012": "partial",
+   "2013": "partial",
+   "2014": "partial",
+   "2015": "partial",
+   "2016": "partial",
+   "2017": "partial",
+   "2018": "partial",
+   "2019": "partial",
+   "2020": "partial",
+   "2021": "partial",
+   "2022": "partial",
+   "2023": "partial",
+   "2024": "partial",
+   "2025": "partial",
+   "2026": "partial"
+  },
+  "seeds": {
+   "1997": "single-source",
+   "1998": "single-source",
+   "1999": "single-source",
+   "2000": "single-source",
+   "2001": "single-source",
+   "2002": "single-source",
+   "2003": "single-source",
+   "2004": "single-source",
+   "2005": "single-source",
+   "2006": "single-source",
+   "2007": "single-source",
+   "2008": "single-source",
+   "2009": "single-source",
+   "2010": "single-source",
+   "2011": "single-source",
+   "2012": "single-source",
+   "2013": "single-source",
+   "2014": "single-source",
+   "2015": "single-source",
+   "2016": "single-source",
+   "2017": "single-source",
+   "2018": "single-source",
+   "2019": "single-source",
+   "2020": "single-source",
+   "2021": "single-source",
+   "2022": "single-source",
+   "2023": "single-source",
+   "2024": "single-source",
+   "2025": "single-source",
+   "2026": "single-source"
+  }
+ },
+ "champions": [
+  {
+   "season": 1997,
+   "champion": "CHI",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 1998,
+   "champion": "CHI",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 1999,
+   "champion": "SAS",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2000,
+   "champion": "LAL",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2001,
+   "champion": "LAL",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2002,
+   "champion": "LAL",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2003,
+   "champion": "SAS",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2004,
+   "champion": "DET",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2005,
+   "champion": "SAS",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2006,
+   "champion": "MIA",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2007,
+   "champion": "SAS",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2008,
+   "champion": "BOS",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2009,
+   "champion": "LAL",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2010,
+   "champion": "LAL",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2011,
+   "champion": "DAL",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2012,
+   "champion": "MIA",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2013,
+   "champion": "MIA",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2014,
+   "champion": "SAS",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2015,
+   "champion": "GSW",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2016,
+   "champion": "CLE",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2017,
+   "champion": "GSW",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2018,
+   "champion": "GSW",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2019,
+   "champion": "TOR",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2020,
+   "champion": "LAL",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2021,
+   "champion": "MIL",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2022,
+   "champion": "GSW",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2023,
+   "champion": "DEN",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2024,
+   "champion": "BOS",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2025,
+   "champion": "OKC",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps"
+   ]
+  },
+  {
+   "season": 2026,
+   "champion": "NYK",
+   "status": "verified",
+   "sources": [
+    "bbref_finals_mvp (Finals MVP's team)",
+    "bbref_playoffs_2026",
+    "bbref_team_page_nyk_2026",
+    "game results",
+    "nba_com_finals_mvp_history (Finals MVP's team)",
+    "nba_com_season_recaps",
+    "wikipedia_2025_26_nba_season",
+    "wikipedia_2026_nba_finals"
+   ]
+  }
+ ],
+ "seeds": [
+  {
+   "season": 1997,
+   "source": [
+    "wikipedia_1996_97_nba_season_standings"
+   ],
+   "differs_from_reconstruction": [
+    "HOU",
+    "MIN",
+    "PHO",
+    "SEA"
+   ],
+   "status": "single-source"
+  },
+  {
+   "season": 1998,
+   "source": [
+    "wikipedia_1997_98_nba_season_standings"
+   ],
+   "differs_from_reconstruction": [
+    "LAL",
+    "MIN",
+    "POR",
+    "SEA"
+   ],
+   "status": "single-source"
+  },
+  {
+   "season": 1999,
+   "source": [
+    "wikipedia_1998_99_nba_season_standings"
+   ],
+   "differs_from_reconstruction": [
+    "PHO",
+    "POR",
+    "SAC",
+    "UTA"
+   ],
+   "status": "single-source"
+  },
+  {
+   "season": 2000,
+   "source": [
+    "wikipedia_1999_00_nba_season_standings"
+   ],
+   "differs_from_reconstruction": [],
+   "status": "single-source"
+  },
+  {
+   "season": 2001,
+   "source": [
+    "wikipedia_2000_01_nba_season_standings"
+   ],
+   "differs_from_reconstruction": [],
+   "status": "single-source"
+  },
+  {
+   "season": 2002,
+   "source": [
+    "wikipedia_2001_02_nba_season_standings"
+   ],
+   "differs_from_reconstruction": [
+    "LAL",
+    "POR",
+    "SAS",
+    "SEA"
+   ],
+   "status": "single-source"
+  },
+  {
+   "season": 2003,
+   "source": [
+    "wikipedia_2003_nba_playoffs"
+   ],
+   "differs_from_reconstruction": [
+    "DAL",
+    "POR",
+    "SAC",
+    "UTA"
+   ],
+   "status": "single-source"
+  },
+  {
+   "season": 2004,
+   "source": [
+    "wikipedia_2003_04_nba_season_standings"
+   ],
+   "differs_from_reconstruction": [
+    "DET",
+    "HOU",
+    "LAL",
+    "MEM",
+    "MIL",
+    "NJN",
+    "NYK",
+    "SAS"
+   ],
+   "status": "single-source"
+  },
+  {
+   "season": 2005,
+   "source": [
+    "wikipedia_2004_05_nba_season_standings"
+   ],
+   "differs_from_reconstruction": [],
+   "status": "single-source"
+  },
+  {
+   "season": 2006,
+   "source": [
+    "wikipedia_2005_06_nba_season_standings"
+   ],
+   "differs_from_reconstruction": [
+    "DEN",
+    "LAC",
+    "LAL",
+    "PHO"
+   ],
+   "status": "single-source"
+  },
+  {
+   "season": 2007,
+   "source": [
+    "wikipedia_2006_07_nba_season_standings"
+   ],
+   "differs_from_reconstruction": [
+    "CHI",
+    "HOU",
+    "MIA",
+    "UTA"
+   ],
+   "status": "single-source"
+  },
+  {
+   "season": 2008,
+   "source": [
+    "wikipedia_2007_08_nba_season_standings"
+   ],
+   "differs_from_reconstruction": [
+    "HOU",
+    "UTA"
+   ],
+   "status": "single-source"
+  },
+  {
+   "season": 2009,
+   "source": [
+    "wikipedia_2009_nba_playoffs"
+   ],
+   "differs_from_reconstruction": [],
+   "status": "single-source"
+  },
+  {
+   "season": 2010,
+   "source": [
+    "wikipedia_2010_nba_playoffs"
+   ],
+   "differs_from_reconstruction": [],
+   "status": "single-source"
+  },
+  {
+   "season": 2011,
+   "source": [
+    "wikipedia_2011_nba_playoffs"
+   ],
+   "differs_from_reconstruction": [],
+   "status": "single-source"
+  },
+  {
+   "season": 2012,
+   "source": [
+    "wikipedia_2012_nba_playoffs"
+   ],
+   "differs_from_reconstruction": [
+    "ATL",
+    "BOS"
+   ],
+   "status": "single-source"
+  },
+  {
+   "season": 2013,
+   "source": [
+    "wikipedia_2013_nba_playoffs"
+   ],
+   "differs_from_reconstruction": [],
+   "status": "single-source"
+  },
+  {
+   "season": 2014,
+   "source": [
+    "wikipedia_2014_nba_playoffs"
+   ],
+   "differs_from_reconstruction": [],
+   "status": "single-source"
+  },
+  {
+   "season": 2015,
+   "source": [
+    "wikipedia_2014_15_nba_season_standings"
+   ],
+   "differs_from_reconstruction": [
+    "DAL",
+    "HOU",
+    "LAC",
+    "MEM",
+    "POR",
+    "SAS"
+   ],
+   "status": "single-source"
+  },
+  {
+   "season": 2016,
+   "source": [
+    "wikipedia_2016_nba_playoffs"
+   ],
+   "differs_from_reconstruction": [],
+   "status": "single-source"
+  },
+  {
+   "season": 2017,
+   "source": [
+    "wikipedia_2017_nba_playoffs"
+   ],
+   "differs_from_reconstruction": [],
+   "status": "single-source"
+  },
+  {
+   "season": 2018,
+   "source": [
+    "wikipedia_2018_nba_playoffs"
+   ],
+   "differs_from_reconstruction": [],
+   "status": "single-source"
+  },
+  {
+   "season": 2019,
+   "source": [
+    "wikipedia_2019_nba_playoffs"
+   ],
+   "differs_from_reconstruction": [],
+   "status": "single-source"
+  },
+  {
+   "season": 2020,
+   "source": [
+    "wikipedia_2020_nba_playoffs"
+   ],
+   "differs_from_reconstruction": [],
+   "status": "single-source"
+  },
+  {
+   "season": 2021,
+   "source": [
+    "wikipedia_2021_nba_playoffs"
+   ],
+   "differs_from_reconstruction": [
+    "DEN",
+    "LAL",
+    "PHO",
+    "POR"
+   ],
+   "status": "single-source"
+  },
+  {
+   "season": 2022,
+   "source": [
+    "wikipedia_2022_nba_playoffs"
+   ],
+   "differs_from_reconstruction": [],
+   "status": "single-source"
+  },
+  {
+   "season": 2023,
+   "source": [
+    "wikipedia_2023_nba_playoffs"
+   ],
+   "differs_from_reconstruction": [],
+   "status": "single-source"
+  },
+  {
+   "season": 2024,
+   "source": [
+    "wikipedia_2024_nba_playoffs"
+   ],
+   "differs_from_reconstruction": [],
+   "status": "single-source"
+  },
+  {
+   "season": 2025,
+   "source": [
+    "wikipedia_2025_nba_playoffs"
+   ],
+   "differs_from_reconstruction": [],
+   "status": "single-source"
+  },
+  {
+   "season": 2026,
+   "source": [
+    "wikipedia_2026_nba_playoffs"
+   ],
+   "differs_from_reconstruction": [],
+   "status": "single-source"
+  }
+ ],
+ "fact_counts": {
+  "alldef": 304,
+  "allnba": 450,
+  "allrookie": 307,
+  "allstar": 758,
+  "dpoy": 30,
+  "finalsmvp": 30,
+  "mip": 30,
+  "mvp": 30,
+  "ring": 30,
+  "roy": 31,
+  "smoy": 30
+ },
+ "fact_status_counts": {
+  "alldef": {
+   "single-source": 294,
+   "verified": 10
+  },
+  "allnba": {
+   "single-source": 435,
+   "verified": 15
+  },
+  "allrookie": {
+   "single-source": 297,
+   "verified": 10
+  },
+  "allstar": {
+   "single-source": 758,
+   "verified": 0
+  },
+  "dpoy": {
+   "single-source": 29,
+   "verified": 1
+  },
+  "finalsmvp": {
+   "single-source": 0,
+   "verified": 30
+  },
+  "mip": {
+   "single-source": 29,
+   "verified": 1
+  },
+  "mvp": {
+   "single-source": 29,
+   "verified": 1
+  },
+  "ring": {
+   "single-source": 0,
+   "verified": 30
+  },
+  "roy": {
+   "single-source": 30,
+   "verified": 1
+  },
+  "smoy": {
+   "single-source": 29,
+   "verified": 1
+  }
+ },
+ "recipients_without_app_profile": [
+  [
+   "bryanko01",
+   2014,
+   "allstar"
+  ],
+  [
+   "hillgr01",
+   2001,
+   "allstar"
+  ],
+  [
+   "mingya01",
+   2011,
+   "allstar"
+  ]
+ ],
+ "champion_players_without_player_data": [],
+ "champion_roster_sizes": {
+  "1997": 12,
+  "1998": 12,
+  "1999": 12,
+  "2000": 12,
+  "2001": 12,
+  "2002": 12,
+  "2003": 12,
+  "2004": 12,
+  "2005": 12,
+  "2006": 12,
+  "2007": 12,
+  "2008": 12,
+  "2009": 12,
+  "2010": 13,
+  "2011": 12,
+  "2012": 14,
+  "2013": 13,
+  "2014": 14,
+  "2015": 14,
+  "2016": 14,
+  "2017": 14,
+  "2018": 15,
+  "2019": 14,
+  "2020": 15,
+  "2021": 17,
+  "2022": 14,
+  "2023": 14,
+  "2024": 15,
+  "2025": 14,
+  "2026": 15
+ }
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import PlayerPhoto from "@/components/PlayerPhoto";
@@ -9,12 +9,16 @@ import ShotDna from "@/components/ShotDna";
 import LimitationsNote from "@/components/LimitationsNote";
 import PlayerAutocomplete, { type PlayerAutocompleteSelection } from "@/components/PlayerAutocomplete";
 import { findPlayerSeason, loadPlayersIndex } from "@/lib/dataLoader";
+import { SMALL_SAMPLE_LABEL } from "@/lib/lineup";
 import { isSamePlayerSeason, parsePlayerSeasonKey, playerSeasonKey, similarityIndex } from "@/lib/similarity";
 import { explainMatch } from "@/lib/explain";
 import { TRAIT_DIMENSIONS, seasonLabel } from "@/lib/config";
 import { DIMENSION_DISPLAY_LABEL } from "@/lib/courtPrint";
 import type { PlayerSeasonRecord } from "@/lib/types";
 import { fmt1 } from "@/lib/format";
+import StatusPanel from "@/components/StatusPanel";
+import { useLoad } from "@/lib/useLoad";
+import { DataError, type LoadState } from "@/lib/loadState";
 
 const SELECT_CLASS =
   "rounded-md border border-line-strong bg-arena-panel px-3 py-2 text-base text-ink-light outline-none focus:border-court-orange sm:text-sm";
@@ -34,7 +38,7 @@ function SlotPicker({
   blockedKey?: string;
   onConfirm: (id: string, season: number) => void;
 }) {
-  const [pick, setPick] = useState<{ id: string; name: string; seasons: number[] } | null>(null);
+  const [pick, setPick] = useState<{ id: string; name: string; seasons: number[]; qualified: number[] } | null>(null);
   const [season, setSeason] = useState(0);
   const [message, setMessage] = useState("");
 
@@ -55,7 +59,7 @@ function SlotPicker({
           commit(sel.id, sel.season);
           return;
         }
-        setPick({ id: sel.id, name: sel.name, seasons });
+        setPick({ id: sel.id, name: sel.name, seasons, qualified: idx[sel.id]?.qualified_seasons ?? [] });
         setSeason(sel.season);
         setMessage("");
       })
@@ -75,7 +79,7 @@ function SlotPicker({
           >
             {[...pick.seasons].reverse().map((s) => (
               <option key={s} value={s} disabled={blockedKey === playerSeasonKey(pick.id, s)}>
-                {seasonLabel(s)}
+                {seasonLabel(s)}{pick.qualified.includes(s) ? "" : ` (${SMALL_SAMPLE_LABEL.toLowerCase()})`}
               </option>
             ))}
           </select>
@@ -94,7 +98,7 @@ function SlotPicker({
           </button>
         </div>
       ) : (
-        <PlayerAutocomplete onSelect={handleSelect} placeholder={placeholder} autoFocus />
+        <PlayerAutocomplete onSelect={handleSelect} seasonPool="all" label={placeholder} placeholder={placeholder} autoFocus />
       )}
       {message && (
         <p role="status" className="mt-2 text-sm text-court-orange-bright">
@@ -105,121 +109,170 @@ function SlotPicker({
   );
 }
 
+/** One side of the comparison, loaded on its own so a failure on one side never takes the other down. */
+function useSide(slug: string | null) {
+  const parsed = parsePlayerSeasonKey(slug);
+  const [state, retry] = useLoad<PlayerSeasonRecord>(parsed ? `compare/${slug}` : null, async () => {
+    const rec = await findPlayerSeason(parsed!.id, parsed!.season);
+    if (!rec) throw new DataError("That player-season isn't in the dataset.", "not-found");
+    return rec;
+  });
+  return { parsed, state, retry };
+}
+
+type Side = { parsed: { id: string; season: number } | null; state: LoadState<PlayerSeasonRecord>; retry: () => void };
+
+function SlotView({
+  label,
+  slug,
+  side,
+  invalidMessage,
+  blockedKey,
+  placeholder,
+  confirmLabel,
+  onPick,
+  onClear,
+}: {
+  label: string;
+  slug: string | null;
+  side: Side;
+  invalidMessage: string;
+  blockedKey?: string;
+  placeholder: string;
+  confirmLabel: string;
+  onPick: (id: string, season: number) => void;
+  onClear: () => void;
+}) {
+  const { parsed, state, retry } = side;
+  const testId = label === "Player 1" ? "compare-slot-a" : "compare-slot-b";
+  if (slug && !parsed) {
+    return (
+      <div data-testid={testId}>
+        <p className="text-eyebrow mb-2">{label}</p>
+        <StatusPanel inline tone="invalid" title={invalidMessage} message="Search below to choose a player." testId={`${testId}-invalid`} />
+        <div className="mt-3"><SlotPicker placeholder={placeholder} confirmLabel={confirmLabel} blockedKey={blockedKey} onConfirm={onPick} /></div>
+      </div>
+    );
+  }
+  if (parsed && state.status === "ready") {
+    return (
+      <div data-testid={testId}>
+        <p className="text-eyebrow mb-2">{label}</p>
+        <div className="flex items-center justify-between rounded-md border border-line-strong bg-arena-panel px-4 py-3">
+          <span className="text-sm font-medium text-ink-light">{state.data.player} · {state.data.season_label}</span>
+          <button type="button" onClick={onClear} className="tap-target-44 text-xs text-stone-light hover:text-court-orange-bright">Change</button>
+        </div>
+      </div>
+    );
+  }
+  if (parsed && state.status === "loading") {
+    return (
+      <div data-testid={testId}>
+        <p className="text-eyebrow mb-2">{label}</p>
+        <div className="h-[54px] animate-pulse rounded-md border border-line bg-arena-panel" role="status" aria-label={`Loading ${label}`} />
+      </div>
+    );
+  }
+  if (parsed && state.status === "error") {
+    return (
+      <div data-testid={testId}>
+        <p className="text-eyebrow mb-2">{label}</p>
+        <StatusPanel inline tone="error" title={`Couldn't load ${label.toLowerCase()}.`} message="Check your connection and retry." onRetry={retry} testId={`${testId}-error`}
+          actions={<button type="button" onClick={onClear} className="tap-target-44 text-xs text-stone-light hover:text-court-orange-bright">Choose another</button>} />
+      </div>
+    );
+  }
+  return (
+    <div data-testid={testId}>
+      <p className="text-eyebrow mb-2">{label} — search to choose</p>
+      {parsed && state.status === "notfound" && (
+        <div className="mb-3"><StatusPanel inline tone="notfound" title={`That ${label.toLowerCase()} isn't available.`} message="Choose a different player or season." testId={`${testId}-notfound`} /></div>
+      )}
+      <SlotPicker placeholder={placeholder} confirmLabel={confirmLabel} blockedKey={blockedKey} onConfirm={onPick} />
+    </div>
+  );
+}
+
+function CompareSkeleton() {
+  return (
+    <div className="mx-auto max-w-[1400px] px-5 py-10 md:px-8" data-testid="compare-loading" role="status" aria-label="Loading comparison">
+      <div className="mb-8 h-10 w-64 animate-pulse rounded bg-arena-panel" />
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
+        <div className="h-28 animate-pulse rounded-lg bg-arena-panel" />
+        <div className="mx-auto h-28 w-28 animate-pulse rounded-full bg-arena-panel" />
+        <div className="h-28 animate-pulse rounded-lg bg-arena-panel" />
+      </div>
+      <div className="mt-10 grid grid-cols-1 gap-6 border-t border-line pt-10 lg:grid-cols-2">
+        <div className="mx-auto h-[300px] w-full max-w-[300px] animate-pulse rounded-lg bg-arena-panel" />
+        <div className="mx-auto h-[300px] w-full max-w-[300px] animate-pulse rounded-lg bg-arena-panel" />
+      </div>
+      <div className="mt-10 h-72 animate-pulse rounded-lg bg-arena-panel" />
+    </div>
+  );
+}
+
 function ComparePageInner() {
   const params = useSearchParams();
   const router = useRouter();
   const aSlug = params.get("a");
   const bSlug = params.get("b");
-
-  // undefined = still loading, null = the key is invalid or that player has no
-  // such season (the slot is then left empty, never substituted).
-  const [a, setA] = useState<PlayerSeasonRecord | null | undefined>(undefined);
-  const [b, setB] = useState<PlayerSeasonRecord | null | undefined>(undefined);
-
-  useEffect(() => {
-    const pa = parsePlayerSeasonKey(aSlug);
-    let live = true;
-    if (pa) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setA(undefined);
-      findPlayerSeason(pa.id, pa.season).then((r) => live && setA(r)).catch(() => live && setA(null));
-    } else {
-      setA(null);
-    }
-    return () => {
-      live = false;
-    };
-  }, [aSlug]);
-
-  useEffect(() => {
-    const pb = parsePlayerSeasonKey(bSlug);
-    let live = true;
-    if (pb) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setB(undefined);
-      findPlayerSeason(pb.id, pb.season).then((r) => live && setB(r)).catch(() => live && setB(null));
-    } else {
-      setB(null);
-    }
-    return () => {
-      live = false;
-    };
-  }, [bSlug]);
-
-  const pa = parsePlayerSeasonKey(aSlug);
-  const pb = parsePlayerSeasonKey(bSlug);
-  const aBad = !!aSlug && a === null;
-  const bBad = !!bSlug && b === null;
+  const sideA = useSide(aSlug);
+  const sideB = useSide(bSlug);
+  const pa = sideA.parsed;
+  const pb = sideB.parsed;
   const duplicate = !!(pa && pb && isSamePlayerSeason(pa, pb));
+  const a = sideA.state.status === "ready" ? sideA.state.data : null;
+  const b = sideB.state.status === "ready" ? sideB.state.data : null;
 
   if (!a || !b || duplicate) {
-    // An explicit Player 1 -> Player 2 -> Compare flow (the generic site
-    // search used here before navigated straight to a profile). An unusable
-    // key in the URL leaves its slot empty with a short note.
-    const haveFirst = !!pa && !aBad;
-    const notice = aBad
-      ? "The first player-season in that link isn't available, so it was skipped."
-      : duplicate
-        ? "Player 2 is the same player-season as Player 1. Choose a different season or player."
-        : bBad
-          ? "The second player-season in that link isn't available. Choose Player 2 below."
-          : null;
+    const bothLoading = !duplicate && pa && pb && [sideA.state.status, sideB.state.status].every((x) => x === "loading" || x === "ready");
+    if (bothLoading) return <CompareSkeleton />;
 
-    function pickFirst(id: string, season: number) {
-      router.push(`/compare?a=${playerSeasonKey(id, season)}`);
-    }
-    function pickSecond(id: string, season: number) {
-      router.push(`/compare?a=${aSlug}&b=${playerSeasonKey(id, season)}`);
-    }
+    // The valid side is kept in the link whichever side is replaced.
+    const keepA = pa && sideA.state.status === "ready" ? aSlug : null;
+    const keepB = pb && sideB.state.status === "ready" && !duplicate ? bSlug : null;
+    const go = (na: string | null, nb: string | null) => {
+      const q = [na ? `a=${na}` : null, nb ? `b=${nb}` : null].filter(Boolean).join("&");
+      router.push(q ? `/compare?${q}` : "/compare");
+    };
+    const effB: Side = duplicate ? { ...sideB, parsed: null } : sideB;
 
     return (
       <div className="mx-auto max-w-2xl px-5 py-20 md:px-8">
         <h1 className="font-display text-4xl text-ink mb-2 text-center">Compare Players</h1>
-        <p className="mb-8 text-center text-stone">Pick two players to compare side by side.</p>
+        <p className="mb-8 text-center text-stone">Pick two player-seasons to compare side by side.</p>
 
-        {notice && (
+        {duplicate && (
           <p role="status" className="mb-5 rounded-md border border-line-strong bg-arena-panel px-4 py-3 text-sm text-ink-light">
-            {notice}
+            Player 2 is the same player-season as Player 1. Choose a different season or player.
           </p>
         )}
 
         <div className="flex flex-col gap-5">
-          <div>
-            <p className="text-eyebrow mb-2">
-              {haveFirst ? "Player 1" : "Player 1 — search to choose"}
-            </p>
-            {haveFirst ? (
-              <div className="flex items-center justify-between rounded-md border border-line-strong bg-arena-panel px-4 py-3">
-                <span className="text-sm font-medium text-ink-light">
-                  {a ? `${a.player} · ${a.season_label}` : "Loading…"}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => router.push("/compare")}
-                  className="tap-target-44 text-xs text-stone-light hover:text-court-orange-bright"
-                >
-                  Change
-                </button>
-              </div>
-            ) : (
-              <SlotPicker placeholder="Search for the first player…" confirmLabel="Select" onConfirm={pickFirst} />
-            )}
-          </div>
-
-          {haveFirst && (
-            <div>
-              <p className="text-eyebrow mb-2">Player 2 — search to choose</p>
-              <SlotPicker
-                placeholder="Search for the second player…"
-                confirmLabel="Compare"
-                blockedKey={aSlug ?? undefined}
-                onConfirm={pickSecond}
-              />
-            </div>
-          )}
-
+          <SlotView
+            label="Player 1"
+            slug={aSlug}
+            side={sideA}
+            invalidMessage="The first player-season in that link isn't valid."
+            blockedKey={keepB ?? undefined}
+            placeholder="Search for the first player…"
+            confirmLabel={keepB ? "Compare" : "Select"}
+            onPick={(id, season) => go(playerSeasonKey(id, season), keepB)}
+            onClear={() => go(null, keepB)}
+          />
+          <SlotView
+            label="Player 2"
+            slug={duplicate ? null : bSlug}
+            side={effB}
+            invalidMessage="The second player-season in that link isn't valid."
+            blockedKey={keepA ?? undefined}
+            placeholder="Search for the second player…"
+            confirmLabel="Compare"
+            onPick={(id, season) => go(keepA ?? aSlug, playerSeasonKey(id, season))}
+            onClear={() => go(keepA, null)}
+          />
           <p className="text-xs text-stone-light">
-            Tip: open any player&rsquo;s Similar Players list and click a card to jump straight into a comparison.
+            Small-sample seasons are included and labelled. Tip: open any player&rsquo;s Similar Players list and click a card to jump straight into a comparison.
           </p>
         </div>
       </div>
@@ -237,7 +290,7 @@ function ComparePageInner() {
     <div className="mx-auto max-w-[1400px] px-5 py-10 md:px-8">
       <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="font-display text-4xl text-ink">Compare Players</h1>
-        <button onClick={swap} className="btn btn-secondary self-start px-4 py-2 text-sm sm:self-auto">Swap sides ⇄</button>
+        <button onClick={swap} className="btn btn-secondary min-h-11 self-start px-4 py-2 text-sm sm:self-auto">Swap sides ⇄</button>
       </div>
 
       {/* Split header */}
@@ -267,14 +320,16 @@ function ComparePageInner() {
         <h2 className="font-display text-2xl text-ink mb-6">Trait Comparison</h2>
         <div className="flex flex-col gap-4">
           {TRAIT_DIMENSIONS.map((dim) => {
-            const av = Math.max(0, Math.min(100, a.traits[dim] ?? 0));
-            const bv = Math.max(0, Math.min(100, b.traits[dim] ?? 0));
+            const aRaw = a.traits[dim];
+            const bRaw = b.traits[dim];
+            const av = aRaw == null ? 0 : Math.max(0, Math.min(100, aRaw));
+            const bv = bRaw == null ? 0 : Math.max(0, Math.min(100, bRaw));
             return (
               <div key={dim}>
                 <div className="mb-1 flex items-center justify-between text-xs text-stone">
-                  <span className="tabular">{Math.round(av)}</span>
+                  <span className="tabular">{aRaw == null ? "Unavailable" : Math.round(av)}</span>
                   <span>{DIMENSION_DISPLAY_LABEL[dim]}</span>
-                  <span className="tabular">{Math.round(bv)}</span>
+                  <span className="tabular">{bRaw == null ? "Unavailable" : Math.round(bv)}</span>
                 </div>
                 <div className="flex h-2.5 w-full gap-0.5">
                   <div className="flex flex-1 justify-end overflow-hidden rounded-l-full bg-arena-panel-strong">

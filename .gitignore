@@ -64,3 +64,6 @@ data/supplementary/
 # Raw shot-location downloads (never committed; see docs/data.md)
 raw/shots/
 data/proposed_distribution_exceptions.json
+
+# Phase 10 game-data downloads (re-created by analysis/sim/games_build.py; the derived game table in raw/sim/ is kept)
+raw/sim/download/

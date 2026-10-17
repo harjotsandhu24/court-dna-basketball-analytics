@@ -1,0 +1,21 @@
+{
+  "note": "The shell could not reach any of these sites, so each table was extracted from the page text returned by a web fetch (a summary of the rendered page, not the raw HTML bytes). The CSV tables in this folder are the staged extraction; their sha256 values are recorded in docs/model/honors_validation.json. Every fact is cross-checked against a second source before it is shown.",
+  "sources": {
+    "nba_com_finals_mvp_history": {"publisher": "NBA.com", "url": "https://www.nba.com/news/history-finals-mvp-winners", "retrieved": "2026-10-16", "tables": ["finals_mvp.csv"], "note": "Finals MVP by season, 1996-97 to 2025-26, with team names."},
+    "bbref_finals_mvp": {"publisher": "Basketball-Reference", "url": "https://www.basketball-reference.com/awards/finals_mvp.html", "retrieved": "2026-10-16", "tables": ["finals_mvp.csv"], "note": "Finals MVP with player ids and team abbreviations."},
+    "nba_com_pr_2025_26_awards": {"publisher": "NBA Communications", "url": "https://pr.nba.com/voting-results-2025-26-nba-regular-season-awards/", "retrieved": "2026-10-16", "tables": ["awards_2026.csv"], "note": "Official 2025-26 regular-season award winners and All-NBA, All-Defensive and All-Rookie teams. Winners only; voting results are not used."},
+    "bbref_awards_2026": {"publisher": "Basketball-Reference", "url": "https://www.basketball-reference.com/awards/awards_2026.html", "retrieved": "2026-10-16", "tables": ["awards_2026.csv"], "note": "MVP and Rookie of the Year plus the three team awards, with ids. Its Defensive Player, Sixth Man and Most Improved sections were empty when fetched."},
+    "wikipedia_2025_26_nba_season": {"publisher": "Wikipedia", "url": "https://en.wikipedia.org/wiki/2025%E2%80%9326_NBA_season", "retrieved": "2026-10-16", "tables": ["awards_2026.csv", "champions.csv"], "note": "Secondary source for the five individual awards, the champion and Finals result."},
+    "nba_com_season_recaps": {"publisher": "NBA.com", "url": "https://www.nba.com/news/history-season-recaps-index", "retrieved": "2026-10-16", "tables": ["champions.csv"], "note": "Champion and Finals result for every season."},
+    "bbref_playoffs_2026": {"publisher": "Basketball-Reference", "url": "https://www.basketball-reference.com/playoffs/NBA_2026.html", "retrieved": "2026-10-16", "tables": ["champions.csv"], "note": "2026 playoff series results and champion."},
+    "bbref_team_page_nyk_2026": {"publisher": "Basketball-Reference", "url": "https://www.basketball-reference.com/teams/NYK/2026.html", "retrieved": "2026-10-16", "tables": ["champions.csv"], "note": "Knicks 2025-26 season page: playoff record 16-3 and the title."},
+    "wikipedia_2026_nba_finals": {"publisher": "Wikipedia", "url": "https://en.wikipedia.org/wiki/2026_NBA_Finals", "retrieved": "2026-10-16", "tables": ["champions.csv"], "note": "2026 Finals result. It lists players who appeared in the series, not a ring or roster list."},
+    "wikipedia_playoffs_and_season_pages": {"publisher": "Wikipedia", "url": "https://en.wikipedia.org/wiki/2005_NBA_playoffs", "retrieved": "2026-10-16", "tables": ["seeds.csv"], "note": "Playoff seeds from each season's playoff page (2003, 2009-2014, 2016-2026) or the standings table on the season page (1997-2002, 2004-2008, 2015). Published seeds are not always record order (for example division winners in 2004-2015). A secondary source, not the NBA's own media guide."},
+    "kaggle_nba_stats": {"publisher": "Kaggle (Sumit Sodatta), compiled from Basketball-Reference", "url": "https://www.kaggle.com/datasets/sumitrodatta/nba-aba-baa-stats", "retrieved": "2026-10-10", "tables": [], "note": "All-Star selections and the awards for 1996-97 to 2024-25. Single source."}
+  },
+  "not_available": [
+    "Ring recipients and full championship rosters: no reachable source lists them. Wikipedia's Finals pages list players who appeared in the series and name a few ring winners in prose only.",
+    "The NBA's own seed tables and its season-by-season home-court tiebreak rules were not reachable.",
+    "Raw page bytes: the shell has no route to these sites, so only extracted text could be staged."
+  ]
+}

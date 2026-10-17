@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import PlayerPhoto from "@/components/PlayerPhoto";
+import SimulatePanel from "@/components/SimulatePanel";
 import LineupCourt, { type CourtSpot } from "@/components/LineupCourt";
 import PlayerAutocomplete, { type PlayerAutocompleteSelection } from "@/components/PlayerAutocomplete";
 import { loadPlayersIndex, loadSeason } from "@/lib/dataLoader";
@@ -449,8 +450,8 @@ export default function BuildAFivePage() {
     <div className="mx-auto max-w-[1200px] px-5 py-10 md:px-8">
       <h1 className="font-display text-4xl text-ink mb-1">Build a Lineup</h1>
       <p className="mb-6 max-w-2xl text-sm text-stone-light">
-        Pick five different players and see what their combined playing style looks like — based on real stats,
-        not a prediction of wins or performance.
+        Pick five different players and see what their combined playing style looks like — based on real stats.
+        The scores describe style. To estimate wins, use Simulate below the scores.
       </p>
 
       <div className="mb-4 min-h-5 max-w-2xl text-xs">
@@ -629,6 +630,7 @@ export default function BuildAFivePage() {
                     <span className="text-stone">{dim.label}</span>
                     <span className="tabular font-semibold text-ink-light">{v == null ? "Unavailable" : Math.round(v)}</span>
                   </div>
+                  {dim.note && <p className="mb-1 text-[11px] text-stone-light">{dim.note}</p>}
                   <div className="h-2.5 w-full overflow-hidden rounded-full bg-arena-panel-strong">
                     {v != null && (
                       <div
@@ -664,11 +666,16 @@ export default function BuildAFivePage() {
           )}
 
           <p className="mt-6 text-xs text-stone-light">
-            This shows the combined playing style of the selected players. It does not predict how many games the
-            lineup would win.
+            These scores describe the combined playing style of the selected players. They are not used to predict wins;
+            Simulate below uses a separate model.
           </p>
         </div>
       )}
+
+      <SimulatePanel
+        lineup={slots.flatMap((x) => (x ? [{ id: x.rec.player_id, name: x.rec.player, season: x.rec.season }] : []))}
+        busyNote={staleNote}
+      />
     </div>
   );
 }

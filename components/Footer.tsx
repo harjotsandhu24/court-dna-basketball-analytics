@@ -13,7 +13,7 @@ const FOOTER_LINKS = [
 export default function Footer() {
   const pathname = usePathname();
   const linkClass = (active: boolean) =>
-    `rounded-md px-2 py-1.5 transition-colors hover:bg-arena-panel hover:text-ink-light ${active ? "text-court-orange-bright" : "text-stone"}`;
+    `inline-flex min-h-11 items-center rounded-md px-2 py-1.5 transition-colors hover:bg-arena-panel hover:text-ink-light ${active ? "text-court-orange-bright" : "text-stone"}`;
   return (
     <footer className="mt-16 border-t border-line">
       <div className="mx-auto max-w-[1400px] px-5 py-6 md:px-8">

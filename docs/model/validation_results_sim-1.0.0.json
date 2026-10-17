@@ -1,0 +1,4127 @@
+{
+  "model_version": "sim-1.0.0",
+  "data_version": "sim-data-2026-10-16",
+  "splits": {
+    "train": [
+      1997,
+      2008
+    ],
+    "validation": [
+      2009,
+      2012
+    ],
+    "test": [
+      2013,
+      2026
+    ]
+  },
+  "stage1": {
+    "best_set": "no_height",
+    "best_alpha": 0.1,
+    "param_info": {
+      "beta_estimate": -0.04516370397823219,
+      "beta_se": 0.03343215747590265,
+      "beta_used": -0.04516370397823219,
+      "pairs": 2778,
+      "starter_share": 0.6172568108052359,
+      "usage_target": 19.910943471565062,
+      "teams": 352
+    },
+    "table": [
+      {
+        "set": "all",
+        "alpha": 0.1,
+        "val_rmse": 2.7253,
+        "val_r2": 0.7099
+      },
+      {
+        "set": "all",
+        "alpha": 0.3,
+        "val_rmse": 2.7262,
+        "val_r2": 0.7097
+      },
+      {
+        "set": "all",
+        "alpha": 1.0,
+        "val_rmse": 2.729,
+        "val_r2": 0.7091
+      },
+      {
+        "set": "all",
+        "alpha": 3.0,
+        "val_rmse": 2.7372,
+        "val_r2": 0.7073
+      },
+      {
+        "set": "all",
+        "alpha": 10.0,
+        "val_rmse": 2.7659,
+        "val_r2": 0.7012
+      },
+      {
+        "set": "all",
+        "alpha": 30.0,
+        "val_rmse": 2.846,
+        "val_r2": 0.6836
+      },
+      {
+        "set": "all",
+        "alpha": 100.0,
+        "val_rmse": 3.0778,
+        "val_r2": 0.63
+      },
+      {
+        "set": "no_height",
+        "alpha": 0.1,
+        "val_rmse": 2.67,
+        "val_r2": 0.7215
+      },
+      {
+        "set": "no_height",
+        "alpha": 0.3,
+        "val_rmse": 2.6707,
+        "val_r2": 0.7214
+      },
+      {
+        "set": "no_height",
+        "alpha": 1.0,
+        "val_rmse": 2.6731,
+        "val_r2": 0.7209
+      },
+      {
+        "set": "no_height",
+        "alpha": 3.0,
+        "val_rmse": 2.6803,
+        "val_r2": 0.7194
+      },
+      {
+        "set": "no_height",
+        "alpha": 10.0,
+        "val_rmse": 2.7067,
+        "val_r2": 0.7138
+      },
+      {
+        "set": "no_height",
+        "alpha": 30.0,
+        "val_rmse": 2.7854,
+        "val_r2": 0.697
+      },
+      {
+        "set": "no_height",
+        "alpha": 100.0,
+        "val_rmse": 3.0294,
+        "val_r2": 0.6415
+      },
+      {
+        "set": "no_creator_max",
+        "alpha": 0.1,
+        "val_rmse": 2.8499,
+        "val_r2": 0.6827
+      },
+      {
+        "set": "no_creator_max",
+        "alpha": 0.3,
+        "val_rmse": 2.8505,
+        "val_r2": 0.6826
+      },
+      {
+        "set": "no_creator_max",
+        "alpha": 1.0,
+        "val_rmse": 2.8524,
+        "val_r2": 0.6822
+      },
+      {
+        "set": "no_creator_max",
+        "alpha": 3.0,
+        "val_rmse": 2.858,
+        "val_r2": 0.6809
+      },
+      {
+        "set": "no_creator_max",
+        "alpha": 10.0,
+        "val_rmse": 2.8775,
+        "val_r2": 0.6766
+      },
+      {
+        "set": "no_creator_max",
+        "alpha": 30.0,
+        "val_rmse": 2.9324,
+        "val_r2": 0.6641
+      },
+      {
+        "set": "no_creator_max",
+        "alpha": 100.0,
+        "val_rmse": 3.1071,
+        "val_r2": 0.6229
+      },
+      {
+        "set": "no_height_no_creator_max",
+        "alpha": 0.1,
+        "val_rmse": 2.7985,
+        "val_r2": 0.6941
+      },
+      {
+        "set": "no_height_no_creator_max",
+        "alpha": 0.3,
+        "val_rmse": 2.799,
+        "val_r2": 0.694
+      },
+      {
+        "set": "no_height_no_creator_max",
+        "alpha": 1.0,
+        "val_rmse": 2.8006,
+        "val_r2": 0.6936
+      },
+      {
+        "set": "no_height_no_creator_max",
+        "alpha": 3.0,
+        "val_rmse": 2.8052,
+        "val_r2": 0.6926
+      },
+      {
+        "set": "no_height_no_creator_max",
+        "alpha": 10.0,
+        "val_rmse": 2.8225,
+        "val_r2": 0.6888
+      },
+      {
+        "set": "no_height_no_creator_max",
+        "alpha": 30.0,
+        "val_rmse": 2.876,
+        "val_r2": 0.6769
+      },
+      {
+        "set": "no_height_no_creator_max",
+        "alpha": 100.0,
+        "val_rmse": 3.0617,
+        "val_r2": 0.6338
+      },
+      {
+        "set": "starters_only",
+        "alpha": 0.1,
+        "val_rmse": 3.3526,
+        "val_r2": 0.561
+      },
+      {
+        "set": "starters_only",
+        "alpha": 0.3,
+        "val_rmse": 3.3529,
+        "val_r2": 0.5609
+      },
+      {
+        "set": "starters_only",
+        "alpha": 1.0,
+        "val_rmse": 3.3541,
+        "val_r2": 0.5606
+      },
+      {
+        "set": "starters_only",
+        "alpha": 3.0,
+        "val_rmse": 3.3576,
+        "val_r2": 0.5596
+      },
+      {
+        "set": "starters_only",
+        "alpha": 10.0,
+        "val_rmse": 3.3709,
+        "val_r2": 0.5561
+      },
+      {
+        "set": "starters_only",
+        "alpha": 30.0,
+        "val_rmse": 3.4137,
+        "val_r2": 0.5448
+      },
+      {
+        "set": "starters_only",
+        "alpha": 100.0,
+        "val_rmse": 3.5652,
+        "val_r2": 0.5035
+      }
+    ],
+    "components": {
+      "net": {
+        "val_rmse": 2.669978695077141,
+        "val_r2": 0.7215402847272026,
+        "val_sd": 5.059720018604455
+      },
+      "ortg_rel": {
+        "val_rmse": 0.9670377085526964,
+        "val_r2": 0.9055806585077523,
+        "val_sd": 3.1470140168455276
+      },
+      "drtg_rel": {
+        "val_rmse": 2.460004192557071,
+        "val_r2": 0.42990033965991026,
+        "val_sd": 3.257938595015089
+      },
+      "net_five_avg_bench": {
+        "val_rmse": 3.775347124070034,
+        "val_r2": 0.4432495704345314
+      }
+    },
+    "show_ortg_drtg": true,
+    "game_model_choice": {
+      "val_playoff_logloss_regular_params": 0.6210371818729903,
+      "val_playoff_logloss_playoff_params": 0.6156753254381272,
+      "rule": "use playoff-specific parameters if validation playoff log loss improves by more than 0.002",
+      "use_playoff_params": true
+    }
+  },
+  "final": {
+    "fit_seasons": [
+      1997,
+      2012
+    ],
+    "param_info": {
+      "beta_estimate": -0.04684672954916632,
+      "beta_se": 0.02865058232700008,
+      "beta_used": -0.04684672954916632,
+      "pairs": 3851,
+      "starter_share": 0.6118963672901367,
+      "usage_target": 19.911820736638596,
+      "teams": 472
+    },
+    "tau": {
+      "real": 2.7690536761699835,
+      "five": 3.6461731188340307,
+      "ortg": 0.9899931313012644,
+      "drtg": 2.55589578184734,
+      "ortg_five": 1.9243678144398333,
+      "n": 472
+    },
+    "alpha": 0.1,
+    "feature_set": "no_height",
+    "features": [
+      "s_uts",
+      "s_ast",
+      "s_tov",
+      "s_orb",
+      "s_drb",
+      "s_stl",
+      "s_blk",
+      "s_x3",
+      "s_ftr",
+      "s_maxast",
+      "b_ts",
+      "b_ast",
+      "b_tov",
+      "b_orb",
+      "b_drb",
+      "b_stl",
+      "b_blk",
+      "b_x3",
+      "b_ftr"
+    ],
+    "coef": {
+      "net": {
+        "s_uts": 5.771987783516,
+        "s_ast": 5.890285223244754,
+        "s_tov": -3.5669382705170496,
+        "s_orb": 2.798513689506619,
+        "s_drb": 8.576204515783115,
+        "s_stl": 2.19517497749944,
+        "s_blk": 3.341503789094738,
+        "s_x3": 0.28396726666209515,
+        "s_ftr": -0.5114509666566814,
+        "s_maxast": -0.9447283062147157,
+        "b_ts": 2.7232485531014925,
+        "b_ast": 0.6657790538080822,
+        "b_tov": -1.0435474259137325,
+        "b_orb": 2.4039091080753345,
+        "b_drb": 4.642088555408085,
+        "b_stl": 1.1460392956634147,
+        "b_blk": 0.7871227116811071,
+        "b_x3": 1.3706052969981881,
+        "b_ftr": 0.02156256537588937
+      },
+      "ortg_rel": {
+        "s_uts": 5.260005834064615,
+        "s_ast": 1.3454218456086429,
+        "s_tov": -2.8111957347013767,
+        "s_orb": 6.077235720680711,
+        "s_drb": -2.253922916088559,
+        "s_stl": 0.010771237420287,
+        "s_blk": -0.21549450214824514,
+        "s_x3": 0.38146788859895786,
+        "s_ftr": -0.35618854675045775,
+        "s_maxast": -0.34189909692143516,
+        "b_ts": 2.4912123989302857,
+        "b_ast": 0.0024152118315008946,
+        "b_tov": -1.394175266863524,
+        "b_orb": 3.9703611745104403,
+        "b_drb": -1.6198415517526985,
+        "b_stl": -0.046333614111381344,
+        "b_blk": -0.2033494532742088,
+        "b_x3": 0.42434871316451217,
+        "b_ftr": -0.06841250427780005
+      },
+      "drtg_rel": {
+        "s_uts": -0.5119819494513833,
+        "s_ast": -4.544863377636105,
+        "s_tov": 0.7557425358156727,
+        "s_orb": 3.278722031174092,
+        "s_drb": -10.830127431871675,
+        "s_stl": -2.184403740079154,
+        "s_blk": -3.5569982912429823,
+        "s_x3": 0.09750062193686257,
+        "s_ftr": 0.15526241990622394,
+        "s_maxast": 0.6028292092932804,
+        "b_ts": -0.23203615417121043,
+        "b_ast": -0.6633638419765818,
+        "b_tov": -0.3506278409497928,
+        "b_orb": 1.5664520664351027,
+        "b_drb": -6.261930107160784,
+        "b_stl": -1.192372909774797,
+        "b_blk": -0.9904721649553156,
+        "b_x3": -0.9462565838336753,
+        "b_ftr": -0.08997506965368676
+      }
+    },
+    "intercept": {
+      "net": -1.2511664157666864,
+      "ortg_rel": -0.694733485331971,
+      "drtg_rel": 0.5564329304347134
+    },
+    "game": {
+      "regular": {
+        "beta": 0.08989779779006613,
+        "home": 0.3061411220252741,
+        "n": 18639
+      },
+      "playoff": {
+        "beta": 0.08946841151368382,
+        "home": 0.408949936461409,
+        "n": 1266
+      },
+      "playoff_used": {
+        "beta": 0.08946841151368382,
+        "home": 0.408949936461409,
+        "n": 1266
+      }
+    },
+    "implied": {
+      "game_sd_points": 11.123743012428964,
+      "home_adv_net_points": 3.4054351669458054,
+      "playoff_home_adv_net_points": 4.570886299896604
+    }
+  },
+  "test": {
+    "components": {
+      "net": {
+        "rmse": 2.869055966413924,
+        "r2": 0.6703092094742811,
+        "n": 420,
+        "sd": 4.996694054464702
+      },
+      "ortg_rel": {
+        "rmse": 1.0981188334069742,
+        "r2": 0.8895238916338388,
+        "n": 420,
+        "sd": 3.303810621971292
+      },
+      "drtg_rel": {
+        "rmse": 2.5417173145815704,
+        "r2": 0.18270143734596378,
+        "n": 420,
+        "sd": 2.811428894050827
+      },
+      "net_five_avg_bench": {
+        "rmse": 4.254821573521021,
+        "r2": 0.2749107257604274
+      }
+    },
+    "coverage_min": 0.9223596188931684,
+    "wins_seasons": [
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "wins_real": {
+      "n": 330,
+      "rmse": 6.877941784568927,
+      "mae": 5.425313131313132,
+      "bias": 0.010995959595959637,
+      "coverage80": 0.8757575757575757,
+      "mean_range_width": 20.166969696969694,
+      "rmse_ci": [
+        6.3853286973628585,
+        7.43953595740375
+      ]
+    },
+    "wins_real_rows": [
+      {
+        "season": 2014,
+        "team": "ATL",
+        "actual": 38.0,
+        "pred": 47.16,
+        "lo": 36.0,
+        "hi": 57.0
+      },
+      {
+        "season": 2014,
+        "team": "BOS",
+        "actual": 25.0,
+        "pred": 21.39,
+        "lo": 13.0,
+        "hi": 31.0
+      },
+      {
+        "season": 2014,
+        "team": "BRK",
+        "actual": 44.0,
+        "pred": 40.47,
+        "lo": 30.0,
+        "hi": 51.0
+      },
+      {
+        "season": 2014,
+        "team": "CHA",
+        "actual": 43.0,
+        "pred": 40.92,
+        "lo": 30.0,
+        "hi": 52.0
+      },
+      {
+        "season": 2014,
+        "team": "CHI",
+        "actual": 48.0,
+        "pred": 32.72,
+        "lo": 23.0,
+        "hi": 43.0
+      },
+      {
+        "season": 2014,
+        "team": "CLE",
+        "actual": 33.0,
+        "pred": 36.29,
+        "lo": 26.0,
+        "hi": 47.0
+      },
+      {
+        "season": 2014,
+        "team": "DAL",
+        "actual": 49.0,
+        "pred": 57.91,
+        "lo": 48.0,
+        "hi": 67.0
+      },
+      {
+        "season": 2014,
+        "team": "DEN",
+        "actual": 36.0,
+        "pred": 39.33,
+        "lo": 29.0,
+        "hi": 50.0
+      },
+      {
+        "season": 2014,
+        "team": "DET",
+        "actual": 29.0,
+        "pred": 30.42,
+        "lo": 21.0,
+        "hi": 41.0
+      },
+      {
+        "season": 2014,
+        "team": "GSW",
+        "actual": 51.0,
+        "pred": 47.38,
+        "lo": 36.0,
+        "hi": 58.0
+      },
+      {
+        "season": 2014,
+        "team": "HOU",
+        "actual": 54.0,
+        "pred": 59.53,
+        "lo": 50.0,
+        "hi": 68.0
+      },
+      {
+        "season": 2014,
+        "team": "IND",
+        "actual": 56.0,
+        "pred": 39.15,
+        "lo": 28.9,
+        "hi": 50.0
+      },
+      {
+        "season": 2014,
+        "team": "LAC",
+        "actual": 57.0,
+        "pred": 55.74,
+        "lo": 46.0,
+        "hi": 65.0
+      },
+      {
+        "season": 2014,
+        "team": "LAL",
+        "actual": 27.0,
+        "pred": 28.1,
+        "lo": 18.0,
+        "hi": 38.0
+      },
+      {
+        "season": 2014,
+        "team": "MEM",
+        "actual": 50.0,
+        "pred": 40.19,
+        "lo": 30.0,
+        "hi": 51.0
+      },
+      {
+        "season": 2014,
+        "team": "MIA",
+        "actual": 54.0,
+        "pred": 56.06,
+        "lo": 46.0,
+        "hi": 65.0
+      },
+      {
+        "season": 2014,
+        "team": "MIL",
+        "actual": 15.0,
+        "pred": 26.84,
+        "lo": 17.0,
+        "hi": 37.0
+      },
+      {
+        "season": 2014,
+        "team": "MIN",
+        "actual": 40.0,
+        "pred": 39.93,
+        "lo": 29.0,
+        "hi": 51.0
+      },
+      {
+        "season": 2014,
+        "team": "NOP",
+        "actual": 34.0,
+        "pred": 46.66,
+        "lo": 36.0,
+        "hi": 57.0
+      },
+      {
+        "season": 2014,
+        "team": "NYK",
+        "actual": 37.0,
+        "pred": 36.46,
+        "lo": 26.0,
+        "hi": 47.0
+      },
+      {
+        "season": 2014,
+        "team": "OKC",
+        "actual": 59.0,
+        "pred": 55.02,
+        "lo": 45.0,
+        "hi": 64.0
+      },
+      {
+        "season": 2014,
+        "team": "ORL",
+        "actual": 23.0,
+        "pred": 27.53,
+        "lo": 18.0,
+        "hi": 37.0
+      },
+      {
+        "season": 2014,
+        "team": "PHI",
+        "actual": 19.0,
+        "pred": 23.4,
+        "lo": 15.0,
+        "hi": 33.0
+      },
+      {
+        "season": 2014,
+        "team": "PHO",
+        "actual": 48.0,
+        "pred": 44.91,
+        "lo": 34.0,
+        "hi": 55.0
+      },
+      {
+        "season": 2014,
+        "team": "POR",
+        "actual": 54.0,
+        "pred": 44.29,
+        "lo": 34.0,
+        "hi": 55.0
+      },
+      {
+        "season": 2014,
+        "team": "SAC",
+        "actual": 28.0,
+        "pred": 37.6,
+        "lo": 27.0,
+        "hi": 48.0
+      },
+      {
+        "season": 2014,
+        "team": "SAS",
+        "actual": 62.0,
+        "pred": 59.02,
+        "lo": 49.0,
+        "hi": 68.0
+      },
+      {
+        "season": 2014,
+        "team": "TOR",
+        "actual": 48.0,
+        "pred": 43.14,
+        "lo": 33.0,
+        "hi": 54.0
+      },
+      {
+        "season": 2014,
+        "team": "UTA",
+        "actual": 25.0,
+        "pred": 31.99,
+        "lo": 22.0,
+        "hi": 42.0
+      },
+      {
+        "season": 2014,
+        "team": "WAS",
+        "actual": 44.0,
+        "pred": 40.79,
+        "lo": 30.0,
+        "hi": 51.0
+      },
+      {
+        "season": 2015,
+        "team": "ATL",
+        "actual": 60.0,
+        "pred": 61.39,
+        "lo": 52.0,
+        "hi": 70.0
+      },
+      {
+        "season": 2015,
+        "team": "BOS",
+        "actual": 40.0,
+        "pred": 31.66,
+        "lo": 22.0,
+        "hi": 42.0
+      },
+      {
+        "season": 2015,
+        "team": "BRK",
+        "actual": 38.0,
+        "pred": 30.53,
+        "lo": 21.0,
+        "hi": 41.0
+      },
+      {
+        "season": 2015,
+        "team": "CHI",
+        "actual": 50.0,
+        "pred": 43.5,
+        "lo": 33.0,
+        "hi": 54.0
+      },
+      {
+        "season": 2015,
+        "team": "CHO",
+        "actual": 33.0,
+        "pred": 35.95,
+        "lo": 25.0,
+        "hi": 47.0
+      },
+      {
+        "season": 2015,
+        "team": "CLE",
+        "actual": 53.0,
+        "pred": 50.95,
+        "lo": 41.0,
+        "hi": 61.0
+      },
+      {
+        "season": 2015,
+        "team": "DAL",
+        "actual": 50.0,
+        "pred": 48.84,
+        "lo": 38.0,
+        "hi": 59.0
+      },
+      {
+        "season": 2015,
+        "team": "DEN",
+        "actual": 30.0,
+        "pred": 29.27,
+        "lo": 20.0,
+        "hi": 40.0
+      },
+      {
+        "season": 2015,
+        "team": "DET",
+        "actual": 32.0,
+        "pred": 38.18,
+        "lo": 28.0,
+        "hi": 49.0
+      },
+      {
+        "season": 2015,
+        "team": "GSW",
+        "actual": 67.0,
+        "pred": 59.08,
+        "lo": 50.0,
+        "hi": 68.0
+      },
+      {
+        "season": 2015,
+        "team": "HOU",
+        "actual": 56.0,
+        "pred": 44.16,
+        "lo": 33.0,
+        "hi": 55.0
+      },
+      {
+        "season": 2015,
+        "team": "IND",
+        "actual": 38.0,
+        "pred": 32.99,
+        "lo": 22.0,
+        "hi": 44.0
+      },
+      {
+        "season": 2015,
+        "team": "LAC",
+        "actual": 56.0,
+        "pred": 57.56,
+        "lo": 48.0,
+        "hi": 66.0
+      },
+      {
+        "season": 2015,
+        "team": "LAL",
+        "actual": 21.0,
+        "pred": 41.93,
+        "lo": 32.0,
+        "hi": 52.0
+      },
+      {
+        "season": 2015,
+        "team": "MEM",
+        "actual": 55.0,
+        "pred": 43.05,
+        "lo": 32.0,
+        "hi": 54.0
+      },
+      {
+        "season": 2015,
+        "team": "MIA",
+        "actual": 37.0,
+        "pred": 34.43,
+        "lo": 24.0,
+        "hi": 45.0
+      },
+      {
+        "season": 2015,
+        "team": "MIL",
+        "actual": 41.0,
+        "pred": 37.15,
+        "lo": 27.0,
+        "hi": 48.0
+      },
+      {
+        "season": 2015,
+        "team": "MIN",
+        "actual": 16.0,
+        "pred": 22.49,
+        "lo": 13.0,
+        "hi": 32.0
+      },
+      {
+        "season": 2015,
+        "team": "NOP",
+        "actual": 45.0,
+        "pred": 47.04,
+        "lo": 37.0,
+        "hi": 57.0
+      },
+      {
+        "season": 2015,
+        "team": "NYK",
+        "actual": 17.0,
+        "pred": 21.88,
+        "lo": 13.0,
+        "hi": 31.0
+      },
+      {
+        "season": 2015,
+        "team": "OKC",
+        "actual": 45.0,
+        "pred": 36.1,
+        "lo": 26.0,
+        "hi": 47.0
+      },
+      {
+        "season": 2015,
+        "team": "ORL",
+        "actual": 25.0,
+        "pred": 30.64,
+        "lo": 21.0,
+        "hi": 41.0
+      },
+      {
+        "season": 2015,
+        "team": "PHI",
+        "actual": 18.0,
+        "pred": 27.86,
+        "lo": 18.0,
+        "hi": 38.0
+      },
+      {
+        "season": 2015,
+        "team": "PHO",
+        "actual": 39.0,
+        "pred": 42.09,
+        "lo": 32.0,
+        "hi": 53.0
+      },
+      {
+        "season": 2015,
+        "team": "POR",
+        "actual": 51.0,
+        "pred": 44.61,
+        "lo": 34.0,
+        "hi": 55.0
+      },
+      {
+        "season": 2015,
+        "team": "SAC",
+        "actual": 29.0,
+        "pred": 42.28,
+        "lo": 32.0,
+        "hi": 53.0
+      },
+      {
+        "season": 2015,
+        "team": "SAS",
+        "actual": 55.0,
+        "pred": 60.3,
+        "lo": 51.0,
+        "hi": 69.0
+      },
+      {
+        "season": 2015,
+        "team": "TOR",
+        "actual": 49.0,
+        "pred": 49.44,
+        "lo": 39.0,
+        "hi": 60.0
+      },
+      {
+        "season": 2015,
+        "team": "UTA",
+        "actual": 38.0,
+        "pred": 45.18,
+        "lo": 34.0,
+        "hi": 56.0
+      },
+      {
+        "season": 2015,
+        "team": "WAS",
+        "actual": 46.0,
+        "pred": 39.02,
+        "lo": 28.0,
+        "hi": 50.0
+      },
+      {
+        "season": 2016,
+        "team": "ATL",
+        "actual": 48.0,
+        "pred": 49.98,
+        "lo": 40.0,
+        "hi": 60.0
+      },
+      {
+        "season": 2016,
+        "team": "BOS",
+        "actual": 48.0,
+        "pred": 45.32,
+        "lo": 35.0,
+        "hi": 56.0
+      },
+      {
+        "season": 2016,
+        "team": "BRK",
+        "actual": 21.0,
+        "pred": 24.48,
+        "lo": 15.0,
+        "hi": 34.0
+      },
+      {
+        "season": 2016,
+        "team": "CHI",
+        "actual": 42.0,
+        "pred": 31.96,
+        "lo": 22.0,
+        "hi": 42.0
+      },
+      {
+        "season": 2016,
+        "team": "CHO",
+        "actual": 48.0,
+        "pred": 51.14,
+        "lo": 40.0,
+        "hi": 61.0
+      },
+      {
+        "season": 2016,
+        "team": "CLE",
+        "actual": 57.0,
+        "pred": 49.71,
+        "lo": 39.0,
+        "hi": 60.0
+      },
+      {
+        "season": 2016,
+        "team": "DAL",
+        "actual": 42.0,
+        "pred": 34.39,
+        "lo": 24.0,
+        "hi": 45.0
+      },
+      {
+        "season": 2016,
+        "team": "DEN",
+        "actual": 33.0,
+        "pred": 37.93,
+        "lo": 27.0,
+        "hi": 48.0
+      },
+      {
+        "season": 2016,
+        "team": "DET",
+        "actual": 44.0,
+        "pred": 29.98,
+        "lo": 20.0,
+        "hi": 40.0
+      },
+      {
+        "season": 2016,
+        "team": "GSW",
+        "actual": 73.0,
+        "pred": 63.79,
+        "lo": 55.0,
+        "hi": 72.0
+      },
+      {
+        "season": 2016,
+        "team": "HOU",
+        "actual": 41.0,
+        "pred": 47.81,
+        "lo": 37.0,
+        "hi": 58.0
+      },
+      {
+        "season": 2016,
+        "team": "IND",
+        "actual": 45.0,
+        "pred": 40.33,
+        "lo": 30.0,
+        "hi": 51.0
+      },
+      {
+        "season": 2016,
+        "team": "LAC",
+        "actual": 53.0,
+        "pred": 43.07,
+        "lo": 32.0,
+        "hi": 54.0
+      },
+      {
+        "season": 2016,
+        "team": "LAL",
+        "actual": 17.0,
+        "pred": 21.24,
+        "lo": 13.0,
+        "hi": 30.0
+      },
+      {
+        "season": 2016,
+        "team": "MEM",
+        "actual": 42.0,
+        "pred": 40.54,
+        "lo": 30.0,
+        "hi": 51.0
+      },
+      {
+        "season": 2016,
+        "team": "MIA",
+        "actual": 48.0,
+        "pred": 45.6,
+        "lo": 35.0,
+        "hi": 56.0
+      },
+      {
+        "season": 2016,
+        "team": "MIL",
+        "actual": 33.0,
+        "pred": 39.05,
+        "lo": 29.0,
+        "hi": 50.0
+      },
+      {
+        "season": 2016,
+        "team": "MIN",
+        "actual": 29.0,
+        "pred": 38.53,
+        "lo": 28.0,
+        "hi": 49.0
+      },
+      {
+        "season": 2016,
+        "team": "NOP",
+        "actual": 30.0,
+        "pred": 34.7,
+        "lo": 25.0,
+        "hi": 45.0
+      },
+      {
+        "season": 2016,
+        "team": "NYK",
+        "actual": 32.0,
+        "pred": 32.73,
+        "lo": 23.0,
+        "hi": 43.0
+      },
+      {
+        "season": 2016,
+        "team": "OKC",
+        "actual": 55.0,
+        "pred": 53.16,
+        "lo": 43.0,
+        "hi": 63.0
+      },
+      {
+        "season": 2016,
+        "team": "ORL",
+        "actual": 35.0,
+        "pred": 44.06,
+        "lo": 33.0,
+        "hi": 55.0
+      },
+      {
+        "season": 2016,
+        "team": "PHI",
+        "actual": 10.0,
+        "pred": 24.45,
+        "lo": 15.0,
+        "hi": 34.0
+      },
+      {
+        "season": 2016,
+        "team": "PHO",
+        "actual": 23.0,
+        "pred": 24.27,
+        "lo": 15.0,
+        "hi": 34.0
+      },
+      {
+        "season": 2016,
+        "team": "POR",
+        "actual": 44.0,
+        "pred": 44.59,
+        "lo": 34.0,
+        "hi": 55.0
+      },
+      {
+        "season": 2016,
+        "team": "SAC",
+        "actual": 33.0,
+        "pred": 42.49,
+        "lo": 32.0,
+        "hi": 53.0
+      },
+      {
+        "season": 2016,
+        "team": "SAS",
+        "actual": 67.0,
+        "pred": 53.91,
+        "lo": 44.0,
+        "hi": 64.0
+      },
+      {
+        "season": 2016,
+        "team": "TOR",
+        "actual": 56.0,
+        "pred": 52.65,
+        "lo": 43.0,
+        "hi": 62.0
+      },
+      {
+        "season": 2016,
+        "team": "UTA",
+        "actual": 40.0,
+        "pred": 49.96,
+        "lo": 39.0,
+        "hi": 60.0
+      },
+      {
+        "season": 2016,
+        "team": "WAS",
+        "actual": 41.0,
+        "pred": 39.38,
+        "lo": 29.0,
+        "hi": 50.0
+      },
+      {
+        "season": 2017,
+        "team": "ATL",
+        "actual": 43.0,
+        "pred": 38.36,
+        "lo": 28.0,
+        "hi": 49.0
+      },
+      {
+        "season": 2017,
+        "team": "BOS",
+        "actual": 53.0,
+        "pred": 51.1,
+        "lo": 41.0,
+        "hi": 61.0
+      },
+      {
+        "season": 2017,
+        "team": "BRK",
+        "actual": 20.0,
+        "pred": 31.99,
+        "lo": 22.0,
+        "hi": 42.0
+      },
+      {
+        "season": 2017,
+        "team": "CHI",
+        "actual": 41.0,
+        "pred": 37.54,
+        "lo": 27.0,
+        "hi": 48.0
+      },
+      {
+        "season": 2017,
+        "team": "CHO",
+        "actual": 36.0,
+        "pred": 47.5,
+        "lo": 37.0,
+        "hi": 58.0
+      },
+      {
+        "season": 2017,
+        "team": "CLE",
+        "actual": 51.0,
+        "pred": 51.71,
+        "lo": 41.0,
+        "hi": 62.0
+      },
+      {
+        "season": 2017,
+        "team": "DAL",
+        "actual": 33.0,
+        "pred": 36.69,
+        "lo": 26.0,
+        "hi": 47.0
+      },
+      {
+        "season": 2017,
+        "team": "DEN",
+        "actual": 40.0,
+        "pred": 53.05,
+        "lo": 43.0,
+        "hi": 63.0
+      },
+      {
+        "season": 2017,
+        "team": "DET",
+        "actual": 37.0,
+        "pred": 29.91,
+        "lo": 20.0,
+        "hi": 40.0
+      },
+      {
+        "season": 2017,
+        "team": "GSW",
+        "actual": 67.0,
+        "pred": 69.7,
+        "lo": 63.0,
+        "hi": 76.0
+      },
+      {
+        "season": 2017,
+        "team": "HOU",
+        "actual": 55.0,
+        "pred": 53.3,
+        "lo": 43.0,
+        "hi": 63.0
+      },
+      {
+        "season": 2017,
+        "team": "IND",
+        "actual": 42.0,
+        "pred": 41.97,
+        "lo": 31.0,
+        "hi": 53.0
+      },
+      {
+        "season": 2017,
+        "team": "LAC",
+        "actual": 51.0,
+        "pred": 42.94,
+        "lo": 32.0,
+        "hi": 54.0
+      },
+      {
+        "season": 2017,
+        "team": "LAL",
+        "actual": 26.0,
+        "pred": 24.01,
+        "lo": 15.0,
+        "hi": 34.0
+      },
+      {
+        "season": 2017,
+        "team": "MEM",
+        "actual": 43.0,
+        "pred": 44.66,
+        "lo": 34.0,
+        "hi": 55.0
+      },
+      {
+        "season": 2017,
+        "team": "MIA",
+        "actual": 41.0,
+        "pred": 41.52,
+        "lo": 31.0,
+        "hi": 52.0
+      },
+      {
+        "season": 2017,
+        "team": "MIL",
+        "actual": 42.0,
+        "pred": 50.16,
+        "lo": 39.0,
+        "hi": 60.0
+      },
+      {
+        "season": 2017,
+        "team": "MIN",
+        "actual": 31.0,
+        "pred": 34.85,
+        "lo": 25.0,
+        "hi": 45.0
+      },
+      {
+        "season": 2017,
+        "team": "NOP",
+        "actual": 34.0,
+        "pred": 32.77,
+        "lo": 23.0,
+        "hi": 43.0
+      },
+      {
+        "season": 2017,
+        "team": "NYK",
+        "actual": 31.0,
+        "pred": 29.74,
+        "lo": 20.0,
+        "hi": 40.0
+      },
+      {
+        "season": 2017,
+        "team": "OKC",
+        "actual": 47.0,
+        "pred": 32.83,
+        "lo": 22.0,
+        "hi": 43.0
+      },
+      {
+        "season": 2017,
+        "team": "ORL",
+        "actual": 29.0,
+        "pred": 33.0,
+        "lo": 23.0,
+        "hi": 43.1
+      },
+      {
+        "season": 2017,
+        "team": "PHI",
+        "actual": 28.0,
+        "pred": 20.6,
+        "lo": 12.0,
+        "hi": 29.0
+      },
+      {
+        "season": 2017,
+        "team": "PHO",
+        "actual": 24.0,
+        "pred": 31.98,
+        "lo": 22.0,
+        "hi": 42.0
+      },
+      {
+        "season": 2017,
+        "team": "POR",
+        "actual": 41.0,
+        "pred": 38.87,
+        "lo": 28.0,
+        "hi": 49.0
+      },
+      {
+        "season": 2017,
+        "team": "SAC",
+        "actual": 32.0,
+        "pred": 37.26,
+        "lo": 27.0,
+        "hi": 48.0
+      },
+      {
+        "season": 2017,
+        "team": "SAS",
+        "actual": 61.0,
+        "pred": 56.41,
+        "lo": 47.0,
+        "hi": 65.0
+      },
+      {
+        "season": 2017,
+        "team": "TOR",
+        "actual": 51.0,
+        "pred": 50.36,
+        "lo": 40.0,
+        "hi": 60.0
+      },
+      {
+        "season": 2017,
+        "team": "UTA",
+        "actual": 51.0,
+        "pred": 41.86,
+        "lo": 31.0,
+        "hi": 53.0
+      },
+      {
+        "season": 2017,
+        "team": "WAS",
+        "actual": 49.0,
+        "pred": 43.6,
+        "lo": 33.0,
+        "hi": 54.0
+      },
+      {
+        "season": 2018,
+        "team": "ATL",
+        "actual": 24.0,
+        "pred": 40.22,
+        "lo": 30.0,
+        "hi": 51.0
+      },
+      {
+        "season": 2018,
+        "team": "BOS",
+        "actual": 55.0,
+        "pred": 41.21,
+        "lo": 31.0,
+        "hi": 52.0
+      },
+      {
+        "season": 2018,
+        "team": "BRK",
+        "actual": 28.0,
+        "pred": 30.93,
+        "lo": 21.0,
+        "hi": 41.0
+      },
+      {
+        "season": 2018,
+        "team": "CHI",
+        "actual": 27.0,
+        "pred": 25.28,
+        "lo": 16.0,
+        "hi": 35.0
+      },
+      {
+        "season": 2018,
+        "team": "CHO",
+        "actual": 36.0,
+        "pred": 39.8,
+        "lo": 29.0,
+        "hi": 50.0
+      },
+      {
+        "season": 2018,
+        "team": "CLE",
+        "actual": 50.0,
+        "pred": 46.93,
+        "lo": 37.0,
+        "hi": 57.0
+      },
+      {
+        "season": 2018,
+        "team": "DAL",
+        "actual": 24.0,
+        "pred": 31.57,
+        "lo": 22.0,
+        "hi": 42.0
+      },
+      {
+        "season": 2018,
+        "team": "DEN",
+        "actual": 46.0,
+        "pred": 48.89,
+        "lo": 39.0,
+        "hi": 59.0
+      },
+      {
+        "season": 2018,
+        "team": "DET",
+        "actual": 39.0,
+        "pred": 35.54,
+        "lo": 25.0,
+        "hi": 46.0
+      },
+      {
+        "season": 2018,
+        "team": "GSW",
+        "actual": 58.0,
+        "pred": 63.98,
+        "lo": 56.0,
+        "hi": 72.0
+      },
+      {
+        "season": 2018,
+        "team": "HOU",
+        "actual": 65.0,
+        "pred": 62.42,
+        "lo": 54.0,
+        "hi": 71.0
+      },
+      {
+        "season": 2018,
+        "team": "IND",
+        "actual": 48.0,
+        "pred": 40.82,
+        "lo": 30.0,
+        "hi": 52.0
+      },
+      {
+        "season": 2018,
+        "team": "LAC",
+        "actual": 42.0,
+        "pred": 41.14,
+        "lo": 31.0,
+        "hi": 52.0
+      },
+      {
+        "season": 2018,
+        "team": "LAL",
+        "actual": 35.0,
+        "pred": 31.97,
+        "lo": 22.0,
+        "hi": 42.0
+      },
+      {
+        "season": 2018,
+        "team": "MEM",
+        "actual": 22.0,
+        "pred": 33.6,
+        "lo": 23.0,
+        "hi": 44.0
+      },
+      {
+        "season": 2018,
+        "team": "MIA",
+        "actual": 44.0,
+        "pred": 38.96,
+        "lo": 29.0,
+        "hi": 50.0
+      },
+      {
+        "season": 2018,
+        "team": "MIL",
+        "actual": 44.0,
+        "pred": 48.86,
+        "lo": 39.0,
+        "hi": 59.0
+      },
+      {
+        "season": 2018,
+        "team": "MIN",
+        "actual": 47.0,
+        "pred": 47.72,
+        "lo": 37.0,
+        "hi": 58.0
+      },
+      {
+        "season": 2018,
+        "team": "NOP",
+        "actual": 48.0,
+        "pred": 51.62,
+        "lo": 41.0,
+        "hi": 61.0
+      },
+      {
+        "season": 2018,
+        "team": "NYK",
+        "actual": 29.0,
+        "pred": 29.32,
+        "lo": 20.0,
+        "hi": 39.0
+      },
+      {
+        "season": 2018,
+        "team": "OKC",
+        "actual": 48.0,
+        "pred": 41.5,
+        "lo": 31.0,
+        "hi": 52.0
+      },
+      {
+        "season": 2018,
+        "team": "ORL",
+        "actual": 25.0,
+        "pred": 30.75,
+        "lo": 21.0,
+        "hi": 42.0
+      },
+      {
+        "season": 2018,
+        "team": "PHI",
+        "actual": 52.0,
+        "pred": 49.85,
+        "lo": 40.0,
+        "hi": 60.0
+      },
+      {
+        "season": 2018,
+        "team": "PHO",
+        "actual": 21.0,
+        "pred": 15.15,
+        "lo": 8.0,
+        "hi": 23.0
+      },
+      {
+        "season": 2018,
+        "team": "POR",
+        "actual": 49.0,
+        "pred": 38.98,
+        "lo": 28.0,
+        "hi": 50.0
+      },
+      {
+        "season": 2018,
+        "team": "SAC",
+        "actual": 27.0,
+        "pred": 23.32,
+        "lo": 14.0,
+        "hi": 33.0
+      },
+      {
+        "season": 2018,
+        "team": "SAS",
+        "actual": 47.0,
+        "pred": 42.74,
+        "lo": 32.0,
+        "hi": 53.0
+      },
+      {
+        "season": 2018,
+        "team": "TOR",
+        "actual": 59.0,
+        "pred": 62.37,
+        "lo": 53.0,
+        "hi": 71.0
+      },
+      {
+        "season": 2018,
+        "team": "UTA",
+        "actual": 48.0,
+        "pred": 52.82,
+        "lo": 43.0,
+        "hi": 62.0
+      },
+      {
+        "season": 2018,
+        "team": "WAS",
+        "actual": 43.0,
+        "pred": 41.12,
+        "lo": 31.0,
+        "hi": 52.0
+      },
+      {
+        "season": 2019,
+        "team": "ATL",
+        "actual": 29.0,
+        "pred": 31.52,
+        "lo": 22.0,
+        "hi": 42.0
+      },
+      {
+        "season": 2019,
+        "team": "BOS",
+        "actual": 49.0,
+        "pred": 52.78,
+        "lo": 43.0,
+        "hi": 63.0
+      },
+      {
+        "season": 2019,
+        "team": "BRK",
+        "actual": 42.0,
+        "pred": 31.49,
+        "lo": 22.0,
+        "hi": 42.0
+      },
+      {
+        "season": 2019,
+        "team": "CHI",
+        "actual": 22.0,
+        "pred": 27.34,
+        "lo": 18.0,
+        "hi": 37.0
+      },
+      {
+        "season": 2019,
+        "team": "CHO",
+        "actual": 39.0,
+        "pred": 40.55,
+        "lo": 30.0,
+        "hi": 51.0
+      },
+      {
+        "season": 2019,
+        "team": "CLE",
+        "actual": 19.0,
+        "pred": 22.92,
+        "lo": 14.0,
+        "hi": 32.0
+      },
+      {
+        "season": 2019,
+        "team": "DAL",
+        "actual": 33.0,
+        "pred": 33.75,
+        "lo": 24.0,
+        "hi": 44.0
+      },
+      {
+        "season": 2019,
+        "team": "DEN",
+        "actual": 54.0,
+        "pred": 52.62,
+        "lo": 42.0,
+        "hi": 62.0
+      },
+      {
+        "season": 2019,
+        "team": "DET",
+        "actual": 41.0,
+        "pred": 29.92,
+        "lo": 20.0,
+        "hi": 40.0
+      },
+      {
+        "season": 2019,
+        "team": "GSW",
+        "actual": 57.0,
+        "pred": 60.11,
+        "lo": 51.0,
+        "hi": 69.0
+      },
+      {
+        "season": 2019,
+        "team": "HOU",
+        "actual": 53.0,
+        "pred": 58.42,
+        "lo": 49.0,
+        "hi": 67.0
+      },
+      {
+        "season": 2019,
+        "team": "IND",
+        "actual": 48.0,
+        "pred": 45.05,
+        "lo": 35.0,
+        "hi": 56.0
+      },
+      {
+        "season": 2019,
+        "team": "LAC",
+        "actual": 48.0,
+        "pred": 39.03,
+        "lo": 28.0,
+        "hi": 50.0
+      },
+      {
+        "season": 2019,
+        "team": "LAL",
+        "actual": 37.0,
+        "pred": 26.22,
+        "lo": 17.0,
+        "hi": 36.0
+      },
+      {
+        "season": 2019,
+        "team": "MEM",
+        "actual": 33.0,
+        "pred": 35.79,
+        "lo": 26.0,
+        "hi": 46.0
+      },
+      {
+        "season": 2019,
+        "team": "MIA",
+        "actual": 39.0,
+        "pred": 36.81,
+        "lo": 26.0,
+        "hi": 47.0
+      },
+      {
+        "season": 2019,
+        "team": "MIL",
+        "actual": 60.0,
+        "pred": 63.25,
+        "lo": 54.9,
+        "hi": 71.0
+      },
+      {
+        "season": 2019,
+        "team": "MIN",
+        "actual": 36.0,
+        "pred": 38.24,
+        "lo": 28.0,
+        "hi": 49.0
+      },
+      {
+        "season": 2019,
+        "team": "NOP",
+        "actual": 33.0,
+        "pred": 43.25,
+        "lo": 33.0,
+        "hi": 53.1
+      },
+      {
+        "season": 2019,
+        "team": "NYK",
+        "actual": 17.0,
+        "pred": 14.99,
+        "lo": 8.0,
+        "hi": 22.1
+      },
+      {
+        "season": 2019,
+        "team": "OKC",
+        "actual": 49.0,
+        "pred": 40.57,
+        "lo": 30.0,
+        "hi": 51.0
+      },
+      {
+        "season": 2019,
+        "team": "ORL",
+        "actual": 42.0,
+        "pred": 38.78,
+        "lo": 28.0,
+        "hi": 49.0
+      },
+      {
+        "season": 2019,
+        "team": "PHI",
+        "actual": 51.0,
+        "pred": 56.18,
+        "lo": 47.0,
+        "hi": 66.0
+      },
+      {
+        "season": 2019,
+        "team": "PHO",
+        "actual": 19.0,
+        "pred": 28.73,
+        "lo": 19.0,
+        "hi": 39.0
+      },
+      {
+        "season": 2019,
+        "team": "POR",
+        "actual": 53.0,
+        "pred": 49.26,
+        "lo": 39.0,
+        "hi": 59.0
+      },
+      {
+        "season": 2019,
+        "team": "SAC",
+        "actual": 39.0,
+        "pred": 39.98,
+        "lo": 29.0,
+        "hi": 51.0
+      },
+      {
+        "season": 2019,
+        "team": "SAS",
+        "actual": 48.0,
+        "pred": 46.0,
+        "lo": 36.0,
+        "hi": 56.0
+      },
+      {
+        "season": 2019,
+        "team": "TOR",
+        "actual": 58.0,
+        "pred": 54.08,
+        "lo": 44.0,
+        "hi": 64.0
+      },
+      {
+        "season": 2019,
+        "team": "UTA",
+        "actual": 50.0,
+        "pred": 49.16,
+        "lo": 39.0,
+        "hi": 59.0
+      },
+      {
+        "season": 2019,
+        "team": "WAS",
+        "actual": 32.0,
+        "pred": 44.78,
+        "lo": 34.0,
+        "hi": 55.0
+      },
+      {
+        "season": 2022,
+        "team": "ATL",
+        "actual": 43.0,
+        "pred": 49.92,
+        "lo": 39.0,
+        "hi": 60.0
+      },
+      {
+        "season": 2022,
+        "team": "BOS",
+        "actual": 51.0,
+        "pred": 49.34,
+        "lo": 39.0,
+        "hi": 60.0
+      },
+      {
+        "season": 2022,
+        "team": "BRK",
+        "actual": 44.0,
+        "pred": 43.91,
+        "lo": 33.0,
+        "hi": 55.0
+      },
+      {
+        "season": 2022,
+        "team": "CHI",
+        "actual": 46.0,
+        "pred": 42.98,
+        "lo": 33.0,
+        "hi": 53.0
+      },
+      {
+        "season": 2022,
+        "team": "CHO",
+        "actual": 43.0,
+        "pred": 43.51,
+        "lo": 33.0,
+        "hi": 54.0
+      },
+      {
+        "season": 2022,
+        "team": "CLE",
+        "actual": 44.0,
+        "pred": 40.36,
+        "lo": 30.0,
+        "hi": 51.0
+      },
+      {
+        "season": 2022,
+        "team": "DAL",
+        "actual": 52.0,
+        "pred": 41.22,
+        "lo": 31.0,
+        "hi": 52.0
+      },
+      {
+        "season": 2022,
+        "team": "DEN",
+        "actual": 48.0,
+        "pred": 49.42,
+        "lo": 39.0,
+        "hi": 59.0
+      },
+      {
+        "season": 2022,
+        "team": "DET",
+        "actual": 23.0,
+        "pred": 21.93,
+        "lo": 13.0,
+        "hi": 31.0
+      },
+      {
+        "season": 2022,
+        "team": "GSW",
+        "actual": 53.0,
+        "pred": 53.87,
+        "lo": 44.0,
+        "hi": 63.0
+      },
+      {
+        "season": 2022,
+        "team": "HOU",
+        "actual": 20.0,
+        "pred": 26.37,
+        "lo": 17.0,
+        "hi": 36.0
+      },
+      {
+        "season": 2022,
+        "team": "IND",
+        "actual": 25.0,
+        "pred": 42.26,
+        "lo": 31.0,
+        "hi": 53.0
+      },
+      {
+        "season": 2022,
+        "team": "LAC",
+        "actual": 42.0,
+        "pred": 28.89,
+        "lo": 19.0,
+        "hi": 39.0
+      },
+      {
+        "season": 2022,
+        "team": "LAL",
+        "actual": 33.0,
+        "pred": 38.43,
+        "lo": 28.0,
+        "hi": 49.0
+      },
+      {
+        "season": 2022,
+        "team": "MEM",
+        "actual": 56.0,
+        "pred": 52.59,
+        "lo": 42.0,
+        "hi": 63.0
+      },
+      {
+        "season": 2022,
+        "team": "MIA",
+        "actual": 53.0,
+        "pred": 43.03,
+        "lo": 32.0,
+        "hi": 54.0
+      },
+      {
+        "season": 2022,
+        "team": "MIL",
+        "actual": 51.0,
+        "pred": 61.08,
+        "lo": 52.0,
+        "hi": 70.0
+      },
+      {
+        "season": 2022,
+        "team": "MIN",
+        "actual": 46.0,
+        "pred": 46.24,
+        "lo": 36.0,
+        "hi": 56.0
+      },
+      {
+        "season": 2022,
+        "team": "NOP",
+        "actual": 36.0,
+        "pred": 44.71,
+        "lo": 34.0,
+        "hi": 56.0
+      },
+      {
+        "season": 2022,
+        "team": "NYK",
+        "actual": 37.0,
+        "pred": 38.45,
+        "lo": 28.0,
+        "hi": 50.0
+      },
+      {
+        "season": 2022,
+        "team": "OKC",
+        "actual": 24.0,
+        "pred": 20.47,
+        "lo": 12.0,
+        "hi": 30.0
+      },
+      {
+        "season": 2022,
+        "team": "ORL",
+        "actual": 22.0,
+        "pred": 37.45,
+        "lo": 27.0,
+        "hi": 49.0
+      },
+      {
+        "season": 2022,
+        "team": "PHI",
+        "actual": 51.0,
+        "pred": 49.56,
+        "lo": 39.0,
+        "hi": 60.0
+      },
+      {
+        "season": 2022,
+        "team": "PHO",
+        "actual": 64.0,
+        "pred": 45.85,
+        "lo": 35.0,
+        "hi": 56.0
+      },
+      {
+        "season": 2022,
+        "team": "POR",
+        "actual": 27.0,
+        "pred": 35.28,
+        "lo": 25.0,
+        "hi": 46.0
+      },
+      {
+        "season": 2022,
+        "team": "SAC",
+        "actual": 30.0,
+        "pred": 27.68,
+        "lo": 18.0,
+        "hi": 38.0
+      },
+      {
+        "season": 2022,
+        "team": "SAS",
+        "actual": 34.0,
+        "pred": 37.09,
+        "lo": 27.0,
+        "hi": 48.0
+      },
+      {
+        "season": 2022,
+        "team": "TOR",
+        "actual": 48.0,
+        "pred": 37.55,
+        "lo": 27.0,
+        "hi": 48.0
+      },
+      {
+        "season": 2022,
+        "team": "UTA",
+        "actual": 49.0,
+        "pred": 43.9,
+        "lo": 33.0,
+        "hi": 54.0
+      },
+      {
+        "season": 2022,
+        "team": "WAS",
+        "actual": 35.0,
+        "pred": 36.62,
+        "lo": 26.0,
+        "hi": 47.0
+      },
+      {
+        "season": 2023,
+        "team": "ATL",
+        "actual": 41.0,
+        "pred": 38.29,
+        "lo": 28.0,
+        "hi": 49.0
+      },
+      {
+        "season": 2023,
+        "team": "BOS",
+        "actual": 57.0,
+        "pred": 49.25,
+        "lo": 39.0,
+        "hi": 60.0
+      },
+      {
+        "season": 2023,
+        "team": "BRK",
+        "actual": 45.0,
+        "pred": 55.33,
+        "lo": 45.0,
+        "hi": 65.0
+      },
+      {
+        "season": 2023,
+        "team": "CHI",
+        "actual": 40.0,
+        "pred": 38.81,
+        "lo": 28.0,
+        "hi": 50.0
+      },
+      {
+        "season": 2023,
+        "team": "CHO",
+        "actual": 27.0,
+        "pred": 27.34,
+        "lo": 18.0,
+        "hi": 38.0
+      },
+      {
+        "season": 2023,
+        "team": "CLE",
+        "actual": 51.0,
+        "pred": 45.8,
+        "lo": 35.0,
+        "hi": 57.0
+      },
+      {
+        "season": 2023,
+        "team": "DAL",
+        "actual": 38.0,
+        "pred": 45.92,
+        "lo": 35.0,
+        "hi": 56.0
+      },
+      {
+        "season": 2023,
+        "team": "DEN",
+        "actual": 53.0,
+        "pred": 54.26,
+        "lo": 44.0,
+        "hi": 64.0
+      },
+      {
+        "season": 2023,
+        "team": "DET",
+        "actual": 17.0,
+        "pred": 22.38,
+        "lo": 14.0,
+        "hi": 32.0
+      },
+      {
+        "season": 2023,
+        "team": "GSW",
+        "actual": 44.0,
+        "pred": 49.42,
+        "lo": 39.0,
+        "hi": 60.0
+      },
+      {
+        "season": 2023,
+        "team": "HOU",
+        "actual": 22.0,
+        "pred": 28.19,
+        "lo": 18.0,
+        "hi": 39.0
+      },
+      {
+        "season": 2023,
+        "team": "IND",
+        "actual": 35.0,
+        "pred": 35.33,
+        "lo": 25.0,
+        "hi": 46.0
+      },
+      {
+        "season": 2023,
+        "team": "LAC",
+        "actual": 44.0,
+        "pred": 44.8,
+        "lo": 34.0,
+        "hi": 56.0
+      },
+      {
+        "season": 2023,
+        "team": "LAL",
+        "actual": 43.0,
+        "pred": 39.77,
+        "lo": 29.0,
+        "hi": 50.0
+      },
+      {
+        "season": 2023,
+        "team": "MEM",
+        "actual": 51.0,
+        "pred": 47.84,
+        "lo": 37.0,
+        "hi": 58.0
+      },
+      {
+        "season": 2023,
+        "team": "MIA",
+        "actual": 44.0,
+        "pred": 39.94,
+        "lo": 29.0,
+        "hi": 51.0
+      },
+      {
+        "season": 2023,
+        "team": "MIL",
+        "actual": 58.0,
+        "pred": 54.83,
+        "lo": 45.0,
+        "hi": 64.0
+      },
+      {
+        "season": 2023,
+        "team": "MIN",
+        "actual": 42.0,
+        "pred": 39.41,
+        "lo": 29.0,
+        "hi": 50.0
+      },
+      {
+        "season": 2023,
+        "team": "NOP",
+        "actual": 42.0,
+        "pred": 39.5,
+        "lo": 28.0,
+        "hi": 51.0
+      },
+      {
+        "season": 2023,
+        "team": "NYK",
+        "actual": 47.0,
+        "pred": 37.99,
+        "lo": 27.0,
+        "hi": 49.0
+      },
+      {
+        "season": 2023,
+        "team": "OKC",
+        "actual": 40.0,
+        "pred": 37.22,
+        "lo": 27.0,
+        "hi": 48.0
+      },
+      {
+        "season": 2023,
+        "team": "ORL",
+        "actual": 34.0,
+        "pred": 40.86,
+        "lo": 30.0,
+        "hi": 51.0
+      },
+      {
+        "season": 2023,
+        "team": "PHI",
+        "actual": 54.0,
+        "pred": 56.73,
+        "lo": 47.0,
+        "hi": 66.0
+      },
+      {
+        "season": 2023,
+        "team": "PHO",
+        "actual": 45.0,
+        "pred": 45.28,
+        "lo": 34.0,
+        "hi": 56.0
+      },
+      {
+        "season": 2023,
+        "team": "POR",
+        "actual": 33.0,
+        "pred": 33.08,
+        "lo": 23.0,
+        "hi": 44.0
+      },
+      {
+        "season": 2023,
+        "team": "SAC",
+        "actual": 48.0,
+        "pred": 47.83,
+        "lo": 37.0,
+        "hi": 58.0
+      },
+      {
+        "season": 2023,
+        "team": "SAS",
+        "actual": 22.0,
+        "pred": 15.61,
+        "lo": 8.9,
+        "hi": 23.0
+      },
+      {
+        "season": 2023,
+        "team": "TOR",
+        "actual": 41.0,
+        "pred": 44.74,
+        "lo": 34.0,
+        "hi": 55.0
+      },
+      {
+        "season": 2023,
+        "team": "UTA",
+        "actual": 37.0,
+        "pred": 39.94,
+        "lo": 29.0,
+        "hi": 51.0
+      },
+      {
+        "season": 2023,
+        "team": "WAS",
+        "actual": 35.0,
+        "pred": 35.04,
+        "lo": 24.0,
+        "hi": 46.0
+      },
+      {
+        "season": 2024,
+        "team": "ATL",
+        "actual": 36.0,
+        "pred": 41.12,
+        "lo": 30.0,
+        "hi": 52.0
+      },
+      {
+        "season": 2024,
+        "team": "BOS",
+        "actual": 64.0,
+        "pred": 59.79,
+        "lo": 51.0,
+        "hi": 69.0
+      },
+      {
+        "season": 2024,
+        "team": "BRK",
+        "actual": 32.0,
+        "pred": 32.76,
+        "lo": 23.0,
+        "hi": 43.0
+      },
+      {
+        "season": 2024,
+        "team": "CHI",
+        "actual": 39.0,
+        "pred": 41.72,
+        "lo": 31.0,
+        "hi": 52.0
+      },
+      {
+        "season": 2024,
+        "team": "CHO",
+        "actual": 21.0,
+        "pred": 24.29,
+        "lo": 15.0,
+        "hi": 34.0
+      },
+      {
+        "season": 2024,
+        "team": "CLE",
+        "actual": 48.0,
+        "pred": 47.33,
+        "lo": 37.0,
+        "hi": 58.0
+      },
+      {
+        "season": 2024,
+        "team": "DAL",
+        "actual": 50.0,
+        "pred": 36.93,
+        "lo": 26.0,
+        "hi": 48.0
+      },
+      {
+        "season": 2024,
+        "team": "DEN",
+        "actual": 57.0,
+        "pred": 46.88,
+        "lo": 36.0,
+        "hi": 57.0
+      },
+      {
+        "season": 2024,
+        "team": "DET",
+        "actual": 14.0,
+        "pred": 28.31,
+        "lo": 19.0,
+        "hi": 38.0
+      },
+      {
+        "season": 2024,
+        "team": "GSW",
+        "actual": 46.0,
+        "pred": 34.28,
+        "lo": 24.0,
+        "hi": 45.0
+      },
+      {
+        "season": 2024,
+        "team": "HOU",
+        "actual": 41.0,
+        "pred": 35.36,
+        "lo": 25.0,
+        "hi": 46.0
+      },
+      {
+        "season": 2024,
+        "team": "IND",
+        "actual": 47.0,
+        "pred": 46.07,
+        "lo": 35.0,
+        "hi": 57.0
+      },
+      {
+        "season": 2024,
+        "team": "LAC",
+        "actual": 51.0,
+        "pred": 44.55,
+        "lo": 34.0,
+        "hi": 55.0
+      },
+      {
+        "season": 2024,
+        "team": "LAL",
+        "actual": 47.0,
+        "pred": 49.96,
+        "lo": 39.0,
+        "hi": 60.0
+      },
+      {
+        "season": 2024,
+        "team": "MEM",
+        "actual": 27.0,
+        "pred": 29.29,
+        "lo": 19.0,
+        "hi": 39.0
+      },
+      {
+        "season": 2024,
+        "team": "MIA",
+        "actual": 46.0,
+        "pred": 38.11,
+        "lo": 28.0,
+        "hi": 49.0
+      },
+      {
+        "season": 2024,
+        "team": "MIL",
+        "actual": 49.0,
+        "pred": 52.61,
+        "lo": 43.0,
+        "hi": 62.0
+      },
+      {
+        "season": 2024,
+        "team": "MIN",
+        "actual": 56.0,
+        "pred": 42.75,
+        "lo": 32.0,
+        "hi": 53.0
+      },
+      {
+        "season": 2024,
+        "team": "NOP",
+        "actual": 49.0,
+        "pred": 57.56,
+        "lo": 48.0,
+        "hi": 67.0
+      },
+      {
+        "season": 2024,
+        "team": "NYK",
+        "actual": 50.0,
+        "pred": 48.56,
+        "lo": 38.0,
+        "hi": 59.0
+      },
+      {
+        "season": 2024,
+        "team": "OKC",
+        "actual": 57.0,
+        "pred": 61.32,
+        "lo": 52.0,
+        "hi": 70.0
+      },
+      {
+        "season": 2024,
+        "team": "ORL",
+        "actual": 47.0,
+        "pred": 46.59,
+        "lo": 36.0,
+        "hi": 57.0
+      },
+      {
+        "season": 2024,
+        "team": "PHI",
+        "actual": 47.0,
+        "pred": 43.04,
+        "lo": 32.0,
+        "hi": 54.0
+      },
+      {
+        "season": 2024,
+        "team": "PHO",
+        "actual": 49.0,
+        "pred": 47.46,
+        "lo": 37.0,
+        "hi": 58.0
+      },
+      {
+        "season": 2024,
+        "team": "POR",
+        "actual": 21.0,
+        "pred": 15.5,
+        "lo": 8.0,
+        "hi": 23.0
+      },
+      {
+        "season": 2024,
+        "team": "SAC",
+        "actual": 46.0,
+        "pred": 45.44,
+        "lo": 35.0,
+        "hi": 56.0
+      },
+      {
+        "season": 2024,
+        "team": "SAS",
+        "actual": 22.0,
+        "pred": 37.23,
+        "lo": 27.0,
+        "hi": 48.0
+      },
+      {
+        "season": 2024,
+        "team": "TOR",
+        "actual": 25.0,
+        "pred": 42.81,
+        "lo": 32.0,
+        "hi": 53.0
+      },
+      {
+        "season": 2024,
+        "team": "UTA",
+        "actual": 31.0,
+        "pred": 29.64,
+        "lo": 20.0,
+        "hi": 40.0
+      },
+      {
+        "season": 2024,
+        "team": "WAS",
+        "actual": 15.0,
+        "pred": 23.68,
+        "lo": 15.0,
+        "hi": 33.0
+      },
+      {
+        "season": 2025,
+        "team": "ATL",
+        "actual": 40.0,
+        "pred": 54.72,
+        "lo": 44.0,
+        "hi": 64.0
+      },
+      {
+        "season": 2025,
+        "team": "BOS",
+        "actual": 61.0,
+        "pred": 58.4,
+        "lo": 49.0,
+        "hi": 67.0
+      },
+      {
+        "season": 2025,
+        "team": "BRK",
+        "actual": 26.0,
+        "pred": 31.02,
+        "lo": 22.0,
+        "hi": 41.0
+      },
+      {
+        "season": 2025,
+        "team": "CHI",
+        "actual": 39.0,
+        "pred": 39.87,
+        "lo": 29.0,
+        "hi": 51.0
+      },
+      {
+        "season": 2025,
+        "team": "CHO",
+        "actual": 19.0,
+        "pred": 13.59,
+        "lo": 7.0,
+        "hi": 21.0
+      },
+      {
+        "season": 2025,
+        "team": "CLE",
+        "actual": 64.0,
+        "pred": 59.99,
+        "lo": 51.0,
+        "hi": 69.0
+      },
+      {
+        "season": 2025,
+        "team": "DAL",
+        "actual": 39.0,
+        "pred": 34.0,
+        "lo": 24.0,
+        "hi": 44.0
+      },
+      {
+        "season": 2025,
+        "team": "DEN",
+        "actual": 50.0,
+        "pred": 54.69,
+        "lo": 45.0,
+        "hi": 64.0
+      },
+      {
+        "season": 2025,
+        "team": "DET",
+        "actual": 44.0,
+        "pred": 42.82,
+        "lo": 32.0,
+        "hi": 53.0
+      },
+      {
+        "season": 2025,
+        "team": "GSW",
+        "actual": 48.0,
+        "pred": 43.73,
+        "lo": 33.0,
+        "hi": 54.0
+      },
+      {
+        "season": 2025,
+        "team": "HOU",
+        "actual": 52.0,
+        "pred": 41.3,
+        "lo": 31.0,
+        "hi": 52.0
+      },
+      {
+        "season": 2025,
+        "team": "IND",
+        "actual": 50.0,
+        "pred": 47.73,
+        "lo": 37.0,
+        "hi": 58.0
+      },
+      {
+        "season": 2025,
+        "team": "LAC",
+        "actual": 50.0,
+        "pred": 48.62,
+        "lo": 38.0,
+        "hi": 59.0
+      },
+      {
+        "season": 2025,
+        "team": "LAL",
+        "actual": 50.0,
+        "pred": 38.26,
+        "lo": 28.0,
+        "hi": 49.0
+      },
+      {
+        "season": 2025,
+        "team": "MEM",
+        "actual": 48.0,
+        "pred": 51.31,
+        "lo": 41.0,
+        "hi": 61.0
+      },
+      {
+        "season": 2025,
+        "team": "MIA",
+        "actual": 37.0,
+        "pred": 33.14,
+        "lo": 23.0,
+        "hi": 43.0
+      },
+      {
+        "season": 2025,
+        "team": "MIL",
+        "actual": 48.0,
+        "pred": 47.78,
+        "lo": 37.0,
+        "hi": 58.0
+      },
+      {
+        "season": 2025,
+        "team": "MIN",
+        "actual": 49.0,
+        "pred": 49.57,
+        "lo": 39.0,
+        "hi": 59.0
+      },
+      {
+        "season": 2025,
+        "team": "NOP",
+        "actual": 21.0,
+        "pred": 24.48,
+        "lo": 15.9,
+        "hi": 34.0
+      },
+      {
+        "season": 2025,
+        "team": "NYK",
+        "actual": 51.0,
+        "pred": 45.97,
+        "lo": 35.0,
+        "hi": 56.0
+      },
+      {
+        "season": 2025,
+        "team": "OKC",
+        "actual": 68.0,
+        "pred": 59.37,
+        "lo": 50.0,
+        "hi": 68.0
+      },
+      {
+        "season": 2025,
+        "team": "ORL",
+        "actual": 41.0,
+        "pred": 32.3,
+        "lo": 22.0,
+        "hi": 43.0
+      },
+      {
+        "season": 2025,
+        "team": "PHI",
+        "actual": 24.0,
+        "pred": 29.82,
+        "lo": 20.0,
+        "hi": 40.0
+      },
+      {
+        "season": 2025,
+        "team": "PHO",
+        "actual": 36.0,
+        "pred": 48.78,
+        "lo": 39.0,
+        "hi": 59.0
+      },
+      {
+        "season": 2025,
+        "team": "POR",
+        "actual": 36.0,
+        "pred": 26.32,
+        "lo": 17.0,
+        "hi": 36.0
+      },
+      {
+        "season": 2025,
+        "team": "SAC",
+        "actual": 40.0,
+        "pred": 49.95,
+        "lo": 40.0,
+        "hi": 60.0
+      },
+      {
+        "season": 2025,
+        "team": "SAS",
+        "actual": 34.0,
+        "pred": 32.71,
+        "lo": 23.0,
+        "hi": 43.0
+      },
+      {
+        "season": 2025,
+        "team": "TOR",
+        "actual": 30.0,
+        "pred": 36.56,
+        "lo": 26.0,
+        "hi": 47.0
+      },
+      {
+        "season": 2025,
+        "team": "UTA",
+        "actual": 17.0,
+        "pred": 33.39,
+        "lo": 23.0,
+        "hi": 44.0
+      },
+      {
+        "season": 2025,
+        "team": "WAS",
+        "actual": 18.0,
+        "pred": 18.96,
+        "lo": 11.0,
+        "hi": 28.0
+      },
+      {
+        "season": 2026,
+        "team": "ATL",
+        "actual": 46.0,
+        "pred": 48.27,
+        "lo": 38.0,
+        "hi": 58.1
+      },
+      {
+        "season": 2026,
+        "team": "BOS",
+        "actual": 56.0,
+        "pred": 58.56,
+        "lo": 49.0,
+        "hi": 67.0
+      },
+      {
+        "season": 2026,
+        "team": "BRK",
+        "actual": 20.0,
+        "pred": 24.86,
+        "lo": 16.0,
+        "hi": 34.0
+      },
+      {
+        "season": 2026,
+        "team": "CHI",
+        "actual": 31.0,
+        "pred": 41.48,
+        "lo": 31.0,
+        "hi": 52.0
+      },
+      {
+        "season": 2026,
+        "team": "CHO",
+        "actual": 44.0,
+        "pred": 49.28,
+        "lo": 39.0,
+        "hi": 59.0
+      },
+      {
+        "season": 2026,
+        "team": "CLE",
+        "actual": 52.0,
+        "pred": 56.85,
+        "lo": 47.0,
+        "hi": 66.0
+      },
+      {
+        "season": 2026,
+        "team": "DAL",
+        "actual": 26.0,
+        "pred": 20.42,
+        "lo": 12.0,
+        "hi": 29.0
+      },
+      {
+        "season": 2026,
+        "team": "DEN",
+        "actual": 54.0,
+        "pred": 52.8,
+        "lo": 43.0,
+        "hi": 63.0
+      },
+      {
+        "season": 2026,
+        "team": "DET",
+        "actual": 60.0,
+        "pred": 57.96,
+        "lo": 48.9,
+        "hi": 67.0
+      },
+      {
+        "season": 2026,
+        "team": "GSW",
+        "actual": 37.0,
+        "pred": 32.95,
+        "lo": 23.0,
+        "hi": 43.0
+      },
+      {
+        "season": 2026,
+        "team": "HOU",
+        "actual": 52.0,
+        "pred": 48.74,
+        "lo": 38.0,
+        "hi": 59.0
+      },
+      {
+        "season": 2026,
+        "team": "IND",
+        "actual": 19.0,
+        "pred": 29.96,
+        "lo": 20.0,
+        "hi": 40.0
+      },
+      {
+        "season": 2026,
+        "team": "LAC",
+        "actual": 42.0,
+        "pred": 48.51,
+        "lo": 38.0,
+        "hi": 59.0
+      },
+      {
+        "season": 2026,
+        "team": "LAL",
+        "actual": 53.0,
+        "pred": 53.54,
+        "lo": 44.0,
+        "hi": 63.0
+      },
+      {
+        "season": 2026,
+        "team": "MEM",
+        "actual": 25.0,
+        "pred": 35.84,
+        "lo": 25.0,
+        "hi": 46.0
+      },
+      {
+        "season": 2026,
+        "team": "MIA",
+        "actual": 43.0,
+        "pred": 36.73,
+        "lo": 26.0,
+        "hi": 48.0
+      },
+      {
+        "season": 2026,
+        "team": "MIL",
+        "actual": 32.0,
+        "pred": 36.92,
+        "lo": 27.0,
+        "hi": 48.0
+      },
+      {
+        "season": 2026,
+        "team": "MIN",
+        "actual": 49.0,
+        "pred": 44.16,
+        "lo": 34.0,
+        "hi": 54.0
+      },
+      {
+        "season": 2026,
+        "team": "NOP",
+        "actual": 26.0,
+        "pred": 36.76,
+        "lo": 26.0,
+        "hi": 47.0
+      },
+      {
+        "season": 2026,
+        "team": "NYK",
+        "actual": 53.0,
+        "pred": 55.69,
+        "lo": 46.0,
+        "hi": 65.0
+      },
+      {
+        "season": 2026,
+        "team": "OKC",
+        "actual": 64.0,
+        "pred": 53.26,
+        "lo": 44.0,
+        "hi": 62.1
+      },
+      {
+        "season": 2026,
+        "team": "ORL",
+        "actual": 45.0,
+        "pred": 37.87,
+        "lo": 28.0,
+        "hi": 48.1
+      },
+      {
+        "season": 2026,
+        "team": "PHI",
+        "actual": 45.0,
+        "pred": 36.25,
+        "lo": 26.0,
+        "hi": 47.0
+      },
+      {
+        "season": 2026,
+        "team": "PHO",
+        "actual": 45.0,
+        "pred": 32.89,
+        "lo": 23.0,
+        "hi": 43.0
+      },
+      {
+        "season": 2026,
+        "team": "POR",
+        "actual": 42.0,
+        "pred": 40.27,
+        "lo": 30.0,
+        "hi": 50.0
+      },
+      {
+        "season": 2026,
+        "team": "SAC",
+        "actual": 22.0,
+        "pred": 29.21,
+        "lo": 19.0,
+        "hi": 39.0
+      },
+      {
+        "season": 2026,
+        "team": "SAS",
+        "actual": 62.0,
+        "pred": 42.58,
+        "lo": 32.0,
+        "hi": 53.0
+      },
+      {
+        "season": 2026,
+        "team": "TOR",
+        "actual": 46.0,
+        "pred": 48.84,
+        "lo": 38.0,
+        "hi": 59.0
+      },
+      {
+        "season": 2026,
+        "team": "UTA",
+        "actual": 22.0,
+        "pred": 24.79,
+        "lo": 16.0,
+        "hi": 34.0
+      },
+      {
+        "season": 2026,
+        "team": "WAS",
+        "actual": 17.0,
+        "pred": 14.35,
+        "lo": 7.0,
+        "hi": 22.0
+      }
+    ],
+    "wins_five": {
+      "n": 330,
+      "rmse": 9.98222382607226,
+      "mae": 7.7370505050505045,
+      "bias": -1.3410888888888886,
+      "coverage80": 0.793939393939394,
+      "mean_range_width": 24.615757575757574,
+      "rmse_ci": [
+        9.17922705770543,
+        10.798295755493823
+      ]
+    },
+    "wins_five_rows": null,
+    "wins_baseline_league": {
+      "rmse": 12.379601990958573,
+      "mae": 10.16969696969697
+    },
+    "wins_baseline_prior_season": {
+      "rmse": 9.838824855127221,
+      "n": 328,
+      "fit": {
+        "slope": 0.6195727920946433,
+        "intercept": 15.606838409574914
+      },
+      "rmse_model_same_teams": 6.861420909774011
+    },
+    "wins_baseline_actual_net_rating": {
+      "rmse": 3.1464580584983106,
+      "note": "uses the season's actual point differential; not a prediction"
+    },
+    "games": {
+      "regular": {
+        "n": 3685,
+        "model": {
+          "logloss": 0.6022632540209839,
+          "brier": 0.20790574760554914,
+          "accuracy": 0.6702849389416553,
+          "calibration": {
+            "bins": [
+              {
+                "n": 369,
+                "mean_pred": 0.27953586464202856,
+                "obs": 0.27371273712737126
+              },
+              {
+                "n": 368,
+                "mean_pred": 0.3970137430844663,
+                "obs": 0.40217391304347827
+              },
+              {
+                "n": 369,
+                "mean_pred": 0.4681601515983889,
+                "obs": 0.4146341463414634
+              },
+              {
+                "n": 369,
+                "mean_pred": 0.532098711914491,
+                "obs": 0.4959349593495935
+              },
+              {
+                "n": 368,
+                "mean_pred": 0.5859702352619552,
+                "obs": 0.5652173913043478
+              },
+              {
+                "n": 368,
+                "mean_pred": 0.6395812521934026,
+                "obs": 0.6277173913043478
+              },
+              {
+                "n": 368,
+                "mean_pred": 0.6903391271017425,
+                "obs": 0.6630434782608695
+              },
+              {
+                "n": 369,
+                "mean_pred": 0.744167936844079,
+                "obs": 0.7669376693766937
+              },
+              {
+                "n": 368,
+                "mean_pred": 0.7986113101055939,
+                "obs": 0.8016304347826086
+              },
+              {
+                "n": 369,
+                "mean_pred": 0.8768743197222563,
+                "obs": 0.8834688346883469
+              }
+            ],
+            "ece": 0.019304583066283392,
+            "slope": 1.0349632405626312,
+            "intercept": -0.06939272103180118
+          }
+        },
+        "baselines": {
+          "home_rate": {
+            "logloss": 0.6773674197261645,
+            "brier": 0.24214764765527094
+          },
+          "prior_season_net_rating": {
+            "logloss": 0.6416208925252068,
+            "brier": 0.2253406464932645,
+            "n": 3439
+          },
+          "actual_season_net_rating_oracle": {
+            "logloss": 0.5754540990220847,
+            "brier": 0.19646891551914036
+          }
+        }
+      },
+      "playoffs": {
+        "n": 255,
+        "model": {
+          "logloss": 0.673044751854879,
+          "brier": 0.23808615190280738,
+          "accuracy": 0.6039215686274509,
+          "calibration": {
+            "bins": [
+              {
+                "n": 28,
+                "mean_pred": 0.34409306017600677,
+                "obs": 0.39285714285714285
+              },
+              {
+                "n": 23,
+                "mean_pred": 0.44670861663053296,
+                "obs": 0.4782608695652174
+              },
+              {
+                "n": 27,
+                "mean_pred": 0.5085383514054436,
+                "obs": 0.6296296296296297
+              },
+              {
+                "n": 24,
+                "mean_pred": 0.5804381857506321,
+                "obs": 0.5416666666666666
+              },
+              {
+                "n": 29,
+                "mean_pred": 0.6358775764577264,
+                "obs": 0.6206896551724138
+              },
+              {
+                "n": 22,
+                "mean_pred": 0.6801103484661591,
+                "obs": 0.5
+              },
+              {
+                "n": 26,
+                "mean_pred": 0.7301539287856478,
+                "obs": 0.6538461538461539
+              },
+              {
+                "n": 28,
+                "mean_pred": 0.7936129991350828,
+                "obs": 0.5357142857142857
+              },
+              {
+                "n": 24,
+                "mean_pred": 0.8233120187180442,
+                "obs": 0.7916666666666666
+              },
+              {
+                "n": 24,
+                "mean_pred": 0.8912975329717764,
+                "obs": 0.8333333333333334
+              }
+            ],
+            "ece": 0.08646960725855751,
+            "slope": 0.5270767931235881,
+            "intercept": 0.05535415890558642
+          }
+        },
+        "baselines": {
+          "home_rate": {
+            "logloss": 0.6828681925330762,
+            "brier": 0.24460047714869956
+          },
+          "prior_season_net_rating": {
+            "logloss": 0.6641865975549713,
+            "brier": 0.23566585487242542,
+            "n": 248
+          },
+          "actual_season_net_rating_oracle": {
+            "logloss": 0.6478249602486473,
+            "brier": 0.22762176139371512
+          }
+        }
+      }
+    },
+    "series": {
+      "n": 45,
+      "logloss": 0.622112009136868,
+      "brier": 0.2188038927777778,
+      "accuracy": 0.6888888888888889,
+      "logloss_ci": [
+        0.4631780842696275,
+        0.8134025212937379
+      ],
+      "mean_games_actual": 5.666666666666667,
+      "mean_games_model": 5.41367,
+      "calibration": {
+        "bins": [
+          {
+            "n": 9,
+            "mean_pred": 0.3859444444444444,
+            "obs": 0.7777777777777778
+          },
+          {
+            "n": 9,
+            "mean_pred": 0.6169611111111111,
+            "obs": 0.8888888888888888
+          },
+          {
+            "n": 9,
+            "mean_pred": 0.7834666666666666,
+            "obs": 0.4444444444444444
+          },
+          {
+            "n": 9,
+            "mean_pred": 0.8561166666666667,
+            "obs": 0.6666666666666666
+          },
+          {
+            "n": 9,
+            "mean_pred": 0.9401666666666666,
+            "obs": 1.0
+          }
+        ],
+        "ece": 0.2504133333333334,
+        "slope": 0.22449029314127553,
+        "intercept": 0.878999192327394
+      },
+      "baselines": {
+        "coin_flip": {
+          "logloss": 0.6931471805599452,
+          "brier": 0.25
+        },
+        "home_court_team_always": {
+          "accuracy": 0.7555555555555555
+        },
+        "better_record": {
+          "accuracy": 0.7777777777777778,
+          "logloss": 0.544963357358111,
+          "note": "better regular-season record wins; probabilities fixed at 70/30 for log loss"
+        }
+      },
+      "equal_footing_five_avg_bench": {
+        "n": 45,
+        "logloss": 0.6177833618611351,
+        "brier": 0.21376343066666667,
+        "accuracy": 0.6666666666666666,
+        "logloss_ci": [
+          0.47886415174958463,
+          0.8078958462333569
+        ],
+        "mean_games_actual": 5.666666666666667,
+        "mean_games_model": 5.384555555555556,
+        "calibration": {
+          "bins": [
+            {
+              "n": 9,
+              "mean_pred": 0.40630000000000005,
+              "obs": 0.7777777777777778
+            },
+            {
+              "n": 9,
+              "mean_pred": 0.6158722222222222,
+              "obs": 0.6666666666666666
+            },
+            {
+              "n": 9,
+              "mean_pred": 0.6903555555555556,
+              "obs": 0.6666666666666666
+            },
+            {
+              "n": 9,
+              "mean_pred": 0.7989888888888889,
+              "obs": 0.6666666666666666
+            },
+            {
+              "n": 9,
+              "mean_pred": 0.9146166666666667,
+              "obs": 1.0
+            }
+          ],
+          "ece": 0.13273333333333334,
+          "slope": 0.23516515686564382,
+          "intercept": 0.9227450882196125
+        }
+      },
+      "length_observed": {
+        "6": 18,
+        "7": 10,
+        "5": 9,
+        "4": 8
+      },
+      "length_model_expected": {
+        "need4_games4": 10.8176,
+        "need4_games5": 14.1458,
+        "need4_games6": 10.64045,
+        "need4_games7": 9.39615,
+        "need3_games3": 0.0,
+        "need3_games4": 0.0,
+        "need3_games5": 0.0
+      },
+      "by_round": {
+        "1": {
+          "n": 24,
+          "acc": 0.5833333333333334
+        },
+        "2": {
+          "n": 12,
+          "acc": 0.75
+        },
+        "3": {
+          "n": 6,
+          "acc": 0.8333333333333334
+        },
+        "4": {
+          "n": 3,
+          "acc": 1.0
+        }
+      }
+    },
+    "series_rows": [
+      {
+        "season": 2013,
+        "hc": "BRK",
+        "other": "CHI",
+        "round": 1,
+        "p": 0.7758,
+        "y": 0.0,
+        "games": 7,
+        "exp_games": 5.4971,
+        "need": 4
+      },
+      {
+        "season": 2013,
+        "hc": "DEN",
+        "other": "GSW",
+        "round": 1,
+        "p": 0.8746,
+        "y": 0.0,
+        "games": 6,
+        "exp_games": 5.2646,
+        "need": 4
+      },
+      {
+        "season": 2013,
+        "hc": "LAC",
+        "other": "MEM",
+        "round": 1,
+        "p": 0.8572,
+        "y": 0.0,
+        "games": 6,
+        "exp_games": 5.3183,
+        "need": 4
+      },
+      {
+        "season": 2013,
+        "hc": "NYK",
+        "other": "BOS",
+        "round": 1,
+        "p": 0.8404,
+        "y": 1.0,
+        "games": 6,
+        "exp_games": 5.3792,
+        "need": 4
+      },
+      {
+        "season": 2013,
+        "hc": "IND",
+        "other": "ATL",
+        "round": 1,
+        "p": 0.4166,
+        "y": 1.0,
+        "games": 6,
+        "exp_games": 5.6852,
+        "need": 4
+      },
+      {
+        "season": 2013,
+        "hc": "MIA",
+        "other": "MIL",
+        "round": 1,
+        "p": 0.9233,
+        "y": 1.0,
+        "games": 4,
+        "exp_games": 5.0942,
+        "need": 4
+      },
+      {
+        "season": 2013,
+        "hc": "OKC",
+        "other": "HOU",
+        "round": 1,
+        "p": 0.6173,
+        "y": 1.0,
+        "games": 6,
+        "exp_games": 5.6785,
+        "need": 4
+      },
+      {
+        "season": 2013,
+        "hc": "SAS",
+        "other": "LAL",
+        "round": 1,
+        "p": 0.9215,
+        "y": 1.0,
+        "games": 4,
+        "exp_games": 5.105,
+        "need": 4
+      },
+      {
+        "season": 2013,
+        "hc": "NYK",
+        "other": "IND",
+        "round": 2,
+        "p": 0.7916,
+        "y": 0.0,
+        "games": 6,
+        "exp_games": 5.4686,
+        "need": 4
+      },
+      {
+        "season": 2013,
+        "hc": "OKC",
+        "other": "MEM",
+        "round": 2,
+        "p": 0.8202,
+        "y": 0.0,
+        "games": 5,
+        "exp_games": 5.4176,
+        "need": 4
+      },
+      {
+        "season": 2013,
+        "hc": "MIA",
+        "other": "CHI",
+        "round": 2,
+        "p": 0.9848,
+        "y": 1.0,
+        "games": 5,
+        "exp_games": 4.615,
+        "need": 4
+      },
+      {
+        "season": 2013,
+        "hc": "SAS",
+        "other": "GSW",
+        "round": 2,
+        "p": 0.9708,
+        "y": 1.0,
+        "games": 6,
+        "exp_games": 4.7924,
+        "need": 4
+      },
+      {
+        "season": 2013,
+        "hc": "SAS",
+        "other": "MEM",
+        "round": 3,
+        "p": 0.9255,
+        "y": 1.0,
+        "games": 4,
+        "exp_games": 5.0824,
+        "need": 4
+      },
+      {
+        "season": 2013,
+        "hc": "MIA",
+        "other": "IND",
+        "round": 3,
+        "p": 0.9396,
+        "y": 1.0,
+        "games": 7,
+        "exp_games": 4.9992,
+        "need": 4
+      },
+      {
+        "season": 2013,
+        "hc": "MIA",
+        "other": "SAS",
+        "round": 4,
+        "p": 0.5682,
+        "y": 1.0,
+        "games": 7,
+        "exp_games": 5.7035,
+        "need": 4
+      },
+      {
+        "season": 2014,
+        "hc": "IND",
+        "other": "ATL",
+        "round": 1,
+        "p": 0.358,
+        "y": 1.0,
+        "games": 7,
+        "exp_games": 5.6426,
+        "need": 4
+      },
+      {
+        "season": 2014,
+        "hc": "LAC",
+        "other": "GSW",
+        "round": 1,
+        "p": 0.7218,
+        "y": 1.0,
+        "games": 7,
+        "exp_games": 5.58,
+        "need": 4
+      },
+      {
+        "season": 2014,
+        "hc": "OKC",
+        "other": "MEM",
+        "round": 1,
+        "p": 0.846,
+        "y": 1.0,
+        "games": 7,
+        "exp_games": 5.3716,
+        "need": 4
+      },
+      {
+        "season": 2014,
+        "hc": "TOR",
+        "other": "BRK",
+        "round": 1,
+        "p": 0.601,
+        "y": 0.0,
+        "games": 7,
+        "exp_games": 5.6977,
+        "need": 4
+      },
+      {
+        "season": 2014,
+        "hc": "CHI",
+        "other": "WAS",
+        "round": 1,
+        "p": 0.3558,
+        "y": 0.0,
+        "games": 5,
+        "exp_games": 5.641,
+        "need": 4
+      },
+      {
+        "season": 2014,
+        "hc": "HOU",
+        "other": "POR",
+        "round": 1,
+        "p": 0.8553,
+        "y": 0.0,
+        "games": 6,
+        "exp_games": 5.3343,
+        "need": 4
+      },
+      {
+        "season": 2014,
+        "hc": "MIA",
+        "other": "CHA",
+        "round": 1,
+        "p": 0.8434,
+        "y": 1.0,
+        "games": 4,
+        "exp_games": 5.3653,
+        "need": 4
+      },
+      {
+        "season": 2014,
+        "hc": "SAS",
+        "other": "DAL",
+        "round": 1,
+        "p": 0.5778,
+        "y": 1.0,
+        "games": 7,
+        "exp_games": 5.6916,
+        "need": 4
+      },
+      {
+        "season": 2014,
+        "hc": "IND",
+        "other": "WAS",
+        "round": 2,
+        "p": 0.5028,
+        "y": 1.0,
+        "games": 6,
+        "exp_games": 5.6985,
+        "need": 4
+      },
+      {
+        "season": 2014,
+        "hc": "OKC",
+        "other": "LAC",
+        "round": 2,
+        "p": 0.5241,
+        "y": 1.0,
+        "games": 6,
+        "exp_games": 5.7073,
+        "need": 4
+      },
+      {
+        "season": 2014,
+        "hc": "MIA",
+        "other": "BRK",
+        "round": 2,
+        "p": 0.855,
+        "y": 1.0,
+        "games": 5,
+        "exp_games": 5.3344,
+        "need": 4
+      },
+      {
+        "season": 2014,
+        "hc": "SAS",
+        "other": "POR",
+        "round": 2,
+        "p": 0.8536,
+        "y": 1.0,
+        "games": 5,
+        "exp_games": 5.339,
+        "need": 4
+      },
+      {
+        "season": 2014,
+        "hc": "IND",
+        "other": "MIA",
+        "round": 3,
+        "p": 0.1808,
+        "y": 0.0,
+        "games": 6,
+        "exp_games": 5.3702,
+        "need": 4
+      },
+      {
+        "season": 2014,
+        "hc": "SAS",
+        "other": "OKC",
+        "round": 3,
+        "p": 0.6517,
+        "y": 1.0,
+        "games": 6,
+        "exp_games": 5.649,
+        "need": 4
+      },
+      {
+        "season": 2014,
+        "hc": "SAS",
+        "other": "MIA",
+        "round": 4,
+        "p": 0.6254,
+        "y": 1.0,
+        "games": 5,
+        "exp_games": 5.6656,
+        "need": 4
+      },
+      {
+        "season": 2015,
+        "hc": "CHI",
+        "other": "MIL",
+        "round": 1,
+        "p": 0.6856,
+        "y": 1.0,
+        "games": 6,
+        "exp_games": 5.6317,
+        "need": 4
+      },
+      {
+        "season": 2015,
+        "hc": "GSW",
+        "other": "NOP",
+        "round": 1,
+        "p": 0.8049,
+        "y": 1.0,
+        "games": 4,
+        "exp_games": 5.4424,
+        "need": 4
+      },
+      {
+        "season": 2015,
+        "hc": "HOU",
+        "other": "DAL",
+        "round": 1,
+        "p": 0.4382,
+        "y": 1.0,
+        "games": 5,
+        "exp_games": 5.678,
+        "need": 4
+      },
+      {
+        "season": 2015,
+        "hc": "TOR",
+        "other": "WAS",
+        "round": 1,
+        "p": 0.767,
+        "y": 0.0,
+        "games": 4,
+        "exp_games": 5.5103,
+        "need": 4
+      },
+      {
+        "season": 2015,
+        "hc": "ATL",
+        "other": "BRK",
+        "round": 1,
+        "p": 0.975,
+        "y": 1.0,
+        "games": 6,
+        "exp_games": 4.7324,
+        "need": 4
+      },
+      {
+        "season": 2015,
+        "hc": "CLE",
+        "other": "BOS",
+        "round": 1,
+        "p": 0.8909,
+        "y": 1.0,
+        "games": 4,
+        "exp_games": 5.214,
+        "need": 4
+      },
+      {
+        "season": 2015,
+        "hc": "LAC",
+        "other": "SAS",
+        "round": 1,
+        "p": 0.4709,
+        "y": 1.0,
+        "games": 7,
+        "exp_games": 5.6997,
+        "need": 4
+      },
+      {
+        "season": 2015,
+        "hc": "MEM",
+        "other": "POR",
+        "round": 1,
+        "p": 0.5174,
+        "y": 1.0,
+        "games": 5,
+        "exp_games": 5.6966,
+        "need": 4
+      },
+      {
+        "season": 2015,
+        "hc": "ATL",
+        "other": "WAS",
+        "round": 2,
+        "p": 0.93,
+        "y": 1.0,
+        "games": 6,
+        "exp_games": 5.0406,
+        "need": 4
+      },
+      {
+        "season": 2015,
+        "hc": "GSW",
+        "other": "MEM",
+        "round": 2,
+        "p": 0.8652,
+        "y": 1.0,
+        "games": 6,
+        "exp_games": 5.2993,
+        "need": 4
+      },
+      {
+        "season": 2015,
+        "hc": "CLE",
+        "other": "CHI",
+        "round": 2,
+        "p": 0.7015,
+        "y": 1.0,
+        "games": 6,
+        "exp_games": 5.6024,
+        "need": 4
+      },
+      {
+        "season": 2015,
+        "hc": "HOU",
+        "other": "LAC",
+        "round": 2,
+        "p": 0.2329,
+        "y": 1.0,
+        "games": 7,
+        "exp_games": 5.4751,
+        "need": 4
+      },
+      {
+        "season": 2015,
+        "hc": "GSW",
+        "other": "HOU",
+        "round": 3,
+        "p": 0.8548,
+        "y": 1.0,
+        "games": 5,
+        "exp_games": 5.3408,
+        "need": 4
+      },
+      {
+        "season": 2015,
+        "hc": "ATL",
+        "other": "CLE",
+        "round": 3,
+        "p": 0.7892,
+        "y": 0.0,
+        "games": 4,
+        "exp_games": 5.5013,
+        "need": 4
+      },
+      {
+        "season": 2015,
+        "hc": "GSW",
+        "other": "CLE",
+        "round": 4,
+        "p": 0.7403,
+        "y": 1.0,
+        "games": 6,
+        "exp_games": 5.562,
+        "need": 4
+      }
+    ]
+  },
+  "bracket_replay": {
+    "validation": {
+      "real_rotations": {
+        "seasons": [
+          {
+            "season": 2009,
+            "champion": "LAL",
+            "p_champion": 0.1335,
+            "rank": 2,
+            "log_score": 2.0136538011418326,
+            "favorite": "BOS",
+            "p_favorite": 0.31325
+          },
+          {
+            "season": 2010,
+            "champion": "LAL",
+            "p_champion": 0.02575,
+            "rank": 9,
+            "log_score": 3.6593206518723917,
+            "favorite": "CLE",
+            "p_favorite": 0.25775
+          },
+          {
+            "season": 2011,
+            "champion": "DAL",
+            "p_champion": 0.13625,
+            "rank": 3,
+            "log_score": 1.9932638454387834,
+            "favorite": "SAS",
+            "p_favorite": 0.26675
+          },
+          {
+            "season": 2012,
+            "champion": "MIA",
+            "p_champion": 0.25925,
+            "rank": 2,
+            "log_score": 1.3499624318725003,
+            "favorite": "SAS",
+            "p_favorite": 0.31475
+          }
+        ],
+        "mean_log_score": 2.254050182581377,
+        "uniform_log_score": 2.772588722239781,
+        "n_seasons": 4
+      },
+      "equal_footing": {
+        "seasons": [
+          {
+            "season": 2009,
+            "champion": "LAL",
+            "p_champion": 0.20125,
+            "rank": 2,
+            "log_score": 1.6032073626834642,
+            "favorite": "BOS",
+            "p_favorite": 0.3045
+          },
+          {
+            "season": 2010,
+            "champion": "LAL",
+            "p_champion": 0.04,
+            "rank": 8,
+            "log_score": 3.2188758248682006,
+            "favorite": "UTA",
+            "p_favorite": 0.272
+          },
+          {
+            "season": 2011,
+            "champion": "DAL",
+            "p_champion": 0.213,
+            "rank": 1,
+            "log_score": 1.546463113272712,
+            "favorite": "DAL",
+            "p_favorite": 0.213
+          },
+          {
+            "season": 2012,
+            "champion": "MIA",
+            "p_champion": 0.3105,
+            "rank": 1,
+            "log_score": 1.1695713776086036,
+            "favorite": "MIA",
+            "p_favorite": 0.3105
+          }
+        ],
+        "mean_log_score": 1.8845294196082452,
+        "uniform_log_score": 2.772588722239781,
+        "n_seasons": 4
+      }
+    },
+    "test": {
+      "real_rotations": {
+        "seasons": [
+          {
+            "season": 2013,
+            "champion": "MIA",
+            "p_champion": 0.41725,
+            "rank": 1,
+            "log_score": 0.8740697164401926,
+            "favorite": "MIA",
+            "p_favorite": 0.41725
+          },
+          {
+            "season": 2014,
+            "champion": "SAS",
+            "p_champion": 0.18575,
+            "rank": 2,
+            "log_score": 1.6833535953842684,
+            "favorite": "MIA",
+            "p_favorite": 0.21075
+          },
+          {
+            "season": 2015,
+            "champion": "GSW",
+            "p_champion": 0.23,
+            "rank": 2,
+            "log_score": 1.4696759700589417,
+            "favorite": "ATL",
+            "p_favorite": 0.36475
+          }
+        ],
+        "mean_log_score": 1.3423664272944675,
+        "uniform_log_score": 2.772588722239781,
+        "n_seasons": 3
+      },
+      "equal_footing": {
+        "seasons": [
+          {
+            "season": 2013,
+            "champion": "MIA",
+            "p_champion": 0.23175,
+            "rank": 2,
+            "log_score": 1.4620960745361724,
+            "favorite": "SAS",
+            "p_favorite": 0.378
+          },
+          {
+            "season": 2014,
+            "champion": "SAS",
+            "p_champion": 0.12025,
+            "rank": 3,
+            "log_score": 2.1181823699962665,
+            "favorite": "LAC",
+            "p_favorite": 0.2935
+          },
+          {
+            "season": 2015,
+            "champion": "GSW",
+            "p_champion": 0.087,
+            "rank": 5,
+            "log_score": 2.4418471603275536,
+            "favorite": "ATL",
+            "p_favorite": 0.3055
+          }
+        ],
+        "mean_log_score": 2.0073752016199973,
+        "uniform_log_score": 2.772588722239781,
+        "n_seasons": 3
+      }
+    }
+  },
+  "validation_stage": {
+    "net_real": {
+      "rmse": 2.669978695077141,
+      "r2": 0.7215402847272026
+    },
+    "games_regular": {
+      "n": 4678,
+      "logloss": 0.5942784707413447,
+      "brier": 0.20415437472801629,
+      "calibration_slope": 1.2287227023233978
+    }
+  },
+  "labels": {
+    "season": {
+      "status": "estimate",
+      "historical_teams_validated": true,
+      "five_avg_bench_validated": true
+    },
+    "series": {
+      "status": "experimental",
+      "reason": "only 45 held-out series (2013-2015) have game-level data; the rule requires at least 100"
+    },
+    "bracket": {
+      "status": "experimental",
+      "reason": "bracket replay uses the series model, which has too few held-out series"
+    },
+    "show_ortg": true,
+    "show_drtg": false,
+    "component_note": "Pre-registered rule used validation R^2 only (offense and defense both passed). The test seasons then showed defense at a much lower R^2, so the rule was tightened to require the minimum on BOTH validation and test. This only withholds output.",
+    "rules": {
+      "wins_rmse_ratio_max": 0.7,
+      "wins_rmse_ratio_max_five": 0.85,
+      "range_coverage_band": [
+        0.7,
+        0.9
+      ],
+      "component_r2_min": 0.3,
+      "series_min_test_n": 100
+    }
+  }
+}

@@ -1,0 +1,61 @@
+source,season,player,player_id,team
+nba_com_finals_mvp_history,2026,Jalen Brunson,,New York Knicks
+nba_com_finals_mvp_history,2025,Shai Gilgeous-Alexander,,Oklahoma City Thunder
+nba_com_finals_mvp_history,2024,Jaylen Brown,,Boston Celtics
+nba_com_finals_mvp_history,2023,Nikola Jokic,,Denver Nuggets
+nba_com_finals_mvp_history,2022,Stephen Curry,,Golden State Warriors
+nba_com_finals_mvp_history,2021,Giannis Antetokounmpo,,Milwaukee Bucks
+nba_com_finals_mvp_history,2020,LeBron James,,Los Angeles Lakers
+nba_com_finals_mvp_history,2019,Kawhi Leonard,,Toronto Raptors
+nba_com_finals_mvp_history,2018,Kevin Durant,,Golden State Warriors
+nba_com_finals_mvp_history,2017,Kevin Durant,,Golden State Warriors
+nba_com_finals_mvp_history,2016,LeBron James,,Cleveland Cavaliers
+nba_com_finals_mvp_history,2015,Andre Iguodala,,Golden State Warriors
+nba_com_finals_mvp_history,2014,Kawhi Leonard,,San Antonio Spurs
+nba_com_finals_mvp_history,2013,LeBron James,,Miami Heat
+nba_com_finals_mvp_history,2012,LeBron James,,Miami Heat
+nba_com_finals_mvp_history,2011,Dirk Nowitzki,,Dallas Mavericks
+nba_com_finals_mvp_history,2010,Kobe Bryant,,Los Angeles Lakers
+nba_com_finals_mvp_history,2009,Kobe Bryant,,Los Angeles Lakers
+nba_com_finals_mvp_history,2008,Paul Pierce,,Boston Celtics
+nba_com_finals_mvp_history,2007,Tony Parker,,San Antonio Spurs
+nba_com_finals_mvp_history,2006,Dwyane Wade,,Miami Heat
+nba_com_finals_mvp_history,2005,Tim Duncan,,San Antonio Spurs
+nba_com_finals_mvp_history,2004,Chauncey Billups,,Detroit Pistons
+nba_com_finals_mvp_history,2003,Tim Duncan,,San Antonio Spurs
+nba_com_finals_mvp_history,2002,Shaquille O'Neal,,Los Angeles Lakers
+nba_com_finals_mvp_history,2001,Shaquille O'Neal,,Los Angeles Lakers
+nba_com_finals_mvp_history,2000,Shaquille O'Neal,,Los Angeles Lakers
+nba_com_finals_mvp_history,1999,Tim Duncan,,San Antonio Spurs
+nba_com_finals_mvp_history,1998,Michael Jordan,,Chicago Bulls
+nba_com_finals_mvp_history,1997,Michael Jordan,,Chicago Bulls
+bbref_finals_mvp,2026,Jalen Brunson,brunsja01,NYK
+bbref_finals_mvp,2025,Shai Gilgeous-Alexander,gilgesh01,OKC
+bbref_finals_mvp,2024,Jaylen Brown,brownja02,BOS
+bbref_finals_mvp,2023,Nikola Jokić,jokicni01,DEN
+bbref_finals_mvp,2022,Stephen Curry,curryst01,GSW
+bbref_finals_mvp,2021,Giannis Antetokounmpo,antetgi01,MIL
+bbref_finals_mvp,2020,LeBron James,jamesle01,LAL
+bbref_finals_mvp,2019,Kawhi Leonard,leonaka01,TOR
+bbref_finals_mvp,2018,Kevin Durant,duranke01,GSW
+bbref_finals_mvp,2017,Kevin Durant,duranke01,GSW
+bbref_finals_mvp,2016,LeBron James,jamesle01,CLE
+bbref_finals_mvp,2015,Andre Iguodala,iguodan01,GSW
+bbref_finals_mvp,2014,Kawhi Leonard,leonaka01,SAS
+bbref_finals_mvp,2013,LeBron James,jamesle01,MIA
+bbref_finals_mvp,2012,LeBron James,jamesle01,MIA
+bbref_finals_mvp,2011,Dirk Nowitzki,nowitdi01,DAL
+bbref_finals_mvp,2010,Kobe Bryant,bryanko01,LAL
+bbref_finals_mvp,2009,Kobe Bryant,bryanko01,LAL
+bbref_finals_mvp,2008,Paul Pierce,piercpa01,BOS
+bbref_finals_mvp,2007,Tony Parker,parketo01,SAS
+bbref_finals_mvp,2006,Dwyane Wade,wadedw01,MIA
+bbref_finals_mvp,2005,Tim Duncan,duncati01,SAS
+bbref_finals_mvp,2004,Chauncey Billups,billuch01,DET
+bbref_finals_mvp,2003,Tim Duncan,duncati01,SAS
+bbref_finals_mvp,2002,Shaquille O'Neal,onealsh01,LAL
+bbref_finals_mvp,2001,Shaquille O'Neal,onealsh01,LAL
+bbref_finals_mvp,2000,Shaquille O'Neal,onealsh01,LAL
+bbref_finals_mvp,1999,Tim Duncan,duncati01,SAS
+bbref_finals_mvp,1998,Michael Jordan,jordami01,CHI
+bbref_finals_mvp,1997,Michael Jordan,jordami01,CHI

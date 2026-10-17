@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import Link from "next/link";
 import { loadPlayersIndex, searchPlayers, nearestQualifiedSeason, nearestSeasonIn, type PlayerSearchResult } from "@/lib/dataLoader";
 import { SMALL_SAMPLE_LABEL, SMALL_SAMPLE_NOTE, isSmallSampleSeason } from "@/lib/lineup";
 import { seasonLabel } from "@/lib/config";
@@ -33,15 +34,20 @@ interface PlayerAutocompleteProps {
    * made. Most call sites want this (search-to-navigate); Build a Lineup
    * wants it too since each slot gets its own fresh search. */
   clearOnSelect?: boolean;
-  /** Which seasons a pick may resolve to. "qualified" (default, used by every
-   * existing call site) keeps the comparison-pool seasons only. "all" offers
-   * every display-eligible season, as Explore does; Build a Lineup uses it. */
-  seasonPool?: "qualified" | "all";
+  /**
+   * Which seasons a pick may resolve to. Every call site states this explicitly (there is no default), so changing
+   * one search can never change the others:
+   *   "all"       every display-eligible season, small samples included (Discover, Compare, Build a Lineup, opponents).
+   *   "qualified" only seasons in the stricter comparison pool (the Player Map).
+   * The default season for a pick is the player's latest one in the pool unless `preferredSeason` is given.
+   */
+  seasonPool: "qualified" | "all";
   /** Ignore picks and lock the input (e.g. while a lineup add is loading). */
   disabled?: boolean;
-  /** Called when a picked player has no season to resolve to, so the caller
-   * can say so instead of the pick silently doing nothing. */
+  /** Called when a picked player has no season to resolve to, in addition to the message this search always shows. */
   onUnavailable?: (name: string) => void;
+  /** Accessible name for the search box (the placeholder alone isn't a label). */
+  label?: string;
 }
 
 type Status = "idle" | "loading" | "ready" | "error";
@@ -54,9 +60,10 @@ export default function PlayerAutocomplete({
   autoFocus = false,
   className = "",
   clearOnSelect = true,
-  seasonPool = "qualified",
+  seasonPool,
   disabled = false,
   onUnavailable,
+  label = "Search players",
 }: PlayerAutocompleteProps) {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<Status>("idle");
@@ -65,6 +72,8 @@ export default function PlayerAutocomplete({
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [announcement, setAnnouncement] = useState("");
+  // Why a pick did nothing (a player with no season in this search's pool): shown, never silent.
+  const [unavailable, setUnavailable] = useState<{ id: string; name: string; latest: number | null } | null>(null);
 
   const rootRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -152,7 +161,18 @@ export default function PlayerAutocomplete({
     if (disabled) return;
     const entry = index?.[r.id];
     const resolvedSeason = resolveSeason(entry);
-    if (resolvedSeason == null) onUnavailable?.(r.name);
+    if (resolvedSeason == null) {
+      const latest = entry && entry.seasons.length ? entry.seasons[entry.seasons.length - 1] : null;
+      setUnavailable({ id: r.id, name: r.name, latest });
+      setAnnouncement(
+        seasonPool === "qualified"
+          ? `${r.name} has no qualified season, so they can't be used here.`
+          : `${r.name} has no season data.`,
+      );
+      onUnavailable?.(r.name);
+    } else {
+      setUnavailable(null);
+    }
     if (resolvedSeason != null) {
       onSelect({
         id: r.id,
@@ -239,7 +259,7 @@ export default function PlayerAutocomplete({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeIndex]);
 
-  const sizeClasses = size === "lg" ? "px-4 py-3 text-base" : "px-3 py-2 text-base sm:text-sm";
+  const sizeClasses = size === "lg" ? "px-4 py-3 text-base" : "min-h-11 px-3 py-2 text-base sm:text-sm";
 
   // Players who share a display name (e.g. father/son pairs) are told apart by
   // their career span; identity stays the player id, never the name.
@@ -258,13 +278,14 @@ export default function PlayerAutocomplete({
           aria-expanded={showDropdown}
           aria-controls={listboxId}
           aria-autocomplete="list"
+          aria-label={label}
           aria-activedescendant={activeIndex >= 0 ? optionId(activeIndex) : undefined}
           enterKeyHint="search"
           autoFocus={autoFocus}
           disabled={disabled}
           placeholder={placeholder}
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => { setQuery(e.target.value); setUnavailable(null); }}
           onFocus={() => {
             if (results.length > 0 || status === "error") setOpen(true);
           }}
@@ -276,6 +297,19 @@ export default function PlayerAutocomplete({
       {/* Live region: announces result counts / errors to screen readers
           without moving focus. */}
       <span className="sr-only" role="status" aria-live="polite">{announcement}</span>
+
+      {unavailable && (
+        <p role="status" data-testid="search-unavailable" className="mt-2 rounded-md border border-line-strong bg-arena-panel px-3 py-2 text-sm text-stone">
+          {seasonPool === "qualified"
+            ? `${unavailable.name} has no qualified season (500+ minutes and 20+ games), so they aren't on the Player Map.`
+            : `No season data was found for ${unavailable.name}.`}{" "}
+          {unavailable.latest != null && (
+            <Link href={`/player/${unavailable.id}/${unavailable.latest}`} className="font-medium text-court-orange-bright hover:underline">
+              Open {seasonLabel(unavailable.latest)} profile
+            </Link>
+          )}
+        </p>
+      )}
 
       {showDropdown && (
         <ul
@@ -335,6 +369,11 @@ export default function PlayerAutocomplete({
                   {resolvedSeason != null && (
                     <span className={willSwitchSeason ? "font-medium text-court-orange-bright" : "text-stone-light"}>
                       {seasonLabel(resolvedSeason)}
+                    </span>
+                  )}
+                  {resolvedSeason == null && (
+                    <span className="rounded-full border border-line-strong px-1.5 py-0.5 text-[10px] font-medium text-stone-light">
+                      {seasonPool === "qualified" ? "Not on this map" : "No data"}
                     </span>
                   )}
                   {smallSample && (
