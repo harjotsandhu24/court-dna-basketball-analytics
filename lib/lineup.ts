@@ -59,7 +59,9 @@ export function lineupScores(selected: PlayerSeasonRecord[]): Record<string, num
   const out: Record<string, number | null> = {};
   for (const dim of LINEUP_DIMENSIONS) {
     const vals = selected.map((p) => lineupValue(p, dim.key));
-    out[dim.key] = vals.some((v) => v == null) ? null : (vals as number[]).reduce((a, b) => a + b, 0) / vals.length;
+    // Sum in sorted order so the result never depends on who stands where:
+    // rearranging the same player-seasons gives bit-for-bit identical scores.
+    out[dim.key] = vals.some((v) => v == null) ? null : [...(vals as number[])].sort((a, b) => a - b).reduce((a, b) => a + b, 0) / vals.length;
   }
   return out;
 }
@@ -73,7 +75,7 @@ export function lineupObservations(selected: PlayerSeasonRecord[], scores: Recor
     const usg = lineupValue(p, "__ball_dominance");
     return play != null && usg != null && play >= 70 && usg >= 70;
   }).length;
-  if (highUsageCreators >= 2) obs.push(`Several players who handle the ball and create shots often (${highUsageCreators} of ${selected.length})`);
+  if (highUsageCreators >= 2) obs.push(`Several selected players handle the ball and create shots often (${highUsageCreators} of ${selected.length})`);
 
   const per = scores["Perimeter Profile"];
   const reb = scores["Rebounding"];
@@ -82,9 +84,9 @@ export function lineupObservations(selected: PlayerSeasonRecord[], scores: Recor
   if (per != null && per >= 65) obs.push("The lineup takes a lot of three-point shots");
   if (reb != null && reb < 40) obs.push("Fewer rebounds than most players in the dataset");
   if (def != null && def >= 65) obs.push("The lineup produces a high number of steals and blocks");
-  if (rim != null && rim >= 65) obs.push("Several players attack the basket often");
+  if (rim != null && rim >= 65) obs.push("Several selected players attack the basket often");
 
   const posGroups = selected.map((p) => p.pos_group);
-  if (new Set(posGroups).size === 1) obs.push(`All five players share one position group (${posGroups[0]})`);
+  if (new Set(posGroups).size === 1) obs.push(`All selected players share one position group (${posGroups[0]})`);
   return obs.slice(0, 5);
 }

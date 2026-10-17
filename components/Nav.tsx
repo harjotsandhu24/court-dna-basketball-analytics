@@ -9,8 +9,6 @@ const LINKS = [
   { href: "/galaxy", label: "Player Map" },
   { href: "/compare", label: "Compare Players" },
   { href: "/build-a-five", label: "Build a Lineup" },
-  { href: "/methodology", label: "How It Works" },
-  { href: "/credits", label: "Credits" },
 ];
 
 export default function Nav() {
@@ -63,7 +61,7 @@ export default function Nav() {
                 key={l.href}
                 href={l.href}
                 className={`whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-                  active ? "text-court-orange-bright" : "text-stone hover:text-ink-light"
+                  active ? "text-court-orange-bright" : "text-stone hover:bg-arena-panel hover:text-ink-light"
                 }`}
                 aria-current={active ? "page" : undefined}
               >

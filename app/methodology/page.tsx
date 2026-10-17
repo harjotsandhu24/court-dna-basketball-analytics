@@ -10,6 +10,12 @@ export default function MethodologyPage() {
   const [meta, setMeta] = useState<DatasetMeta | null>(null);
   useEffect(() => { loadMeta().then(setMeta); }, []);
 
+  // The page above a #section link can grow once the dataset numbers arrive; scroll to the section again after that.
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    if (meta && id) document.getElementById(id)?.scrollIntoView({ block: "start", behavior: "auto" });
+  }, [meta]);
+
   return (
     <div className="mx-auto max-w-3xl px-5 py-14 md:px-8">
       <p className="text-eyebrow mb-2">How It Works</p>
@@ -141,6 +147,36 @@ export default function MethodologyPage() {
         </p>
       </Section>
 
+      <Section id="lineup-scores" title="How lineup scores are calculated">
+        <p>
+          In Build a Lineup, each of the six scores is the plain average, across the selected players, of that stat for
+          the season you chose. Five are trait percentiles from 0 to 100, each measured against the other qualified
+          players in the same season: Passing &amp; Creation, Three-Point Shooting, Attacking the Basket, Rebounding
+          and Defense. &ldquo;How Much They Handle the Ball&rdquo; comes from the usage rate, standardized within its
+          season and turned into a 0 to 100 value.
+        </p>
+        <ul className="mt-3 list-disc space-y-1 pl-5">
+          <li>
+            <strong>Positions don&rsquo;t affect scores.</strong> PG, SG, SF, PF and C only help you arrange the
+            lineup. Moving or swapping the same player-seasons gives the same scores.
+          </li>
+          <li>
+            <strong>Missing stats.</strong> If a selected player-season has no value for a stat, that score shows
+            &ldquo;Unavailable&rdquo;. It is never counted as zero and never averaged without that player.
+          </li>
+          <li>
+            <strong>Small samples.</strong> A season with fewer than {GALAXY_MIN_MINUTES} minutes or {GALAXY_MIN_GAMES} games
+            (but at least {CAREER_DISPLAY_MIN_MINUTES} minutes) is labeled &ldquo;Small sample&rdquo;. It is averaged
+            like any other season, but its stats come from limited playing time and may be less reliable. Its
+            percentiles are measured against that season&rsquo;s qualified players, which it did not help set.
+          </li>
+          <li>
+            <strong>Not a prediction.</strong> The scores describe combined playing style from past statistics. They
+            don&rsquo;t predict wins, and the observations are simple notes triggered by fixed thresholds on these stats.
+          </li>
+        </ul>
+      </Section>
+
       <Section title="Limitations">
         <LimitationsNote className="mb-4" />
         <ul className="list-disc pl-5 space-y-1.5">
@@ -154,9 +190,9 @@ export default function MethodologyPage() {
   );
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({ title, id, children }: { title: string; id?: string; children: React.ReactNode }) {
   return (
-    <section className="mb-10">
+    <section id={id} className="mb-10 scroll-mt-24">
       <h2 className="font-display text-2xl text-ink mb-3">{title}</h2>
       <div className="text-sm leading-relaxed text-stone-light [&_strong]:text-ink-light [&_em]:text-ink-light [&_code]:text-ink-light">
         {children}

@@ -181,10 +181,19 @@ seasons: **58.3%** (range 55.0%-61.1%).
 Lineup dimensions map onto the trait system (Passing & Creation =
 Playmaking, Three-Point Shooting = Perimeter Profile, Attacking the Basket
 = Rim Pressure, Rebounding, Defense = Defensive Activity), averaged across
-the five selected players. "How Much They Handle the Ball" is derived from
-a usage-rate z-score via a normal CDF approximation (`lib/stats.ts`), not
-the same computation used elsewhere. Observations come from fixed threshold
-rules — never a win/loss prediction.
+the selected players (one to five) for the season chosen for each. "How Much
+They Handle the Ball" is derived from a usage-rate z-score via a normal CDF
+approximation (`lib/stats.ts`), not the same computation used elsewhere.
+Positions (PG/SG/SF/PF/C) are user-assigned labels only and never enter the
+calculation; the scores are summed in sorted order so any arrangement of the
+same player-seasons gives identical results. If a selected player-season has
+no value for a stat, that score is shown as "Unavailable" (never zero, never
+averaged around). Small-sample seasons (at least 250 minutes but below the
+500-minute / 20-game comparison cutoff) are averaged like any other season but
+labeled, since their percentiles are measured against that season's qualified
+pool, which they did not help set. Observations come from fixed threshold
+rules on these averages -- never a win/loss prediction. The in-app
+explanation is at `/methodology#lineup-scores`.
 
 ## Limitations
 

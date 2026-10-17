@@ -87,6 +87,17 @@ describe("lineup scores", () => {
     expect(lineupValue(rec({ traits: { Rebounding: 0 } }), "Rebounding")).toBe(0);
   });
 
+  it("says 'selected players' (never 'five') with three, four or five players", () => {
+    for (const n of [3, 4, 5]) {
+      const players = Array.from({ length: n }, (_, i) => rec({ player_id: `p${i}`, pos_group: "Guard", traits: { Playmaking: 90, "Rim Pressure": 90 }, usg: 2 }));
+      const obs = lineupObservations(players, lineupScores(players)!);
+      expect(obs).toContain("All selected players share one position group (Guard)");
+      expect(obs.join(" ")).not.toMatch(/\bfive\b/i);
+      expect(obs).toContain(`Several selected players handle the ball and create shots often (${n} of ${n})`);
+      expect(obs).toContain("Several selected players attack the basket often");
+    }
+  });
+
   it("does not build observations from missing stats", () => {
     const players = ["a", "b", "c"].map((id) => rec({ player_id: id, traits: { Playmaking: null, Rebounding: null, "Perimeter Profile": null } }));
     const scores = lineupScores(players)!;
